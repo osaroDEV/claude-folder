@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lesson 1: Welcome to the Web — Code Your World: HTML</title>
+<link rel="stylesheet" href="../assets/style.css" />
+</head>
+<body>
+
+<div class="top-progress"><div class="top-progress__fill" style="width:0%"></div></div>
+<button class="sidebar-toggle" aria-label="Toggle menu">☰ Menu</button>
+<div class="sidebar-scrim"></div>
+
+<div class="app-shell">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand__mark">&lt;/&gt;</div>
+      <div class="brand__text">
+        <div class="kicker">CIOS Course Book</div>
+        <div class="name">Code Your World: HTML</div>
+      </div>
+    </div>
+
+    <div class="sidebar-progress">
+      <div class="sidebar-progress__label"><span>Your progress</span><strong class="sidebar-progress__count">0 / 16</strong></div>
+      <div class="sidebar-progress__track"><div class="sidebar-progress__fill" style="width:0%"></div></div>
+    </div>
+
+    <div class="nav-group__title">Start Here</div>
+    <ul class="nav-list">
+      <li><a href="../index.html">🏠 <span>Course Home</span></a></li>
+    </ul>
+
+    <div class="nav-group__title">Week 1 · Getting Started</div>
+    <ul class="nav-list">
+      <li><a href="lesson-01.html" class="active" data-lesson-id="l01"><span class="num">1</span><span>Welcome to the Web</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-02.html" data-lesson-id="l02"><span class="num">2</span><span>Your First Web Page</span><span class="check">✓</span></a></li>
+    </ul>
+
+    <div class="nav-group__title">Week 2 · Text Foundations</div>
+    <ul class="nav-list">
+      <li><a href="lesson-03.html" data-lesson-id="l03"><span class="num">3</span><span>Headings &amp; Paragraphs</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-04.html" data-lesson-id="l04"><span class="num">4</span><span>Text Formatting</span><span class="check">✓</span></a></li>
+    </ul>
+
+    <div class="nav-group__title">Week 3 · Organizing Content</div>
+    <ul class="nav-list">
+      <li><a href="lesson-05.html" data-lesson-id="l05"><span class="num">5</span><span>Lists</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-06.html" data-lesson-id="l06"><span class="num">6</span><span>Links</span><span class="check">✓</span></a></li>
+    </ul>
+
+    <div class="nav-group__title">Week 4 · Media &amp; Data</div>
+    <ul class="nav-list">
+      <li><a href="lesson-07.html" data-lesson-id="l07"><span class="num">7</span><span>Images</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-08.html" data-lesson-id="l08"><span class="num">8</span><span>Tables</span><span class="check">✓</span></a></li>
+    </ul>
+
+    <div class="nav-group__title">Week 5 · Forms</div>
+    <ul class="nav-list">
+      <li><a href="lesson-09.html" data-lesson-id="l09"><span class="num">9</span><span>Forms Part 1</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-10.html" data-lesson-id="l10"><span class="num">10</span><span>Forms Part 2</span><span class="check">✓</span></a></li>
+    </ul>
+
+    <div class="nav-group__title">Week 6 · Structure &amp; Media</div>
+    <ul class="nav-list">
+      <li><a href="lesson-11.html" data-lesson-id="l11"><span class="num">11</span><span>Div, Span &amp; Semantics</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-12.html" data-lesson-id="l12"><span class="num">12</span><span>Audio, Video &amp; Embeds</span><span class="check">✓</span></a></li>
+    </ul>
+
+    <div class="nav-group__title">Week 7 · Real-World Skills</div>
+    <ul class="nav-list">
+      <li><a href="lesson-13.html" data-lesson-id="l13"><span class="num">13</span><span>Attributes &amp; Accessibility</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-14.html" data-lesson-id="l14"><span class="num">14</span><span>Mini Project: Plan</span><span class="check">✓</span></a></li>
+    </ul>
+
+    <div class="nav-group__title">Week 8 · Project &amp; Beyond</div>
+    <ul class="nav-list">
+      <li><a href="lesson-15.html" data-lesson-id="l15"><span class="num">15</span><span>Mini Project: Build</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-16.html" data-lesson-id="l16"><span class="num">16</span><span>Publishing &amp; Next Steps</span><span class="check">✓</span></a></li>
+    </ul>
+
+  </aside>
+
+  <main class="main">
+    <div class="content">
+
+      <div class="lesson-kicker"><span class="pill">Lesson 1 of 16</span><span class="pill week">Week 1</span><span class="pill time">⏱ 60 minutes</span></div>
+      <h1 class="lesson-title">Welcome to the Web &amp; How HTML Works</h1>
+      <p class="lesson-sub">Before we write a single line of code, let's understand what actually happens when you visit a website — and where HTML fits into that story.</p>
+
+      <div class="box objectives">
+        <div class="box-title">🎯 Learning Objectives</div>
+        <ul>
+          <li>Explain what the internet, a web page, and a browser are, in your own words</li>
+          <li>Describe what HTML stands for and the job it does</li>
+          <li>Understand how a browser turns HTML code into the page you see</li>
+          <li>Set up the two tools you'll use throughout this course</li>
+        </ul>
+      </div>
+
+      <h2><span class="num-chip">1</span>What Happens When You Visit a Website?</h2>
+      <p>Every time you open a web page — whether it's a game, a school site, or YouTube — the same basic story happens behind the scenes. Your <strong>browser</strong> (like Chrome, Edge, or Firefox) sends a request across the <strong>internet</strong> to a <strong>server</strong>, which is just a powerful computer that stores web pages. The server sends the page's code back to your browser, and your browser reads that code and draws it on your screen in a fraction of a second.</p>
+
+      <div class="two-col">
+        <div class="info-card">
+          <div class="icon">🌐</div>
+          <h3>The Internet</h3>
+          <p>A giant network of connected computers all over the world that can send information to each other.</p>
+        </div>
+        <div class="info-card">
+          <div class="icon">🖥️</div>
+          <h3>A Server</h3>
+          <p>A computer that stores website files and "serves" them to anyone who asks for them.</p>
+        </div>
+      </div>
+
+      <p>The most important thing to know is this: <strong>every web page is really just a text file</strong> full of code. Your browser's whole job is to read that text file and turn it into the buttons, pictures, and text you interact with. That code is written in a language called <strong>HTML</strong> — and by the end of today, you'll have written some yourself.</p>
+
+      <h2><span class="num-chip">2</span>What Is HTML?</h2>
+      <p><strong>HTML</strong> stands for <strong>HyperText Markup Language</strong>. Let's break that name down, because each part tells you something important:</p>
+      <ul>
+        <li><strong>HyperText</strong> — text that can link to other text (think of clicking a blue underlined link that jumps you to another page)</li>
+        <li><strong>Markup</strong> — HTML "marks up" plain text by wrapping it in <strong>tags</strong> that tell the browser what each piece of content is (a heading? a paragraph? a picture?)</li>
+        <li><strong>Language</strong> — it's a language with its own vocabulary and rules, just like English or Spanish has rules — except this language is for talking to computers</li>
+      </ul>
+      <p>HTML is not a "programming language" that does math or makes decisions — it's a <strong>structure language</strong>. Think of it like the skeleton of a body: it doesn't make the body move or look pretty, but without it, everything would collapse into a pile. Later courses add CSS (the "skin and clothes") and JavaScript (the "muscles that move things") — but we start with the skeleton, because everything else is built on top of it.</p>
+
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">example.html</span></div>
+        <pre><code><span class="tag">&lt;h1&gt;</span><span class="txt">Welcome to my page!</span><span class="tag">&lt;/h1&gt;</span>
+<span class="tag">&lt;p&gt;</span><span class="txt">This paragraph is marked up with a tag.</span><span class="tag">&lt;/p&gt;</span></code></pre>
+      </div>
+
+      <div class="preview-window">
+        <div class="preview-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="url">🔒 example.html</span></div>
+        <div class="preview-window__body">
+          <h1 style="margin:0 0 10px;font-family:Poppins,sans-serif;">Welcome to my page!</h1>
+          <p style="margin:0;">This paragraph is marked up with a tag.</p>
+        </div>
+      </div>
+
+      <p>Notice the pattern: a tag like <code class="inline">&lt;h1&gt;</code> opens, some content sits inside, and a matching <code class="inline">&lt;/h1&gt;</code> closes it — with a forward slash. Together, an opening tag, its content, and its closing tag are called an <strong>element</strong>. You'll type this pattern hundreds of times in this course, so it will quickly feel natural.</p>
+
+      <h2><span class="num-chip">3</span>How the Browser "Reads" Your Code</h2>
+      <p>A browser reads HTML from <strong>top to bottom</strong>, the same way you read a book. As it goes, it looks at every tag and decides how to display whatever is inside it. It doesn't care about spacing or indentation the way you might expect — it cares about tags and structure. This is why professional coders still indent their code neatly: it's not for the browser, it's so <em>humans</em> can read it easily.</p>
+
+      <div class="box tip">
+        <div class="box-title">💡 Good Habit</div>
+        <p>Even though browsers don't require neat spacing, always indent your code and keep related tags together. Messy code is much harder to fix when something goes wrong — and something always eventually goes wrong!</p>
+      </div>
+
+      <h2><span class="num-chip">4</span>Meet Your Toolkit</h2>
+      <p>You only need two things for this entire course:</p>
+      <ul>
+        <li><strong>A text editor</strong> — this is where you'll type your HTML code. We recommend <strong>Visual Studio Code</strong> (free), though Notepad or TextEdit also work for now.</li>
+        <li><strong>A web browser</strong> — this is where you'll see your code come to life. Chrome, Edge, or Firefox are all great choices.</li>
+      </ul>
+      <p>Important: never write HTML in a program like Microsoft Word. Word adds hidden formatting that breaks your code. Always use a plain text editor.</p>
+
+      <div class="box vocab">
+        <div class="box-title">📚 Key Vocabulary</div>
+        <dl class="vocab-grid">
+          <div class="vocab-item"><dt>HTML</dt><dd>HyperText Markup Language — the language used to structure content on the web</dd></div>
+          <div class="vocab-item"><dt>Browser</dt><dd>The program (like Chrome) that reads HTML and displays it as a page</dd></div>
+          <div class="vocab-item"><dt>Server</dt><dd>A computer that stores and delivers website files</dd></div>
+          <div class="vocab-item"><dt>Tag</dt><dd>A keyword wrapped in angle brackets, like &lt;p&gt;, that marks up content</dd></div>
+          <div class="vocab-item"><dt>Element</dt><dd>An opening tag, its content, and its closing tag together</dd></div>
+          <div class="vocab-item"><dt>Text editor</dt><dd>Software used to write plain-text code, like VS Code</dd></div>
+        </dl>
+      </div>
+
+      <div class="box challenge">
+        <div class="box-title">🚀 Challenge</div>
+        <p><strong>Install and open your text editor</strong> (VS Code is recommended). Type this single line exactly as shown:</p>
+        <p><code class="inline">&lt;h1&gt;I just wrote my first line of HTML!&lt;/h1&gt;</code></p>
+        <p>Save the file as <code class="inline">first-line.html</code>, then find it on your computer and double-click it to open it in your browser. You should see your sentence appear as a big heading. Congratulations — you're officially a web developer!</p>
+      </div>
+
+      <div class="box recap">
+        <div class="box-title">✅ Recap</div>
+        <p>The internet connects computers so servers can send web pages to browsers. HTML is the markup language that structures those pages using tags and elements. Browsers read HTML top to bottom and display it visually. You now have the two tools you need: a text editor and a browser. Next lesson, we'll build a complete, properly structured web page.</p>
+      </div>
+
+      <div class="mark-complete">
+        <button data-lesson-id="l01">Mark Lesson as Complete</button>
+      </div>
+
+      <div class="lesson-pager">
+        <span class="pager-btn disabled"><div class="dir">← Previous</div><div class="title">You're at the start!</div></span>
+        <a class="pager-btn next" href="lesson-02.html"><div class="dir">Next →</div><div class="title">Lesson 2: Your First Web Page</div></a>
+      </div>
+
+    </div>
+    <footer class="site-footer">CIOS HTML Course Book · Lesson 1 of 16</footer>
+  </main>
+</div>
+
+<script src="../assets/script.js"></script>
+</body>
+</html>

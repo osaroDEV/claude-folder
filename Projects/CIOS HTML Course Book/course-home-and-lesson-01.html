@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Code Your World — HTML Course Book | Course Home &amp; Lesson 1 | CIOS</title>
+<meta name="description" content="Standalone preview: Course Home and Lesson 1 (Welcome to the Web) from the CIOS HTML course book for young learners (ages 10-15)." />
+<style>
+/* =========================================================
+   CIOS HTML Course Book — Shared Stylesheet
+   (inlined for this standalone preview file)
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap');
+
+:root {
+  --navy-950: #0b1023;
+  --navy-900: #10173a;
+  --navy-800: #171f4a;
+  --navy-700: #232c5c;
+  --indigo-600: #5b5bf0;
+  --indigo-500: #6f6ff5;
+  --indigo-400: #8d8dfb;
+  --violet-500: #9c5bf0;
+  --teal-400: #2fd9c4;
+  --amber-400: #ffb648;
+  --amber-500: #ff9d1f;
+  --rose-400: #ff6b8b;
+  --ink-900: #151833;
+  --ink-700: #3a3f66;
+  --ink-500: #6b6f96;
+  --ink-300: #a4a8c9;
+  --paper-0: #ffffff;
+  --paper-50: #f7f8fd;
+  --paper-100: #eef0fb;
+  --paper-200: #e2e5f7;
+  --success-500: #22c58b;
+  --radius-lg: 20px;
+  --radius-md: 14px;
+  --radius-sm: 9px;
+  --shadow-soft: 0 10px 30px -12px rgba(20, 24, 60, 0.18);
+  --shadow-card: 0 4px 18px -6px rgba(20, 24, 60, 0.12);
+  --sidebar-w: 296px;
+  --font-head: 'Poppins', 'Segoe UI', sans-serif;
+  --font-body: 'Inter', 'Segoe UI', sans-serif;
+  --font-code: 'Fira Code', 'Consolas', monospace;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--ink-900);
+  background: var(--paper-50);
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; display: block; }
+
+a { color: var(--indigo-600); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.top-progress {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 5px;
+  background: var(--paper-200);
+  z-index: 500;
+}
+.top-progress__fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--teal-400), var(--indigo-500) 60%, var(--violet-500));
+  transition: width .4s ease;
+}
+
+.app-shell {
+  display: flex;
+  min-height: 100vh;
+  padding-top: 5px;
+}
+
+.sidebar {
+  width: var(--sidebar-w);
+  flex-shrink: 0;
+  background: radial-gradient(120% 140% at 0% 0%, var(--navy-800) 0%, var(--navy-950) 65%);
+  color: var(--paper-0);
+  padding: 28px 20px 32px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+.sidebar::-webkit-scrollbar { width: 6px; }
+.sidebar::-webkit-scrollbar-thumb { background: var(--navy-700); border-radius: 4px; }
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 22px;
+  padding: 0 4px;
+}
+.brand__mark {
+  width: 42px; height: 42px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--teal-400), var(--indigo-500));
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 18px;
+  color: var(--navy-950);
+  flex-shrink: 0;
+}
+.brand__text { line-height: 1.2; }
+.brand__text .kicker { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--indigo-400); font-weight: 600; }
+.brand__text .name { font-family: var(--font-head); font-weight: 700; font-size: 16px; color: #fff; }
+
+.sidebar-progress {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  margin-bottom: 22px;
+}
+.sidebar-progress__label {
+  display: flex; justify-content: space-between;
+  font-size: 12.5px; color: var(--ink-300); margin-bottom: 8px;
+}
+.sidebar-progress__label strong { color: #fff; }
+.sidebar-progress__track {
+  height: 7px; border-radius: 6px; background: rgba(255,255,255,0.1); overflow: hidden;
+}
+.sidebar-progress__fill {
+  height: 100%; border-radius: 6px;
+  background: linear-gradient(90deg, var(--teal-400), var(--indigo-400));
+}
+
+.nav-group__title {
+  font-size: 11px; letter-spacing: 0.09em; text-transform: uppercase;
+  color: var(--ink-300); font-weight: 700; margin: 18px 6px 8px;
+}
+.nav-list { list-style: none; margin: 0; padding: 0; }
+.nav-list a {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 10px;
+  border-radius: 10px;
+  color: var(--paper-100);
+  font-size: 13.5px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background .15s ease, color .15s ease;
+}
+.nav-list a:hover { background: rgba(255,255,255,0.08); text-decoration: none; }
+.nav-list a.active {
+  background: linear-gradient(90deg, rgba(111,111,245,0.35), rgba(111,111,245,0.08));
+  color: #fff;
+  font-weight: 600;
+  box-shadow: inset 3px 0 0 var(--indigo-400);
+}
+.nav-list .num {
+  width: 22px; height: 22px; border-radius: 7px;
+  background: rgba(255,255,255,0.08);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; flex-shrink: 0;
+  font-family: var(--font-head);
+}
+.nav-list a.done .num { background: var(--success-500); color: #06331f; }
+.nav-list a.active .num { background: var(--indigo-400); color: var(--navy-950); }
+.nav-list .check { margin-left: auto; opacity: 0; font-size: 12px; color: var(--teal-400); }
+.nav-list a.done .check { opacity: 1; }
+
+.sidebar-foot {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+.sidebar-foot a {
+  display: block; font-size: 13px; color: var(--ink-300); padding: 6px 10px; border-radius: 8px;
+}
+.sidebar-foot a:hover { background: rgba(255,255,255,0.06); color: #fff; text-decoration: none; }
+.sidebar-foot p {
+  font-size: 12px; color: var(--ink-300); padding: 6px 10px; margin: 0; line-height: 1.6;
+}
+
+.sidebar-toggle { display: none; }
+
+.main {
+  flex: 1;
+  min-width: 0;
+  padding: 44px clamp(20px, 5vw, 64px) 90px;
+}
+.content {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.section-divider {
+  max-width: 860px;
+  margin: 10px auto 0;
+  border: none;
+  border-top: 2px dashed var(--paper-200);
+}
+.jump-back {
+  max-width: 860px;
+  margin: 0 auto 30px;
+  display: flex;
+  justify-content: flex-end;
+}
+.jump-back a {
+  font-size: 13px; font-weight: 600; color: var(--ink-500);
+  padding: 8px 16px; border-radius: 100px; background: var(--paper-100);
+}
+.jump-back a:hover { text-decoration: none; background: var(--paper-200); color: var(--indigo-600); }
+
+.lesson-kicker {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 14px;
+}
+.pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 12px;
+  border-radius: 100px;
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 0.03em;
+  background: var(--paper-100);
+  color: var(--indigo-600);
+}
+.pill.week { background: #fff4e0; color: var(--amber-500); }
+.pill.time { background: #e6faf5; color: #0e9a83; }
+
+h1.lesson-title {
+  font-family: var(--font-head);
+  font-size: clamp(28px, 4vw, 38px);
+  font-weight: 800;
+  margin: 0 0 10px;
+  line-height: 1.15;
+  color: var(--ink-900);
+}
+.lesson-sub {
+  font-size: 16.5px;
+  color: var(--ink-500);
+  margin: 0 0 30px;
+  max-width: 640px;
+}
+
+h2 {
+  font-family: var(--font-head);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ink-900);
+  margin: 44px 0 16px;
+  padding-top: 6px;
+  display: flex; align-items: center; gap: 10px;
+}
+h2 .num-chip {
+  width: 30px; height: 30px; border-radius: 9px;
+  background: linear-gradient(135deg, var(--indigo-500), var(--violet-500));
+  color: #fff; font-size: 14px; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+h3 { font-family: var(--font-head); font-size: 17px; font-weight: 700; margin: 26px 0 10px; color: var(--ink-900); }
+
+p { line-height: 1.75; font-size: 15.5px; color: var(--ink-700); margin: 0 0 16px; }
+ul, ol { line-height: 1.75; font-size: 15.5px; color: var(--ink-700); padding-left: 22px; margin: 0 0 16px; }
+li { margin-bottom: 6px; }
+strong { color: var(--ink-900); }
+code.inline {
+  font-family: var(--font-code);
+  background: var(--paper-100);
+  color: #8033d1;
+  padding: 2px 7px;
+  border-radius: 6px;
+  font-size: 0.88em;
+}
+
+.box {
+  border-radius: var(--radius-md);
+  padding: 20px 22px;
+  margin: 22px 0;
+  box-shadow: var(--shadow-card);
+}
+.box p:last-child { margin-bottom: 0; }
+.box-title {
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 10px;
+}
+
+.box.objectives { background: #f2f1ff; border-left: 4px solid var(--indigo-500); }
+.box.objectives .box-title { color: var(--indigo-600); }
+.box.objectives ul { margin-bottom: 0; }
+
+.box.vocab { background: var(--paper-0); border: 1px solid var(--paper-200); }
+.box.vocab .box-title { color: var(--ink-700); }
+.vocab-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 12px;
+  margin-top: 4px;
+}
+.vocab-item { background: var(--paper-50); border-radius: var(--radius-sm); padding: 12px 14px; }
+.vocab-item dt { font-family: var(--font-code); font-weight: 600; color: var(--indigo-600); font-size: 13.5px; margin-bottom: 4px; }
+.vocab-item dd { margin: 0; font-size: 13.5px; color: var(--ink-700); line-height: 1.5; }
+
+.box.tip { background: #eafaf5; border-left: 4px solid var(--success-500); }
+.box.tip .box-title { color: #0e9a6e; }
+
+.box.warning { background: #fff4e6; border-left: 4px solid var(--amber-500); }
+.box.warning .box-title { color: #b5691a; }
+
+.box.challenge {
+  background: linear-gradient(135deg, #1b1f4d, #2a1f5e);
+  color: #fff;
+  border-left: none;
+}
+.box.challenge .box-title { color: var(--teal-400); }
+.box.challenge p, .box.challenge li { color: #dfe1f7; }
+.box.challenge strong { color: #fff; }
+
+.box.recap { background: var(--paper-0); border: 1.5px dashed var(--indigo-400); }
+.box.recap .box-title { color: var(--indigo-600); }
+
+.code-window {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin: 18px 0 22px;
+  box-shadow: var(--shadow-card);
+  background: #171b34;
+}
+.code-window__bar {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 14px;
+  background: #12152b;
+}
+.code-window__bar span.dot { width: 10px; height: 10px; border-radius: 50%; }
+.dot.red { background: #ff5f56; } .dot.yellow { background: #ffbd2e; } .dot.green { background: #27c93f; }
+.code-window__label {
+  margin-left: 8px; font-family: var(--font-code); font-size: 12px; color: #8b8fb8;
+}
+.code-window pre {
+  margin: 0;
+  padding: 18px 20px;
+  overflow-x: auto;
+  font-family: var(--font-code);
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: #e6e8fb;
+}
+.code-window code { font-family: var(--font-code); }
+.tag { color: #8d8dfb; }
+.attr { color: #2fd9c4; }
+.str  { color: #ffb648; }
+.cmt  { color: #6b6f96; font-style: italic; }
+.txt  { color: #e6e8fb; }
+
+.preview-window {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--paper-200);
+  margin: 0 0 22px;
+  box-shadow: var(--shadow-card);
+}
+.preview-window__bar {
+  display: flex; align-items: center; gap: 8px;
+  padding: 9px 14px;
+  background: var(--paper-100);
+  border-bottom: 1px solid var(--paper-200);
+}
+.preview-window__bar .url {
+  margin-left: 6px;
+  background: #fff; border-radius: 100px; padding: 3px 12px;
+  font-size: 11.5px; color: var(--ink-500);
+  font-family: var(--font-code);
+}
+.preview-window__body {
+  padding: 20px 22px;
+  background: #fff;
+  font-family: var(--font-body);
+  color: #222;
+}
+
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+@media (max-width: 720px) { .two-col { grid-template-columns: 1fr; } }
+
+.lesson-pager {
+  display: flex; justify-content: space-between; gap: 16px;
+  margin-top: 56px;
+  padding-top: 26px;
+  border-top: 1px solid var(--paper-200);
+}
+.pager-btn {
+  flex: 1;
+  max-width: 340px;
+  padding: 16px 18px;
+  border-radius: var(--radius-md);
+  background: var(--paper-0);
+  border: 1px solid var(--paper-200);
+  box-shadow: var(--shadow-card);
+  text-decoration: none;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.pager-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-soft); text-decoration: none; }
+.pager-btn .dir { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-500); font-weight: 700; }
+.pager-btn .title { font-family: var(--font-head); font-weight: 700; color: var(--ink-900); font-size: 14.5px; margin-top: 4px; }
+.pager-btn.next { text-align: right; margin-left: auto; }
+.pager-btn.disabled { opacity: 0.4; pointer-events: none; }
+
+.mark-complete {
+  margin-top: 40px;
+  display: flex; align-items: center; justify-content: center;
+}
+.mark-complete button {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 14.5px;
+  padding: 13px 28px;
+  border-radius: 100px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(135deg, var(--indigo-500), var(--violet-500));
+  color: #fff;
+  box-shadow: 0 8px 20px -8px rgba(91,91,240,0.6);
+  transition: transform .15s ease;
+}
+.mark-complete button:hover { transform: translateY(-2px); }
+.mark-complete button.is-done {
+  background: linear-gradient(135deg, var(--success-500), #1aa87a);
+}
+
+.hero {
+  border-radius: 28px;
+  background: radial-gradient(120% 160% at 100% 0%, #2a1f5e 0%, var(--navy-950) 60%);
+  color: #fff;
+  padding: clamp(36px, 6vw, 64px);
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 40px;
+}
+.hero::before {
+  content: "";
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at 15% 90%, rgba(47,217,196,0.25), transparent 45%);
+}
+.hero__inner { position: relative; z-index: 1; max-width: 640px; }
+.hero .kicker { font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal-400); font-weight: 700; margin-bottom: 14px; }
+.hero h1 { font-family: var(--font-head); font-size: clamp(32px, 5vw, 48px); font-weight: 800; line-height: 1.1; margin: 0 0 18px; }
+.hero p.lead { font-size: 17px; color: #d6d8f5; line-height: 1.7; margin-bottom: 28px; }
+.hero-stats { display: flex; flex-wrap: wrap; gap: 28px; margin-bottom: 30px; }
+.hero-stats .stat .n { font-family: var(--font-head); font-size: 26px; font-weight: 800; color: #fff; }
+.hero-stats .stat .l { font-size: 12.5px; color: var(--ink-300); text-transform: uppercase; letter-spacing: 0.05em; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-head); font-weight: 700; font-size: 14.5px;
+  padding: 14px 26px; border-radius: 100px; text-decoration: none;
+}
+.btn.primary { background: linear-gradient(135deg, var(--teal-400), var(--indigo-500)); color: #08122b; box-shadow: 0 10px 24px -8px rgba(47,217,196,0.5); }
+.btn.primary:hover { text-decoration: none; transform: translateY(-2px); }
+.btn.ghost { background: rgba(255,255,255,0.08); color: #fff; border: 1px solid rgba(255,255,255,0.2); }
+.btn.ghost:hover { text-decoration: none; background: rgba(255,255,255,0.14); }
+.btn-row { display: flex; gap: 14px; flex-wrap: wrap; }
+
+.landing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 44px;
+}
+@media (max-width: 860px) { .landing-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .landing-grid { grid-template-columns: 1fr; } }
+
+.info-card {
+  background: var(--paper-0);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--paper-200);
+}
+.info-card .icon {
+  width: 44px; height: 44px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; margin-bottom: 14px;
+  background: var(--paper-100);
+}
+.info-card h3 { margin-top: 0; }
+.info-card p { font-size: 14px; margin-bottom: 0; }
+
+.section-heading {
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 26px;
+  margin: 8px 0 6px;
+}
+.section-sub { color: var(--ink-500); margin-bottom: 28px; max-width: 600px; }
+
+table.grid-table { width: 100%; border-collapse: collapse; margin: 18px 0 26px; font-size: 14px; }
+table.grid-table th, table.grid-table td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--paper-200); }
+table.grid-table th { font-family: var(--font-head); font-size: 12.5px; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-500); }
+
+footer.site-footer {
+  text-align: center;
+  padding: 30px 20px;
+  color: var(--ink-500);
+  font-size: 13px;
+}
+
+/* Mobile */
+@media (max-width: 900px) {
+  .sidebar {
+    position: fixed;
+    left: 0; top: 0; bottom: 0;
+    transform: translateX(-100%);
+    transition: transform .25s ease;
+    z-index: 400;
+    width: 82vw;
+    max-width: 320px;
+  }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-toggle {
+    display: flex; align-items: center; gap: 8px;
+    position: fixed; top: 14px; left: 16px; z-index: 410;
+    background: var(--navy-950); color: #fff;
+    border: none; border-radius: 100px;
+    padding: 10px 16px; font-family: var(--font-head); font-weight: 700; font-size: 13px;
+    box-shadow: var(--shadow-soft); cursor: pointer;
+  }
+  .main { padding-top: 74px; }
+  .sidebar-scrim {
+    display: none;
+    position: fixed; inset: 0; background: rgba(10,12,30,0.5); z-index: 390;
+  }
+  .sidebar-scrim.show { display: block; }
+}
+</style>
+</head>
+<body>
+
+<div class="top-progress"><div class="top-progress__fill" style="width:0%"></div></div>
+
+<button class="sidebar-toggle" aria-label="Toggle menu">☰ Menu</button>
+<div class="sidebar-scrim"></div>
+
+<div class="app-shell">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand__mark">&lt;/&gt;</div>
+      <div class="brand__text">
+        <div class="kicker">CIOS Course Book</div>
+        <div class="name">Code Your World: HTML</div>
+      </div>
+    </div>
+
+    <div class="sidebar-progress">
+      <div class="sidebar-progress__label"><span>Your progress</span><strong class="sidebar-progress__count">0 / 1</strong></div>
+      <div class="sidebar-progress__track"><div class="sidebar-progress__fill" style="width:0%"></div></div>
+    </div>
+
+    <div class="nav-group__title">Start Here</div>
+    <ul class="nav-list">
+      <li><a href="#home" class="active" id="nav-home">🏠 <span>Course Home</span></a></li>
+    </ul>
+
+    <div class="nav-group__title">Week 1 · Getting Started</div>
+    <ul class="nav-list">
+      <li><a href="#lesson-1" data-lesson-id="l01" id="nav-lesson-1"><span class="num">1</span><span>Welcome to the Web</span><span class="check">✓</span></a></li>
+    </ul>
+
+    <div class="sidebar-foot">
+      <p>This is a standalone preview containing only Course Home and Lesson 1, extracted from the full 16-lesson course book.</p>
+    </div>
+
+  </aside>
+
+  <main class="main">
+
+    <!-- ================= COURSE HOME ================= -->
+    <div class="content" id="home">
+
+      <section class="hero">
+        <div class="hero__inner">
+          <div class="kicker">✦ CIOS Online Course Book ✦ Ages 10–15</div>
+          <h1>Code Your World<br>with HTML</h1>
+          <p class="lead">Welcome, future web builder! This course book will teach you how to build real web pages from scratch — one clear, hands-on lesson at a time. No experience needed, just curiosity.</p>
+
+          <div class="hero-stats">
+            <div class="stat"><div class="n">16</div><div class="l">Lessons</div></div>
+            <div class="stat"><div class="n">8</div><div class="l">Weeks</div></div>
+            <div class="stat"><div class="n">60</div><div class="l">Min / Session</div></div>
+            <div class="stat"><div class="n">1</div><div class="l">Final Project</div></div>
+          </div>
+
+          <div class="btn-row">
+            <a class="btn primary" href="#lesson-1">▶ Start Lesson 1</a>
+          </div>
+        </div>
+      </section>
+
+      <div class="landing-grid">
+        <div class="info-card">
+          <div class="icon">🧭</div>
+          <h3>Structured Path</h3>
+          <p>Two 1-hour sessions a week for 8 weeks, building skills in order — from your very first tag to a finished project.</p>
+        </div>
+        <div class="info-card">
+          <div class="icon">💻</div>
+          <h3>Real Code, Real Pages</h3>
+          <p>Every lesson has working code examples and a preview of what appears in the browser, so you always see the result.</p>
+        </div>
+        <div class="info-card">
+          <div class="icon">🏆</div>
+          <h3>Practice &amp; Project</h3>
+          <p>Each lesson ends with a challenge, and the course finishes with your own personal profile web page.</p>
+        </div>
+      </div>
+
+      <h2 class="section-heading">What You Need</h2>
+      <p class="section-sub">Just two free tools — no installation headaches.</p>
+      <table class="grid-table">
+        <thead><tr><th>Tool</th><th>What it's for</th><th>Where to get it</th></tr></thead>
+        <tbody>
+          <tr><td><strong>A web browser</strong></td><td>Viewing the web pages you build (Chrome, Edge, or Firefox all work great)</td><td>Already on your computer</td></tr>
+          <tr><td><strong>A text editor</strong></td><td>Writing your HTML code</td><td>Visual Studio Code (free) or even Notepad to start</td></tr>
+        </tbody>
+      </table>
+
+      <h2 class="section-heading">How This Course Book Works</h2>
+      <p class="section-sub">Each of the 16 lessons follows the same friendly structure so you always know what's coming next.</p>
+      <table class="grid-table">
+        <thead><tr><th>Section</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr><td>🎯 Learning Objectives</td><td>What you'll be able to do by the end of the lesson</td></tr>
+          <tr><td>📖 Explanatory Notes</td><td>Clear, comprehensive explanations of each new idea</td></tr>
+          <tr><td>💻 Code Examples</td><td>Real HTML code you can copy, type out, and run</td></tr>
+          <tr><td>🖥️ Preview</td><td>A mock-up of exactly what the code produces in a browser</td></tr>
+          <tr><td>📚 Key Vocabulary</td><td>New terms explained in plain language</td></tr>
+          <tr><td>🚀 Challenge</td><td>A hands-on task to practice what you just learned</td></tr>
+          <tr><td>✅ Recap</td><td>A quick summary before you move on</td></tr>
+        </tbody>
+      </table>
+
+      <div class="mark-complete" style="margin-top:36px;">
+        <a class="btn primary" href="#lesson-1">▶ Begin Lesson 1: Welcome to the Web</a>
+      </div>
+
+    </div>
+
+    <hr class="section-divider">
+    <div class="jump-back"><a href="#home">↑ Back to Course Home</a></div>
+
+    <!-- ================= LESSON 1 ================= -->
+    <div class="content" id="lesson-1">
+
+      <div class="lesson-kicker"><span class="pill">Lesson 1 of 16</span><span class="pill week">Week 1</span><span class="pill time">⏱ 60 minutes</span></div>
+      <h1 class="lesson-title">Welcome to the Web &amp; How HTML Works</h1>
+      <p class="lesson-sub">Before we write a single line of code, let's understand what actually happens when you visit a website — and where HTML fits into that story.</p>
+
+      <div class="box objectives">
+        <div class="box-title">🎯 Learning Objectives</div>
+        <ul>
+          <li>Explain what the internet, a web page, and a browser are, in your own words</li>
+          <li>Describe what HTML stands for and the job it does</li>
+          <li>Understand how a browser turns HTML code into the page you see</li>
+          <li>Set up the two tools you'll use throughout this course</li>
+        </ul>
+      </div>
+
+      <h2><span class="num-chip">1</span>What Happens When You Visit a Website?</h2>
+      <p>Every time you open a web page — whether it's a game, a school site, or YouTube — the same basic story happens behind the scenes. Your <strong>browser</strong> (like Chrome, Edge, or Firefox) sends a request across the <strong>internet</strong> to a <strong>server</strong>, which is just a powerful computer that stores web pages. The server sends the page's code back to your browser, and your browser reads that code and draws it on your screen in a fraction of a second.</p>
+
+      <div class="two-col">
+        <div class="info-card">
+          <div class="icon">🌐</div>
+          <h3>The Internet</h3>
+          <p>A giant network of connected computers all over the world that can send information to each other.</p>
+        </div>
+        <div class="info-card">
+          <div class="icon">🖥️</div>
+          <h3>A Server</h3>
+          <p>A computer that stores website files and "serves" them to anyone who asks for them.</p>
+        </div>
+      </div>
+
+      <p>The most important thing to know is this: <strong>every web page is really just a text file</strong> full of code. Your browser's whole job is to read that text file and turn it into the buttons, pictures, and text you interact with. That code is written in a language called <strong>HTML</strong> — and by the end of today, you'll have written some yourself.</p>
+
+      <h2><span class="num-chip">2</span>What Is HTML?</h2>
+      <p><strong>HTML</strong> stands for <strong>HyperText Markup Language</strong>. Let's break that name down, because each part tells you something important:</p>
+      <ul>
+        <li><strong>HyperText</strong> — text that can link to other text (think of clicking a blue underlined link that jumps you to another page)</li>
+        <li><strong>Markup</strong> — HTML "marks up" plain text by wrapping it in <strong>tags</strong> that tell the browser what each piece of content is (a heading? a paragraph? a picture?)</li>
+        <li><strong>Language</strong> — it's a language with its own vocabulary and rules, just like English or Spanish has rules — except this language is for talking to computers</li>
+      </ul>
+      <p>HTML is not a "programming language" that does math or makes decisions — it's a <strong>structure language</strong>. Think of it like the skeleton of a body: it doesn't make the body move or look pretty, but without it, everything would collapse into a pile. Later courses add CSS (the "skin and clothes") and JavaScript (the "muscles that move things") — but we start with the skeleton, because everything else is built on top of it.</p>
+
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">example.html</span></div>
+        <pre><code><span class="tag">&lt;h1&gt;</span><span class="txt">Welcome to my page!</span><span class="tag">&lt;/h1&gt;</span>
+<span class="tag">&lt;p&gt;</span><span class="txt">This paragraph is marked up with a tag.</span><span class="tag">&lt;/p&gt;</span></code></pre>
+      </div>
+
+      <div class="preview-window">
+        <div class="preview-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="url">🔒 example.html</span></div>
+        <div class="preview-window__body">
+          <h1 style="margin:0 0 10px;font-family:Poppins,sans-serif;">Welcome to my page!</h1>
+          <p style="margin:0;">This paragraph is marked up with a tag.</p>
+        </div>
+      </div>
+
+      <p>Notice the pattern: a tag like <code class="inline">&lt;h1&gt;</code> opens, some content sits inside, and a matching <code class="inline">&lt;/h1&gt;</code> closes it — with a forward slash. Together, an opening tag, its content, and its closing tag are called an <strong>element</strong>. You'll type this pattern hundreds of times in this course, so it will quickly feel natural.</p>
+
+      <h2><span class="num-chip">3</span>How the Browser "Reads" Your Code</h2>
+      <p>A browser reads HTML from <strong>top to bottom</strong>, the same way you read a book. As it goes, it looks at every tag and decides how to display whatever is inside it. It doesn't care about spacing or indentation the way you might expect — it cares about tags and structure. This is why professional coders still indent their code neatly: it's not for the browser, it's so <em>humans</em> can read it easily.</p>
+
+      <div class="box tip">
+        <div class="box-title">💡 Good Habit</div>
+        <p>Even though browsers don't require neat spacing, always indent your code and keep related tags together. Messy code is much harder to fix when something goes wrong — and something always eventually goes wrong!</p>
+      </div>
+
+      <h2><span class="num-chip">4</span>Meet Your Toolkit</h2>
+      <p>You only need two things for this entire course:</p>
+      <ul>
+        <li><strong>A text editor</strong> — this is where you'll type your HTML code. We recommend <strong>Visual Studio Code</strong> (free), though Notepad or TextEdit also work for now.</li>
+        <li><strong>A web browser</strong> — this is where you'll see your code come to life. Chrome, Edge, or Firefox are all great choices.</li>
+      </ul>
+      <p>Important: never write HTML in a program like Microsoft Word. Word adds hidden formatting that breaks your code. Always use a plain text editor.</p>
+
+      <div class="box vocab">
+        <div class="box-title">📚 Key Vocabulary</div>
+        <dl class="vocab-grid">
+          <div class="vocab-item"><dt>HTML</dt><dd>HyperText Markup Language — the language used to structure content on the web</dd></div>
+          <div class="vocab-item"><dt>Browser</dt><dd>The program (like Chrome) that reads HTML and displays it as a page</dd></div>
+          <div class="vocab-item"><dt>Server</dt><dd>A computer that stores and delivers website files</dd></div>
+          <div class="vocab-item"><dt>Tag</dt><dd>A keyword wrapped in angle brackets, like &lt;p&gt;, that marks up content</dd></div>
+          <div class="vocab-item"><dt>Element</dt><dd>An opening tag, its content, and its closing tag together</dd></div>
+          <div class="vocab-item"><dt>Text editor</dt><dd>Software used to write plain-text code, like VS Code</dd></div>
+        </dl>
+      </div>
+
+      <div class="box challenge">
+        <div class="box-title">🚀 Challenge</div>
+        <p><strong>Install and open your text editor</strong> (VS Code is recommended). Type this single line exactly as shown:</p>
+        <p><code class="inline">&lt;h1&gt;I just wrote my first line of HTML!&lt;/h1&gt;</code></p>
+        <p>Save the file as <code class="inline">first-line.html</code>, then find it on your computer and double-click it to open it in your browser. You should see your sentence appear as a big heading. Congratulations — you're officially a web developer!</p>
+      </div>
+
+      <div class="box recap">
+        <div class="box-title">✅ Recap</div>
+        <p>The internet connects computers so servers can send web pages to browsers. HTML is the markup language that structures those pages using tags and elements. Browsers read HTML top to bottom and display it visually. You now have the two tools you need: a text editor and a browser. Next lesson, we'll build a complete, properly structured web page.</p>
+      </div>
+
+      <div class="mark-complete">
+        <button data-lesson-id="l01">Mark Lesson as Complete</button>
+      </div>
+
+      <div class="lesson-pager">
+        <span class="pager-btn disabled"><div class="dir">← Previous</div><div class="title">You're at the start!</div></span>
+        <span class="pager-btn disabled"><div class="dir">Next →</div><div class="title">Continue in the full course book</div></span>
+      </div>
+
+    </div>
+
+    <footer class="site-footer">CIOS HTML Course Book · Standalone preview — Course Home &amp; Lesson 1 of 16</footer>
+  </main>
+</div>
+
+<script>
+/* =========================================================
+   Standalone preview script — reading progress, mobile
+   sidebar toggle, single-lesson completion tracking.
+   ========================================================= */
+(function () {
+  "use strict";
+
+  var STORAGE_KEY = "ciosHtmlCourseProgress_preview";
+  var TOTAL_LESSONS = 1;
+
+  function getProgress() {
+    try {
+      var raw = window.localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function saveProgress(list) {
+    try {
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+    } catch (e) { /* storage unavailable — fail silently */ }
+  }
+
+  function refreshSidebarProgress() {
+    var done = getProgress();
+    var links = document.querySelectorAll(".nav-list a[data-lesson-id]");
+    links.forEach(function (a) {
+      if (done.indexOf(a.getAttribute("data-lesson-id")) !== -1) {
+        a.classList.add("done");
+      } else {
+        a.classList.remove("done");
+      }
+    });
+    var fill = document.querySelector(".sidebar-progress__fill");
+    var label = document.querySelector(".sidebar-progress__count");
+    var pct = Math.round((done.length / TOTAL_LESSONS) * 100);
+    if (fill) fill.style.width = pct + "%";
+    if (label) label.textContent = done.length + " / " + TOTAL_LESSONS;
+  }
+
+  function setupMarkComplete() {
+    var btn = document.querySelector(".mark-complete button");
+    if (!btn) return;
+    var lessonId = btn.getAttribute("data-lesson-id");
+
+    function render() {
+      var done = getProgress();
+      var isDone = done.indexOf(lessonId) !== -1;
+      btn.classList.toggle("is-done", isDone);
+      btn.textContent = isDone ? "✓ Lesson Completed" : "Mark Lesson as Complete";
+    }
+
+    btn.addEventListener("click", function () {
+      var done = getProgress();
+      var idx = done.indexOf(lessonId);
+      if (idx === -1) {
+        done.push(lessonId);
+      } else {
+        done.splice(idx, 1);
+      }
+      saveProgress(done);
+      render();
+      refreshSidebarProgress();
+    });
+
+    render();
+  }
+
+  function setupMobileSidebar() {
+    var toggle = document.querySelector(".sidebar-toggle");
+    var sidebar = document.querySelector(".sidebar");
+    var scrim = document.querySelector(".sidebar-scrim");
+    if (!toggle || !sidebar) return;
+
+    function close() {
+      sidebar.classList.remove("open");
+      if (scrim) scrim.classList.remove("show");
+    }
+
+    toggle.addEventListener("click", function () {
+      sidebar.classList.toggle("open");
+      if (scrim) scrim.classList.toggle("show", sidebar.classList.contains("open"));
+    });
+    if (scrim) scrim.addEventListener("click", close);
+  }
+
+  function setupReadingProgress() {
+    var fill = document.querySelector(".top-progress__fill");
+    if (!fill) return;
+    function update() {
+      var doc = document.documentElement;
+      var scrollTop = doc.scrollTop || document.body.scrollTop;
+      var height = (doc.scrollHeight - doc.clientHeight) || 1;
+      var pct = Math.min(100, Math.max(0, (scrollTop / height) * 100));
+      fill.style.width = pct + "%";
+    }
+    document.addEventListener("scroll", update, { passive: true });
+    update();
+  }
+
+  function setupSectionNav() {
+    var homeLink = document.getElementById("nav-home");
+    var lessonLink = document.getElementById("nav-lesson-1");
+    if (!homeLink || !lessonLink) return;
+    function setActive(hash) {
+      homeLink.classList.toggle("active", hash === "#home" || hash === "");
+      lessonLink.classList.toggle("active", hash === "#lesson-1");
+    }
+    window.addEventListener("hashchange", function () {
+      setActive(window.location.hash);
+    });
+    setActive(window.location.hash);
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    refreshSidebarProgress();
+    setupMarkComplete();
+    setupMobileSidebar();
+    setupReadingProgress();
+    setupSectionNav();
+  });
+})();
+</script>
+</body>
+</html>

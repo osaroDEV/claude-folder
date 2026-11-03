@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lesson 5: Lists — Code Your World: HTML</title>
+<link rel="stylesheet" href="../assets/style.css" />
+</head>
+<body>
+
+<div class="top-progress"><div class="top-progress__fill" style="width:0%"></div></div>
+<button class="sidebar-toggle" aria-label="Toggle menu">☰ Menu</button>
+<div class="sidebar-scrim"></div>
+
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand"><div class="brand__mark">&lt;/&gt;</div><div class="brand__text"><div class="kicker">CIOS Course Book</div><div class="name">Code Your World: HTML</div></div></div>
+    <div class="sidebar-progress">
+      <div class="sidebar-progress__label"><span>Your progress</span><strong class="sidebar-progress__count">0 / 16</strong></div>
+      <div class="sidebar-progress__track"><div class="sidebar-progress__fill" style="width:0%"></div></div>
+    </div>
+    <div class="nav-group__title">Start Here</div>
+    <ul class="nav-list">
+      <li><a href="../index.html">🏠 <span>Course Home</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 1 · Getting Started</div>
+    <ul class="nav-list">
+      <li><a href="lesson-01.html" data-lesson-id="l01"><span class="num">1</span><span>Welcome to the Web</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-02.html" data-lesson-id="l02"><span class="num">2</span><span>Your First Web Page</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 2 · Text Foundations</div>
+    <ul class="nav-list">
+      <li><a href="lesson-03.html" data-lesson-id="l03"><span class="num">3</span><span>Headings &amp; Paragraphs</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-04.html" data-lesson-id="l04"><span class="num">4</span><span>Text Formatting</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 3 · Organizing Content</div>
+    <ul class="nav-list">
+      <li><a href="lesson-05.html" class="active" data-lesson-id="l05"><span class="num">5</span><span>Lists</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-06.html" data-lesson-id="l06"><span class="num">6</span><span>Links</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 4 · Media &amp; Data</div>
+    <ul class="nav-list">
+      <li><a href="lesson-07.html" data-lesson-id="l07"><span class="num">7</span><span>Images</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-08.html" data-lesson-id="l08"><span class="num">8</span><span>Tables</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 5 · Forms</div>
+    <ul class="nav-list">
+      <li><a href="lesson-09.html" data-lesson-id="l09"><span class="num">9</span><span>Forms Part 1</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-10.html" data-lesson-id="l10"><span class="num">10</span><span>Forms Part 2</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 6 · Structure &amp; Media</div>
+    <ul class="nav-list">
+      <li><a href="lesson-11.html" data-lesson-id="l11"><span class="num">11</span><span>Div, Span &amp; Semantics</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-12.html" data-lesson-id="l12"><span class="num">12</span><span>Audio, Video &amp; Embeds</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 7 · Real-World Skills</div>
+    <ul class="nav-list">
+      <li><a href="lesson-13.html" data-lesson-id="l13"><span class="num">13</span><span>Attributes &amp; Accessibility</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-14.html" data-lesson-id="l14"><span class="num">14</span><span>Mini Project: Plan</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 8 · Project &amp; Beyond</div>
+    <ul class="nav-list">
+      <li><a href="lesson-15.html" data-lesson-id="l15"><span class="num">15</span><span>Mini Project: Build</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-16.html" data-lesson-id="l16"><span class="num">16</span><span>Publishing &amp; Next Steps</span><span class="check">✓</span></a></li>
+    </ul>
+  </aside>
+
+  <main class="main">
+    <div class="content">
+
+      <div class="lesson-kicker"><span class="pill">Lesson 5 of 16</span><span class="pill week">Week 3</span><span class="pill time">⏱ 60 minutes</span></div>
+      <h1 class="lesson-title">Lists: Ordered, Unordered &amp; Nested</h1>
+      <p class="lesson-sub">Lists are everywhere on the web — menus, steps, ingredients, rankings. Today you'll learn all three list types HTML offers.</p>
+
+      <div class="box objectives">
+        <div class="box-title">🎯 Learning Objectives</div>
+        <ul>
+          <li>Build unordered (bulleted) lists with &lt;ul&gt; and &lt;li&gt;</li>
+          <li>Build ordered (numbered) lists with &lt;ol&gt; and &lt;li&gt;</li>
+          <li>Nest lists inside other lists</li>
+          <li>Choose the right list type for the content</li>
+        </ul>
+      </div>
+
+      <h2><span class="num-chip">1</span>Unordered Lists (Bullets)</h2>
+      <p>Use <code class="inline">&lt;ul&gt;</code> (unordered list) when the order of items doesn't matter — like a list of favorite foods. Each item inside goes in its own <code class="inline">&lt;li&gt;</code> (list item) tag.</p>
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">bullets.html</span></div>
+        <pre><code><span class="tag">&lt;ul&gt;</span>
+  <span class="tag">&lt;li&gt;</span><span class="txt">Pizza</span><span class="tag">&lt;/li&gt;</span>
+  <span class="tag">&lt;li&gt;</span><span class="txt">Tacos</span><span class="tag">&lt;/li&gt;</span>
+  <span class="tag">&lt;li&gt;</span><span class="txt">Sushi</span><span class="tag">&lt;/li&gt;</span>
+<span class="tag">&lt;/ul&gt;</span></code></pre>
+      </div>
+      <div class="preview-window">
+        <div class="preview-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="url">🔒 bullets.html</span></div>
+        <div class="preview-window__body"><ul style="margin:0;padding-left:20px;"><li>Pizza</li><li>Tacos</li><li>Sushi</li></ul></div>
+      </div>
+
+      <h2><span class="num-chip">2</span>Ordered Lists (Numbers)</h2>
+      <p>Use <code class="inline">&lt;ol&gt;</code> (ordered list) when order matters — like steps in a recipe. The browser numbers items automatically, so you never type the numbers yourself.</p>
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">steps.html</span></div>
+        <pre><code><span class="tag">&lt;ol&gt;</span>
+  <span class="tag">&lt;li&gt;</span><span class="txt">Preheat the oven to 200°C</span><span class="tag">&lt;/li&gt;</span>
+  <span class="tag">&lt;li&gt;</span><span class="txt">Mix the dry ingredients</span><span class="tag">&lt;/li&gt;</span>
+  <span class="tag">&lt;li&gt;</span><span class="txt">Bake for 25 minutes</span><span class="tag">&lt;/li&gt;</span>
+<span class="tag">&lt;/ol&gt;</span></code></pre>
+      </div>
+      <div class="preview-window">
+        <div class="preview-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="url">🔒 steps.html</span></div>
+        <div class="preview-window__body"><ol style="margin:0;padding-left:20px;"><li>Preheat the oven to 200°C</li><li>Mix the dry ingredients</li><li>Bake for 25 minutes</li></ol></div>
+      </div>
+      <p>You can change where numbering starts with the <code class="inline">start</code> attribute (e.g. <code class="inline">&lt;ol start="4"&gt;</code>), or switch the numbering style with <code class="inline">type</code> (e.g. <code class="inline">type="A"</code> for A, B, C or <code class="inline">type="i"</code> for i, ii, iii).</p>
+
+      <h2><span class="num-chip">3</span>Nesting Lists</h2>
+      <p>You can put a whole list inside a single &lt;li&gt; to create sub-items — this is called <strong>nesting</strong>. It's perfect for things like packing lists with categories.</p>
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">packing.html</span></div>
+        <pre><code><span class="tag">&lt;ul&gt;</span>
+  <span class="tag">&lt;li&gt;</span><span class="txt">Clothes</span>
+    <span class="tag">&lt;ul&gt;</span>
+      <span class="tag">&lt;li&gt;</span><span class="txt">T-shirts</span><span class="tag">&lt;/li&gt;</span>
+      <span class="tag">&lt;li&gt;</span><span class="txt">Jacket</span><span class="tag">&lt;/li&gt;</span>
+    <span class="tag">&lt;/ul&gt;</span>
+  <span class="tag">&lt;/li&gt;</span>
+  <span class="tag">&lt;li&gt;</span><span class="txt">Toiletries</span><span class="tag">&lt;/li&gt;</span>
+<span class="tag">&lt;/ul&gt;</span></code></pre>
+      </div>
+      <div class="preview-window">
+        <div class="preview-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="url">🔒 packing.html</span></div>
+        <div class="preview-window__body">
+          <ul style="margin:0;padding-left:20px;">
+            <li>Clothes
+              <ul style="padding-left:20px;"><li>T-shirts</li><li>Jacket</li></ul>
+            </li>
+            <li>Toiletries</li>
+          </ul>
+        </div>
+      </div>
+      <div class="box warning">
+        <div class="box-title">⚠️ Watch the Nesting</div>
+        <p>The nested &lt;ul&gt; must go <em>inside</em> the &lt;li&gt; of its parent item, not after it closes. Getting this indentation right in your editor makes mistakes much easier to spot.</p>
+      </div>
+
+      <h2><span class="num-chip">4</span>Bonus: Description Lists</h2>
+      <p>A third, less common list type is the <strong>description list</strong>, used for term/definition pairs like a glossary: <code class="inline">&lt;dl&gt;</code> wraps it, <code class="inline">&lt;dt&gt;</code> holds the term, and <code class="inline">&lt;dd&gt;</code> holds its description.</p>
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">glossary.html</span></div>
+        <pre><code><span class="tag">&lt;dl&gt;</span>
+  <span class="tag">&lt;dt&gt;</span><span class="txt">HTML</span><span class="tag">&lt;/dt&gt;</span>
+  <span class="tag">&lt;dd&gt;</span><span class="txt">The language used to structure web pages</span><span class="tag">&lt;/dd&gt;</span>
+<span class="tag">&lt;/dl&gt;</span></code></pre>
+      </div>
+
+      <div class="box vocab">
+        <div class="box-title">📚 Key Vocabulary</div>
+        <dl class="vocab-grid">
+          <div class="vocab-item"><dt>Unordered list</dt><dd>A bulleted list where order doesn't matter — &lt;ul&gt;</dd></div>
+          <div class="vocab-item"><dt>Ordered list</dt><dd>A numbered list where order matters — &lt;ol&gt;</dd></div>
+          <div class="vocab-item"><dt>List item</dt><dd>A single entry in a list — &lt;li&gt;</dd></div>
+          <div class="vocab-item"><dt>Nesting</dt><dd>Placing one list (or element) inside another</dd></div>
+          <div class="vocab-item"><dt>Description list</dt><dd>A term/definition list using &lt;dl&gt;, &lt;dt&gt;, &lt;dd&gt;</dd></div>
+        </dl>
+      </div>
+
+      <div class="box challenge">
+        <div class="box-title">🚀 Challenge</div>
+        <p>Create <code class="inline">my-week.html</code>. Include an &lt;ol&gt; listing the steps of your morning routine (at least 4 steps), and a &lt;ul&gt; of your favorite subjects at school, with at least one item containing a nested &lt;ul&gt; of reasons why you like it.</p>
+      </div>
+
+      <div class="box recap">
+        <div class="box-title">✅ Recap</div>
+        <p>Use &lt;ul&gt; for unordered content, &lt;ol&gt; for ordered/step-based content, and nest lists by placing a new list inside an &lt;li&gt;. Description lists (&lt;dl&gt;) handle term/definition pairs. Next lesson: connecting pages with links.</p>
+      </div>
+
+      <div class="mark-complete"><button data-lesson-id="l05">Mark Lesson as Complete</button></div>
+
+      <div class="lesson-pager">
+        <a class="pager-btn" href="lesson-04.html"><div class="dir">← Previous</div><div class="title">Lesson 4: Text Formatting</div></a>
+        <a class="pager-btn next" href="lesson-06.html"><div class="dir">Next →</div><div class="title">Lesson 6: Links</div></a>
+      </div>
+
+    </div>
+    <footer class="site-footer">CIOS HTML Course Book · Lesson 5 of 16</footer>
+  </main>
+</div>
+
+<script src="../assets/script.js"></script>
+</body>
+</html>

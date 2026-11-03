@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lesson 7: Adding Images — Code Your World: HTML</title>
+<link rel="stylesheet" href="../assets/style.css" />
+</head>
+<body>
+
+<div class="top-progress"><div class="top-progress__fill" style="width:0%"></div></div>
+<button class="sidebar-toggle" aria-label="Toggle menu">☰ Menu</button>
+<div class="sidebar-scrim"></div>
+
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand"><div class="brand__mark">&lt;/&gt;</div><div class="brand__text"><div class="kicker">CIOS Course Book</div><div class="name">Code Your World: HTML</div></div></div>
+    <div class="sidebar-progress">
+      <div class="sidebar-progress__label"><span>Your progress</span><strong class="sidebar-progress__count">0 / 16</strong></div>
+      <div class="sidebar-progress__track"><div class="sidebar-progress__fill" style="width:0%"></div></div>
+    </div>
+    <div class="nav-group__title">Start Here</div>
+    <ul class="nav-list">
+      <li><a href="../index.html">🏠 <span>Course Home</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 1 · Getting Started</div>
+    <ul class="nav-list">
+      <li><a href="lesson-01.html" data-lesson-id="l01"><span class="num">1</span><span>Welcome to the Web</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-02.html" data-lesson-id="l02"><span class="num">2</span><span>Your First Web Page</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 2 · Text Foundations</div>
+    <ul class="nav-list">
+      <li><a href="lesson-03.html" data-lesson-id="l03"><span class="num">3</span><span>Headings &amp; Paragraphs</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-04.html" data-lesson-id="l04"><span class="num">4</span><span>Text Formatting</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 3 · Organizing Content</div>
+    <ul class="nav-list">
+      <li><a href="lesson-05.html" data-lesson-id="l05"><span class="num">5</span><span>Lists</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-06.html" data-lesson-id="l06"><span class="num">6</span><span>Links</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 4 · Media &amp; Data</div>
+    <ul class="nav-list">
+      <li><a href="lesson-07.html" class="active" data-lesson-id="l07"><span class="num">7</span><span>Images</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-08.html" data-lesson-id="l08"><span class="num">8</span><span>Tables</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 5 · Forms</div>
+    <ul class="nav-list">
+      <li><a href="lesson-09.html" data-lesson-id="l09"><span class="num">9</span><span>Forms Part 1</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-10.html" data-lesson-id="l10"><span class="num">10</span><span>Forms Part 2</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 6 · Structure &amp; Media</div>
+    <ul class="nav-list">
+      <li><a href="lesson-11.html" data-lesson-id="l11"><span class="num">11</span><span>Div, Span &amp; Semantics</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-12.html" data-lesson-id="l12"><span class="num">12</span><span>Audio, Video &amp; Embeds</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 7 · Real-World Skills</div>
+    <ul class="nav-list">
+      <li><a href="lesson-13.html" data-lesson-id="l13"><span class="num">13</span><span>Attributes &amp; Accessibility</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-14.html" data-lesson-id="l14"><span class="num">14</span><span>Mini Project: Plan</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 8 · Project &amp; Beyond</div>
+    <ul class="nav-list">
+      <li><a href="lesson-15.html" data-lesson-id="l15"><span class="num">15</span><span>Mini Project: Build</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-16.html" data-lesson-id="l16"><span class="num">16</span><span>Publishing &amp; Next Steps</span><span class="check">✓</span></a></li>
+    </ul>
+  </aside>
+
+  <main class="main">
+    <div class="content">
+
+      <div class="lesson-kicker"><span class="pill">Lesson 7 of 16</span><span class="pill week">Week 4</span><span class="pill time">⏱ 60 minutes</span></div>
+      <h1 class="lesson-title">Adding Images</h1>
+      <p class="lesson-sub">Pictures make pages come alive. Today you'll learn how to add images correctly — including a step every beginner forgets.</p>
+
+      <div class="box objectives">
+        <div class="box-title">🎯 Learning Objectives</div>
+        <ul>
+          <li>Insert images using the &lt;img&gt; tag</li>
+          <li>Explain why alt text is required, not optional</li>
+          <li>Size images properly using width and height</li>
+          <li>Add captions with &lt;figure&gt; and &lt;figcaption&gt;</li>
+        </ul>
+      </div>
+
+      <h2><span class="num-chip">1</span>The &lt;img&gt; Tag</h2>
+      <p>Images use the self-closing <code class="inline">&lt;img&gt;</code> tag. It needs a <code class="inline">src</code> (source) attribute pointing to the image file — either a file in your own project or a full web address.</p>
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">image.html</span></div>
+        <pre><code><span class="tag">&lt;img</span> <span class="attr">src</span>=<span class="str">"images/mountain.jpg"</span> <span class="attr">alt</span>=<span class="str">"Snow-capped mountain at sunrise"</span><span class="tag">&gt;</span></code></pre>
+      </div>
+
+      <h2><span class="num-chip">2</span>Alt Text: Not Optional</h2>
+      <p>The <code class="inline">alt</code> attribute describes the image in words. It does two important jobs:</p>
+      <ul>
+        <li>Screen readers read it aloud, so blind or low-vision visitors know what the image shows</li>
+        <li>If the image fails to load (a typo in the file name, a slow connection), the browser shows the alt text instead — so nobody sees a broken, meaningless icon</li>
+      </ul>
+      <div class="box warning">
+        <div class="box-title">⚠️ Write Real Descriptions</div>
+        <p>Avoid vague alt text like <code class="inline">alt="image"</code> or <code class="inline">alt="pic1"</code>. Describe what's actually shown: <code class="inline">alt="A golden retriever catching a frisbee in a park"</code>. If an image is purely decorative and adds no information, use an empty <code class="inline">alt=""</code> — never omit the attribute entirely.</p>
+      </div>
+
+      <h2><span class="num-chip">3</span>Sizing Images</h2>
+      <p>You can control the display size with <code class="inline">width</code> and <code class="inline">height</code> attributes (in pixels). Always set both, and keep them in the same ratio as the original image, or your picture will look stretched or squashed.</p>
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">sized-image.html</span></div>
+        <pre><code><span class="tag">&lt;img</span> <span class="attr">src</span>=<span class="str">"images/mountain.jpg"</span> <span class="attr">alt</span>=<span class="str">"Snow-capped mountain at sunrise"</span> <span class="attr">width</span>=<span class="str">"400"</span> <span class="attr">height</span>=<span class="str">"267"</span><span class="tag">&gt;</span></code></pre>
+      </div>
+      <div class="preview-window">
+        <div class="preview-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="url">🔒 sized-image.html</span></div>
+        <div class="preview-window__body">
+          <div style="width:260px;height:150px;border-radius:10px;background:linear-gradient(135deg,#ffb648,#5b5bf0);display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Poppins',sans-serif;font-weight:700;font-size:13px;">🏔️ mountain.jpg (400×267)</div>
+        </div>
+      </div>
+      <div class="box tip">
+        <div class="box-title">💡 Why Set a Size at All?</div>
+        <p>Setting width and height reserves the correct space for the image before it fully loads, so the rest of the page doesn't "jump around" while images are downloading. This is a real technique professional sites use.</p>
+      </div>
+
+      <h2><span class="num-chip">4</span>Captions with &lt;figure&gt; and &lt;figcaption&gt;</h2>
+      <p>When an image needs a visible caption, wrap it in a <code class="inline">&lt;figure&gt;</code> element with a <code class="inline">&lt;figcaption&gt;</code> inside. This groups the image and its caption together as one meaningful unit.</p>
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">figure.html</span></div>
+        <pre><code><span class="tag">&lt;figure&gt;</span>
+  <span class="tag">&lt;img</span> <span class="attr">src</span>=<span class="str">"images/mountain.jpg"</span> <span class="attr">alt</span>=<span class="str">"Snow-capped mountain at sunrise"</span> <span class="attr">width</span>=<span class="str">"400"</span> <span class="attr">height</span>=<span class="str">"267"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;figcaption&gt;</span><span class="txt">Mount Kenya at sunrise, taken during our summer trip.</span><span class="tag">&lt;/figcaption&gt;</span>
+<span class="tag">&lt;/figure&gt;</span></code></pre>
+      </div>
+
+      <div class="box vocab">
+        <div class="box-title">📚 Key Vocabulary</div>
+        <dl class="vocab-grid">
+          <div class="vocab-item"><dt>src</dt><dd>The attribute pointing to an image file's location</dd></div>
+          <div class="vocab-item"><dt>alt text</dt><dd>A written description of an image for accessibility and fallback</dd></div>
+          <div class="vocab-item"><dt>Aspect ratio</dt><dd>The proportion between an image's width and height</dd></div>
+          <div class="vocab-item"><dt>figure / figcaption</dt><dd>Elements that group an image with its visible caption</dd></div>
+        </dl>
+      </div>
+
+      <div class="box challenge">
+        <div class="box-title">🚀 Challenge</div>
+        <p>Add an image to <code class="inline">about-me.html</code> — a photo of yourself, a pet, or something you like — wrapped in a &lt;figure&gt; with a &lt;figcaption&gt;. Write thoughtful alt text, and set a sensible width and height.</p>
+      </div>
+
+      <div class="box recap">
+        <div class="box-title">✅ Recap</div>
+        <p>The &lt;img&gt; tag needs src and a meaningful alt attribute. Set width/height in the correct ratio to prevent page jumping. Use &lt;figure&gt; and &lt;figcaption&gt; when an image needs a visible caption. Next lesson: displaying data in tables.</p>
+      </div>
+
+      <div class="mark-complete"><button data-lesson-id="l07">Mark Lesson as Complete</button></div>
+
+      <div class="lesson-pager">
+        <a class="pager-btn" href="lesson-06.html"><div class="dir">← Previous</div><div class="title">Lesson 6: Links</div></a>
+        <a class="pager-btn next" href="lesson-08.html"><div class="dir">Next →</div><div class="title">Lesson 8: Building Tables</div></a>
+      </div>
+
+    </div>
+    <footer class="site-footer">CIOS HTML Course Book · Lesson 7 of 16</footer>
+  </main>
+</div>
+
+<script src="../assets/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+/* ===========================================================
+   SALVAGE RUN — page styling
+   Session 3 material: selectors, colours, borders, spacing.
+   =========================================================== */
+
+body {
+  background: #0d1024;
+  color: #a3aad6;
+  font-family: system-ui, sans-serif;
+  text-align: center;          /* centres the inline content, incl. the canvas */
+  margin: 0;
+  padding: 24px 16px 40px;
+}
+
+h1 {
+  color: #e9ecff;
+  font-size: 34px;
+  letter-spacing: 4px;
+  margin: 0 0 4px;
+}
+
+.tagline {
+  color: #6c8cff;
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: 0 0 22px;
+}
+
+canvas {
+  background: #0b0e24;
+  border: 3px solid #6c8cff;
+  border-radius: 12px;
+  cursor: crosshair;           /* tells the player the mouse matters */
+  max-width: 100%;             /* stops it overflowing a small screen */
+}
+
+.controls {
+  margin: 18px auto 0;
+  max-width: 640px;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.controls b {
+  color: #e9ecff;
+}

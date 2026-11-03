@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lesson 13: Attributes &amp; Accessibility — Code Your World: HTML</title>
+<link rel="stylesheet" href="../assets/style.css" />
+</head>
+<body>
+
+<div class="top-progress"><div class="top-progress__fill" style="width:0%"></div></div>
+<button class="sidebar-toggle" aria-label="Toggle menu">☰ Menu</button>
+<div class="sidebar-scrim"></div>
+
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand"><div class="brand__mark">&lt;/&gt;</div><div class="brand__text"><div class="kicker">CIOS Course Book</div><div class="name">Code Your World: HTML</div></div></div>
+    <div class="sidebar-progress">
+      <div class="sidebar-progress__label"><span>Your progress</span><strong class="sidebar-progress__count">0 / 16</strong></div>
+      <div class="sidebar-progress__track"><div class="sidebar-progress__fill" style="width:0%"></div></div>
+    </div>
+    <div class="nav-group__title">Start Here</div>
+    <ul class="nav-list">
+      <li><a href="../index.html">🏠 <span>Course Home</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 1 · Getting Started</div>
+    <ul class="nav-list">
+      <li><a href="lesson-01.html" data-lesson-id="l01"><span class="num">1</span><span>Welcome to the Web</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-02.html" data-lesson-id="l02"><span class="num">2</span><span>Your First Web Page</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 2 · Text Foundations</div>
+    <ul class="nav-list">
+      <li><a href="lesson-03.html" data-lesson-id="l03"><span class="num">3</span><span>Headings &amp; Paragraphs</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-04.html" data-lesson-id="l04"><span class="num">4</span><span>Text Formatting</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 3 · Organizing Content</div>
+    <ul class="nav-list">
+      <li><a href="lesson-05.html" data-lesson-id="l05"><span class="num">5</span><span>Lists</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-06.html" data-lesson-id="l06"><span class="num">6</span><span>Links</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 4 · Media &amp; Data</div>
+    <ul class="nav-list">
+      <li><a href="lesson-07.html" data-lesson-id="l07"><span class="num">7</span><span>Images</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-08.html" data-lesson-id="l08"><span class="num">8</span><span>Tables</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 5 · Forms</div>
+    <ul class="nav-list">
+      <li><a href="lesson-09.html" data-lesson-id="l09"><span class="num">9</span><span>Forms Part 1</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-10.html" data-lesson-id="l10"><span class="num">10</span><span>Forms Part 2</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 6 · Structure &amp; Media</div>
+    <ul class="nav-list">
+      <li><a href="lesson-11.html" data-lesson-id="l11"><span class="num">11</span><span>Div, Span &amp; Semantics</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-12.html" data-lesson-id="l12"><span class="num">12</span><span>Audio, Video &amp; Embeds</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 7 · Real-World Skills</div>
+    <ul class="nav-list">
+      <li><a href="lesson-13.html" class="active" data-lesson-id="l13"><span class="num">13</span><span>Attributes &amp; Accessibility</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-14.html" data-lesson-id="l14"><span class="num">14</span><span>Mini Project: Plan</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 8 · Project &amp; Beyond</div>
+    <ul class="nav-list">
+      <li><a href="lesson-15.html" data-lesson-id="l15"><span class="num">15</span><span>Mini Project: Build</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-16.html" data-lesson-id="l16"><span class="num">16</span><span>Publishing &amp; Next Steps</span><span class="check">✓</span></a></li>
+    </ul>
+  </aside>
+
+  <main class="main">
+    <div class="content">
+
+      <div class="lesson-kicker"><span class="pill">Lesson 13 of 16</span><span class="pill week">Week 7</span><span class="pill time">⏱ 60 minutes</span></div>
+      <h1 class="lesson-title">Attributes Deep Dive &amp; Accessibility Basics</h1>
+      <p class="lesson-sub">You've been using attributes since Lesson 1. Today, let's understand them properly — and learn how to build pages that work for everyone.</p>
+
+      <div class="box objectives">
+        <div class="box-title">🎯 Learning Objectives</div>
+        <ul>
+          <li>Explain what an attribute is and how it modifies a tag</li>
+          <li>Use id and class correctly, and know the difference</li>
+          <li>Store custom information using data-* attributes</li>
+          <li>Apply core accessibility practices to your pages</li>
+        </ul>
+      </div>
+
+      <h2><span class="num-chip">1</span>What Is an Attribute, Really?</h2>
+      <p>An <strong>attribute</strong> is extra information added inside a tag's opening bracket, always in the form <code class="inline">name="value"</code>. You've already used many: <code class="inline">href</code>, <code class="inline">src</code>, <code class="inline">alt</code>, <code class="inline">type</code>. Some attributes are <strong>global</strong> — they can be added to almost any tag — including <code class="inline">id</code>, <code class="inline">class</code>, <code class="inline">title</code>, and <code class="inline">lang</code>.</p>
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">title-attr.html</span></div>
+        <pre><code><span class="tag">&lt;p</span> <span class="attr">title</span>=<span class="str">"This appears as a tooltip on hover"</span><span class="tag">&gt;</span><span class="txt">Hover over me.</span><span class="tag">&lt;/p&gt;</span></code></pre>
+      </div>
+
+      <h2><span class="num-chip">2</span>id vs. class: When to Use Which</h2>
+      <ul>
+        <li><code class="inline">id</code> — a <strong>unique</strong> identifier. Only one element on a page may use a given id. Perfect for jump-link targets or one specific element you'll reference.</li>
+        <li><code class="inline">class</code> — a <strong>reusable</strong> label. Many elements can share the same class, and one element can have several classes separated by spaces. Perfect for styling groups of similar elements later with CSS.</li>
+      </ul>
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">id-class.html</span></div>
+        <pre><code><span class="tag">&lt;h1</span> <span class="attr">id</span>=<span class="str">"page-title"</span><span class="tag">&gt;</span><span class="txt">My Page</span><span class="tag">&lt;/h1&gt;</span>
+
+<span class="tag">&lt;p</span> <span class="attr">class</span>=<span class="str">"highlight"</span><span class="tag">&gt;</span><span class="txt">Important note one.</span><span class="tag">&lt;/p&gt;</span>
+<span class="tag">&lt;p</span> <span class="attr">class</span>=<span class="str">"highlight"</span><span class="tag">&gt;</span><span class="txt">Important note two.</span><span class="tag">&lt;/p&gt;</span></code></pre>
+      </div>
+
+      <h2><span class="num-chip">3</span>Custom Data with data-*</h2>
+      <p>Sometimes you want to attach your own custom information to an element — information JavaScript can later read, but that isn't a "real" built-in attribute. HTML lets you invent your own, as long as they start with <code class="inline">data-</code>.</p>
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">data-attr.html</span></div>
+        <pre><code><span class="tag">&lt;li</span> <span class="attr">data-difficulty</span>=<span class="str">"beginner"</span><span class="tag">&gt;</span><span class="txt">Introduction to Tags</span><span class="tag">&lt;/li&gt;</span></code></pre>
+      </div>
+
+      <h2><span class="num-chip">4</span>Accessibility Basics: Building for Everyone</h2>
+      <p><strong>Accessibility</strong> means making sure your pages work for people with different abilities — including visitors who are blind, low-vision, motor-impaired, or using assistive technology like screen readers. The great news: you've already been learning accessibility this whole course, often without realizing it.</p>
+      <table class="grid-table">
+        <thead><tr><th>Practice</th><th>Why it helps</th></tr></thead>
+        <tbody>
+          <tr><td>Meaningful alt text on images</td><td>Lets screen reader users know what an image shows</td></tr>
+          <tr><td>Logical heading order (no skipped levels)</td><td>Lets users navigate a page by its outline</td></tr>
+          <tr><td>Labels correctly linked to form fields</td><td>Lets users know what each field is for</td></tr>
+          <tr><td>Semantic elements (nav, main, footer...)</td><td>Lets assistive tech announce page regions correctly</td></tr>
+          <tr><td>Descriptive link text (not "click here")</td><td>Lets users understand a link out of context</td></tr>
+        </tbody>
+      </table>
+
+      <div class="box tip">
+        <div class="box-title">💡 A Quick Intro to ARIA</div>
+        <p>For cases plain HTML can't describe, there's a toolkit called <strong>ARIA</strong> (Accessible Rich Internet Applications) — for example <code class="inline">aria-label="Close menu"</code> on an icon button with no visible text. You won't need it often as a beginner, since choosing the right semantic HTML tag solves most accessibility needs on its own — but it's good to know it exists.</p>
+      </div>
+
+      <div class="box vocab">
+        <div class="box-title">📚 Key Vocabulary</div>
+        <dl class="vocab-grid">
+          <div class="vocab-item"><dt>Attribute</dt><dd>Extra info added inside a tag's opening bracket</dd></div>
+          <div class="vocab-item"><dt>Global attribute</dt><dd>An attribute usable on nearly any HTML tag</dd></div>
+          <div class="vocab-item"><dt>id</dt><dd>A unique identifier for one specific element</dd></div>
+          <div class="vocab-item"><dt>class</dt><dd>A reusable label shared by multiple elements</dd></div>
+          <div class="vocab-item"><dt>Accessibility</dt><dd>Designing so people of all abilities can use a page</dd></div>
+          <div class="vocab-item"><dt>ARIA</dt><dd>Extra attributes that describe elements to assistive tech</dd></div>
+        </dl>
+      </div>
+
+      <div class="box challenge">
+        <div class="box-title">🚀 Challenges</div>
+        <p class="challenge-intro">Three challenges, each a little tougher than the last. Challenge 1 is the must-do; Challenges 2 and 3 are where you level up.</p>
+        <div class="challenge-item">
+          <div class="challenge-item__head"><span class="challenge-item__num">Challenge 1</span><span class="challenge-level core">Core</span><span class="challenge-item__name">The Accessibility Check</span></div>
+          <p>Go back through every page you've built so far and run an accessibility check: does every image have real alt text? Does every form label connect correctly? Is heading order logical with no skipped levels? Fix anything you find, then add one class attribute shared by at least two elements on the same page.</p>
+        </div>
+        <div class="challenge-item">
+          <div class="challenge-item__head"><span class="challenge-item__num">Challenge 2</span><span class="challenge-level levelup">Level Up</span><span class="challenge-item__name">Book Club Shelf</span></div>
+          <p>Build <code class="inline">bookclub.html</code> with a list of five books (real or made-up). Then use attributes to organize it:</p>
+        <ul>
+          <li>Give every &lt;li&gt; <code class="inline">class="book"</code>, and give two of them a second class too: <code class="inline">class="book must-read"</code></li>
+          <li>Give every book a <code class="inline">data-genre</code> attribute, like <code class="inline">data-genre="mystery"</code></li>
+          <li>Give your #1 book <code class="inline">id="favourite"</code>, and add a link at the top of the page that jumps to it (<code class="inline">href="#favourite"</code>)</li>
+          <li>Add a <code class="inline">title</code> tooltip to two books with a one-line review</li>
+        </ul>
+        <p>Finish with a comment answering: <em>why can lots of books share <code class="inline">class="book"</code>, but only one can have <code class="inline">id="favourite"</code>?</em></p>
+        </div>
+        <div class="challenge-item">
+          <div class="challenge-item__head"><span class="challenge-item__num">Challenge 3</span><span class="challenge-level boss">Boss Level</span><span class="challenge-item__name">Accessibility Makeover</span></div>
+          <p>This bakery page works for some visitors — but not everyone. Copy it into <code class="inline">bakery.html</code>, then find and fix <strong>all 6 accessibility problems</strong>.</p>
+        <div class="code-window">
+          <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">bakery.html</span></div>
+          <pre><code><span class="tag">&lt;div</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="str">"index.html"</span><span class="tag">&gt;</span>Home<span class="tag">&lt;/a</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="str">"cakes.html"</span><span class="tag">&gt;</span>Cakes<span class="tag">&lt;/a</span><span class="tag">&gt;</span>
+<span class="tag">&lt;/div</span><span class="tag">&gt;</span>
+
+<span class="tag">&lt;h1</span><span class="tag">&gt;</span>Welcome to Zainab's Bakery<span class="tag">&lt;/h1</span><span class="tag">&gt;</span>
+<span class="tag">&lt;h4</span><span class="tag">&gt;</span>Our Cakes<span class="tag">&lt;/h4</span><span class="tag">&gt;</span>
+<span class="tag">&lt;img</span> <span class="attr">src</span>=<span class="str">"images/cake.jpg"</span><span class="tag">&gt;</span>
+<span class="tag">&lt;p</span><span class="tag">&gt;</span>To see our full menu, <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="str">"menu.html"</span><span class="tag">&gt;</span>click here<span class="tag">&lt;/a</span><span class="tag">&gt;</span>.<span class="tag">&lt;/p</span><span class="tag">&gt;</span>
+
+<span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="str">"text"</span> <span class="attr">id</span>=<span class="str">"order"</span> <span class="attr">name</span>=<span class="str">"order"</span> <span class="attr">placeholder</span>=<span class="str">"Your order"</span><span class="tag">&gt;</span>
+<span class="tag">&lt;button</span><span class="tag">&gt;</span>✖<span class="tag">&lt;/button</span><span class="tag">&gt;</span></code></pre>
+        </div>
+        <p>Next to each fix, write a short comment saying <strong>who</strong> it helps — for example, <code class="inline">&lt;!-- helps screen reader users know what the picture shows --&gt;</code>.</p>
+        </div>
+      </div>
+
+      <div class="box recap">
+        <div class="box-title">✅ Recap</div>
+        <p>Attributes add extra info to tags; id is unique, class is reusable, and data-* stores custom info. Accessibility means building pages that work for everyone — mostly achieved through the good habits you've already been practicing: real alt text, logical headings, linked labels, and semantic elements. Next lesson: planning your final project.</p>
+      </div>
+
+      <div class="mark-complete"><button data-lesson-id="l13">Mark Lesson as Complete</button></div>
+
+      <div class="lesson-pager">
+        <a class="pager-btn" href="lesson-12.html"><div class="dir">← Previous</div><div class="title">Lesson 12: Audio, Video &amp; Embeds</div></a>
+        <a class="pager-btn next" href="lesson-14.html"><div class="dir">Next →</div><div class="title">Lesson 14: Mini Project — Plan</div></a>
+      </div>
+
+    </div>
+    <footer class="site-footer">CIOS HTML Course Book · Lesson 13 of 16</footer>
+  </main>
+</div>
+
+<script src="../assets/script.js"></script>
+</body>
+</html>

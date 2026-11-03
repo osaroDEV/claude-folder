@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lessons 9 &amp; 10: Forms — Code Your World: HTML</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap');
+
+  :root {
+    --navy-950: #0b1023;
+    --indigo-600: #5b5bf0;
+    --indigo-500: #6f6ff5;
+    --indigo-400: #8d8dfb;
+    --violet-500: #9c5bf0;
+    --teal-400: #2fd9c4;
+    --amber-500: #ff9d1f;
+    --ink-900: #151833;
+    --ink-700: #3a3f66;
+    --ink-500: #6b6f96;
+    --ink-300: #a4a8c9;
+    --paper-0: #ffffff;
+    --paper-50: #f7f8fd;
+    --paper-100: #eef0fb;
+    --paper-200: #e2e5f7;
+    --success-500: #22c58b;
+    --radius-md: 14px;
+    --radius-sm: 9px;
+    --shadow-card: 0 4px 18px -6px rgba(20, 24, 60, 0.12);
+    --font-head: 'Poppins', 'Segoe UI', sans-serif;
+    --font-body: 'Inter', 'Segoe UI', sans-serif;
+    --font-code: 'Fira Code', 'Consolas', monospace;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: var(--font-body);
+    color: var(--ink-900);
+    background: var(--paper-50);
+    -webkit-font-smoothing: antialiased;
+  }
+  img { max-width: 100%; display: block; }
+
+  .main { padding: 44px clamp(20px, 5vw, 64px) 90px; }
+  .content { max-width: 860px; margin: 0 auto; }
+
+  .doc-header { max-width: 860px; margin: 0 auto 10px; }
+  .doc-title {
+    font-family: var(--font-head); font-weight: 800; font-size: clamp(22px, 3.4vw, 30px);
+    color: var(--ink-900); margin: 0 0 6px;
+  }
+  .doc-sub { color: var(--ink-500); font-size: 14.5px; margin: 0; }
+
+  .lesson-divider {
+    max-width: 860px; margin: 56px auto 0; padding-top: 26px;
+    border-top: 2px dashed var(--paper-200);
+  }
+
+  .lesson-kicker { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+  .pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 12px; border-radius: 100px;
+    font-size: 12px; font-weight: 700; letter-spacing: 0.03em;
+    background: var(--paper-100); color: var(--indigo-600);
+  }
+  .pill.week { background: #fff4e0; color: var(--amber-500); }
+  .pill.time { background: #e6faf5; color: #0e9a83; }
+
+  h1.lesson-title {
+    font-family: var(--font-head);
+    font-size: clamp(28px, 4vw, 38px);
+    font-weight: 800; margin: 0 0 10px; line-height: 1.15; color: var(--ink-900);
+  }
+  .lesson-sub { font-size: 16.5px; color: var(--ink-500); margin: 0 0 30px; max-width: 640px; }
+
+  h2 {
+    font-family: var(--font-head); font-size: 22px; font-weight: 700; color: var(--ink-900);
+    margin: 44px 0 16px; padding-top: 6px; display: flex; align-items: center; gap: 10px;
+  }
+  h2 .num-chip {
+    width: 30px; height: 30px; border-radius: 9px;
+    background: linear-gradient(135deg, var(--indigo-500), var(--violet-500));
+    color: #fff; font-size: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+
+  p { line-height: 1.75; font-size: 15.5px; color: var(--ink-700); margin: 0 0 16px; }
+  ul, ol { line-height: 1.75; font-size: 15.5px; color: var(--ink-700); padding-left: 22px; margin: 0 0 16px; }
+  li { margin-bottom: 6px; }
+  strong { color: var(--ink-900); }
+  code.inline {
+    font-family: var(--font-code); background: var(--paper-100); color: #8033d1;
+    padding: 2px 7px; border-radius: 6px; font-size: 0.88em;
+  }
+
+  .box { border-radius: var(--radius-md); padding: 20px 22px; margin: 22px 0; box-shadow: var(--shadow-card); }
+  .box p:last-child { margin-bottom: 0; }
+  .box-title {
+    display: flex; align-items: center; gap: 8px;
+    font-family: var(--font-head); font-weight: 700; font-size: 14px;
+    text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 10px;
+  }
+  .box.objectives { background: #f2f1ff; border-left: 4px solid var(--indigo-500); }
+  .box.objectives .box-title { color: var(--indigo-600); }
+  .box.objectives ul { margin-bottom: 0; }
+  .box.vocab { background: var(--paper-0); border: 1px solid var(--paper-200); }
+  .box.vocab .box-title { color: var(--ink-700); }
+  .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; margin-top: 4px; }
+  .vocab-item { background: var(--paper-50); border-radius: var(--radius-sm); padding: 12px 14px; }
+  .vocab-item dt { font-family: var(--font-code); font-weight: 600; color: var(--indigo-600); font-size: 13.5px; margin-bottom: 4px; }
+  .vocab-item dd { margin: 0; font-size: 13.5px; color: var(--ink-700); line-height: 1.5; }
+  .box.tip { background: #eafaf5; border-left: 4px solid var(--success-500); }
+  .box.tip .box-title { color: #0e9a6e; }
+  .box.warning { background: #fff4e6; border-left: 4px solid var(--amber-500); }
+  .box.warning .box-title { color: #b5691a; }
+  .box.challenge { background: linear-gradient(135deg, #1b1f4d, #2a1f5e); color: #fff; border-left: none; }
+  .box.challenge .box-title { color: var(--teal-400); }
+  .box.challenge p, .box.challenge li { color: #dfe1f7; }
+  .box.challenge strong { color: #fff; }
+  .box.recap { background: var(--paper-0); border: 1.5px dashed var(--indigo-400); }
+  .box.recap .box-title { color: var(--indigo-600); }
+
+  .code-window { border-radius: var(--radius-md); overflow: hidden; margin: 18px 0 22px; box-shadow: var(--shadow-card); background: #171b34; }
+  .code-window__bar { display: flex; align-items: center; gap: 8px; padding: 10px 14px; background: #12152b; }
+  .code-window__bar span.dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot.red { background: #ff5f56; } .dot.yellow { background: #ffbd2e; } .dot.green { background: #27c93f; }
+  .code-window__label { margin-left: 8px; font-family: var(--font-code); font-size: 12px; color: #8b8fb8; }
+  .code-window pre { margin: 0; padding: 18px 20px; overflow-x: auto; font-family: var(--font-code); font-size: 13.5px; line-height: 1.65; color: #e6e8fb; }
+  .code-window code { font-family: var(--font-code); }
+  .tag { color: #8d8dfb; } .attr { color: #2fd9c4; } .str { color: #ffb648; } .cmt { color: #6b6f96; font-style: italic; } .txt { color: #e6e8fb; }
+
+  .preview-window { border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--paper-200); margin: 0 0 22px; box-shadow: var(--shadow-card); }
+  .preview-window__bar { display: flex; align-items: center; gap: 8px; padding: 9px 14px; background: var(--paper-100); border-bottom: 1px solid var(--paper-200); }
+  .preview-window__bar .url { margin-left: 6px; background: #fff; border-radius: 100px; padding: 3px 12px; font-size: 11.5px; color: var(--ink-500); font-family: var(--font-code); }
+  .preview-window__body { padding: 20px 22px; background: #fff; font-family: var(--font-body); color: #222; }
+
+  table.grid-table { width: 100%; border-collapse: collapse; margin: 18px 0 26px; font-size: 14px; }
+  table.grid-table th, table.grid-table td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--paper-200); }
+  table.grid-table th { font-family: var(--font-head); font-size: 12.5px; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-500); }
+
+  footer.site-footer { text-align: center; padding: 30px 20px; color: var(--ink-500); font-size: 13px; }
+
+  /* Three-level challenges (Lessons 9-16) */
+  .box.challenge .challenge-intro { font-size: 14.5px; margin-bottom: 4px; }
+  .challenge-item {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: var(--radius-sm);
+    padding: 16px 18px;
+    margin-top: 14px;
+  }
+  .challenge-item__head {
+    display: flex; align-items: center; flex-wrap: wrap; gap: 8px 10px;
+    margin-bottom: 10px;
+  }
+  .challenge-item__num { font-family: var(--font-head); font-weight: 700; font-size: 15px; color: #fff; }
+  .challenge-item__name { font-family: var(--font-head); font-weight: 600; font-size: 15px; color: #dfe1f7; }
+  .challenge-level {
+    font-family: var(--font-head); font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.05em;
+    padding: 3px 10px; border-radius: 100px;
+  }
+  .challenge-level.core    { background: rgba(47, 217, 196, 0.16); color: var(--teal-400); }
+  .challenge-level.levelup { background: rgba(255, 182, 72, 0.16); color: #ffb648; }
+  .challenge-level.boss    { background: rgba(255, 107, 139, 0.18); color: #ff6b8b; }
+  .challenge-item p:last-child, .challenge-item ul:last-child { margin-bottom: 0; }
+  .box.challenge .code-window { border: 1px solid rgba(255, 255, 255, 0.12); box-shadow: none; margin: 12px 0 14px; }
+  .box.challenge .code-window pre { font-size: 13px; }
+</style>
+</head>
+<body>
+
+  <main class="main">
+    <div class="doc-header">
+      <p class="doc-title">Forms: Lessons 9 &amp; 10</p>
+      <p class="doc-sub">Standalone excerpt from Code Your World: HTML · Week 5</p>
+    </div>
+
+    <div class="content">
+
+      <div class="lesson-kicker"><span class="pill">Lesson 9 of 16</span><span class="pill week">Week 5</span><span class="pill time">⏱ 60 minutes</span></div>
+      <h1 class="lesson-title">Forms Part 1: Collecting Input</h1>
+      <p class="lesson-sub">Forms are how websites collect information from visitors — sign-ups, searches, quizzes, and more. Let's build your first one.</p>
+
+      <div class="box objectives">
+        <div class="box-title">🎯 Learning Objectives</div>
+        <ul>
+          <li>Create a form using the &lt;form&gt; element</li>
+          <li>Add text-based inputs using &lt;input&gt; and its type attribute</li>
+          <li>Correctly connect a &lt;label&gt; to its input</li>
+          <li>Use placeholder text appropriately</li>
+        </ul>
+      </div>
+
+      <h2><span class="num-chip">1</span>The &lt;form&gt; Element</h2>
+      <p>Everything a visitor fills in belongs inside a <code class="inline">&lt;form&gt;</code> element. For now, we'll focus on building forms visually — later courses cover sending form data to a server using the <code class="inline">action</code> and <code class="inline">method</code> attributes.</p>
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">form-shell.html</span></div>
+        <pre><code><span class="tag">&lt;form&gt;</span>
+  <span class="cmt">&lt;!-- inputs go here --&gt;</span>
+<span class="tag">&lt;/form&gt;</span></code></pre>
+      </div>
+
+      <h2><span class="num-chip">2</span>Text Inputs &amp; Input Types</h2>
+      <p>The <code class="inline">&lt;input&gt;</code> tag is self-closing and creates most form fields. Its <code class="inline">type</code> attribute decides what kind of field it becomes — and modern browsers even validate some types automatically.</p>
+      <table class="grid-table">
+        <thead><tr><th>type value</th><th>Creates</th></tr></thead>
+        <tbody>
+          <tr><td><code class="inline">text</code></td><td>A single-line text field</td></tr>
+          <tr><td><code class="inline">email</code></td><td>A field that checks for a valid email pattern</td></tr>
+          <tr><td><code class="inline">password</code></td><td>A field that hides typed characters</td></tr>
+          <tr><td><code class="inline">number</code></td><td>A field that only accepts numbers, often with up/down arrows</td></tr>
+          <tr><td><code class="inline">date</code></td><td>A field with a built-in date picker</td></tr>
+        </tbody>
+      </table>
+
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">inputs.html</span></div>
+        <pre><code><span class="tag">&lt;form&gt;</span>
+  <span class="tag">&lt;label</span> <span class="attr">for</span>=<span class="str">"fullname"</span><span class="tag">&gt;</span><span class="txt">Full Name</span><span class="tag">&lt;/label&gt;</span>
+  <span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="str">"text"</span> <span class="attr">id</span>=<span class="str">"fullname"</span> <span class="attr">name</span>=<span class="str">"fullname"</span> <span class="attr">placeholder</span>=<span class="str">"e.g. Amara Obi"</span><span class="tag">&gt;</span>
+<span class="tag">&lt;/form&gt;</span></code></pre>
+      </div>
+      <div class="preview-window">
+        <div class="preview-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="url">🔒 inputs.html</span></div>
+        <div class="preview-window__body">
+          <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;">Full Name</label>
+          <input type="text" placeholder="e.g. Amara Obi" style="width:100%;padding:9px 12px;border:1px solid #e2e5f7;border-radius:8px;font-size:14px;" disabled>
+        </div>
+      </div>
+
+      <h2><span class="num-chip">3</span>Labels: Why for/id Matters</h2>
+      <p>The <code class="inline">&lt;label&gt;</code> tag gives an input a visible, readable name — and connecting it correctly matters more than it looks. The label's <code class="inline">for</code> attribute must exactly match the input's <code class="inline">id</code>. When connected properly, clicking the label text also focuses (or checks) the input, and screen readers announce the label whenever the input is focused.</p>
+      <div class="box tip">
+        <div class="box-title">💡 Test It Yourself</div>
+        <p>Once you build a labeled input, click directly on the label text (not the box). If it's connected correctly, your cursor will jump into the input automatically. If nothing happens, double-check that <code class="inline">for</code> and <code class="inline">id</code> match exactly, including capitalization.</p>
+      </div>
+
+      <h2><span class="num-chip">4</span>Placeholder vs. Label — Don't Confuse Them</h2>
+      <div class="box warning">
+        <div class="box-title">⚠️ A Common Mistake</div>
+        <p>New developers sometimes skip the &lt;label&gt; and rely only on <code class="inline">placeholder</code> text to explain a field. Don't — placeholder text disappears the moment someone starts typing, and screen readers may not announce it reliably. Placeholder text should only show an <em>example</em> of expected input (like "e.g. Amara Obi"), never replace a real label.</p>
+      </div>
+
+      <div class="box vocab">
+        <div class="box-title">📚 Key Vocabulary</div>
+        <dl class="vocab-grid">
+          <div class="vocab-item"><dt>&lt;form&gt;</dt><dd>Container element for all input fields</dd></div>
+          <div class="vocab-item"><dt>&lt;input&gt;</dt><dd>A self-closing tag that creates a form field, styled by its type</dd></div>
+          <div class="vocab-item"><dt>&lt;label&gt;</dt><dd>Readable text describing a field, linked via for/id</dd></div>
+          <div class="vocab-item"><dt>placeholder</dt><dd>Faint example text shown inside an empty field</dd></div>
+          <div class="vocab-item"><dt>name attribute</dt><dd>Identifies the field's data when a form is submitted</dd></div>
+        </dl>
+      </div>
+
+      <div class="box challenge">
+        <div class="box-title">🚀 Challenges</div>
+        <p class="challenge-intro">Three challenges, each a little tougher than the last. Challenge 1 is the must-do; Challenges 2 and 3 are where you level up.</p>
+        <div class="challenge-item">
+          <div class="challenge-item__head"><span class="challenge-item__num">Challenge 1</span><span class="challenge-level core">Core</span><span class="challenge-item__name">The Sign-Up Form</span></div>
+          <p>Build <code class="inline">signup.html</code> with a &lt;form&gt; containing three properly labeled fields: full name (text), email (email), and age (number). Every &lt;label&gt; must be correctly linked to its &lt;input&gt; using matching for/id pairs. Test that clicking each label focuses its field.</p>
+        </div>
+        <div class="challenge-item">
+          <div class="challenge-item__head"><span class="challenge-item__num">Challenge 2</span><span class="challenge-level levelup">Level Up</span><span class="challenge-item__name">Label Detective</span></div>
+          <p>This form has <strong>5 bugs</strong> hiding in it. Copy it into a new file called <code class="inline">detective.html</code>, find every bug, and fix it.</p>
+        <div class="code-window">
+          <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">detective.html</span></div>
+          <pre><code><span class="tag">&lt;form</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;label</span> <span class="attr">for</span>=<span class="str">"username"</span><span class="tag">&gt;</span>Username<span class="tag">&lt;/label</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="str">"text"</span> <span class="attr">id</span>=<span class="str">"user-name"</span> <span class="attr">name</span>=<span class="str">"username"</span><span class="tag">&gt;</span>
+
+  <span class="tag">&lt;label</span> <span class="attr">for</span>=<span class="str">"Email"</span><span class="tag">&gt;</span>Email<span class="tag">&lt;/label</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="str">"email"</span> <span class="attr">id</span>=<span class="str">"email"</span> <span class="attr">name</span>=<span class="str">"email"</span><span class="tag">&gt;</span>
+
+  <span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="str">"password"</span> <span class="attr">id</span>=<span class="str">"password"</span> <span class="attr">placeholder</span>=<span class="str">"Password"</span><span class="tag">&gt;</span>
+
+  <span class="tag">&lt;label</span> <span class="attr">for</span>=<span class="str">"birthday"</span><span class="tag">&gt;</span>Birthday<span class="tag">&lt;/label</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="str">"date"</span> <span class="attr">id</span>=<span class="str">"birthday"</span><span class="tag">&gt;</span>
+<span class="tag">&lt;/form</span><span class="tag">&gt;</span></code></pre>
+        </div>
+        <p><strong>Clues:</strong> two labels don't connect to their inputs, one field uses a placeholder pretending to be a label, and two fields are missing their <code class="inline">name</code> attribute. When you're done, click every label to prove it jumps into the right box.</p>
+        </div>
+        <div class="challenge-item">
+          <div class="challenge-item__head"><span class="challenge-item__num">Challenge 3</span><span class="challenge-level boss">Boss Level</span><span class="challenge-item__name">Library Card Designer</span></div>
+          <p>Your school library wants an online library card form. Build <code class="inline">library-card.html</code> with these six fields — but this time <strong>you</strong> choose the best <code class="inline">type</code> for each one:</p>
+        <ul>
+          <li>Full name</li>
+          <li>Email address</li>
+          <li>Date of birth</li>
+          <li>A secret 4-digit PIN that nobody looking over your shoulder should see</li>
+          <li>How many books you read last month</li>
+          <li>Your favourite author</li>
+        </ul>
+        <p><strong>Rules:</strong> every field needs a connected label and a <code class="inline">name</code> attribute. Add a placeholder example to at least two fields (as an example only — never instead of a label). Above each input, write an HTML comment explaining your choice, like <code class="inline">&lt;!-- date: gives a built-in date picker --&gt;</code>.</p>
+        </div>
+      </div>
+
+      <div class="box recap">
+        <div class="box-title">✅ Recap</div>
+        <p>Forms collect input inside &lt;form&gt;, using &lt;input&gt; fields whose type attribute determines behavior. Always pair a &lt;label&gt; with its input using matching for/id — never rely on placeholder text alone. Next lesson: checkboxes, dropdowns, and buttons.</p>
+      </div>
+
+    </div>
+
+    <div class="lesson-divider"></div>
+
+    <div class="content">
+
+      <div class="lesson-kicker"><span class="pill">Lesson 10 of 16</span><span class="pill week">Week 5</span><span class="pill time">⏱ 60 minutes</span></div>
+      <h1 class="lesson-title">Forms Part 2: Choices, Buttons &amp; Validation</h1>
+      <p class="lesson-sub">Beyond text fields, forms can offer checkboxes, choices, dropdowns, and long text — plus ways to stop a form from being submitted incorrectly.</p>
+
+      <div class="box objectives">
+        <div class="box-title">🎯 Learning Objectives</div>
+        <ul>
+          <li>Add checkboxes for multiple independent choices</li>
+          <li>Add grouped radio buttons for a single choice</li>
+          <li>Build dropdown menus and multi-line text areas</li>
+          <li>Use the required attribute for basic form validation</li>
+        </ul>
+      </div>
+
+      <h2><span class="num-chip">1</span>Checkboxes</h2>
+      <p>Use <code class="inline">type="checkbox"</code> when someone can pick <strong>any number</strong> of options — including none, one, or all of them.</p>
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">checkboxes.html</span></div>
+        <pre><code><span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="str">"checkbox"</span> <span class="attr">id</span>=<span class="str">"pizza"</span> <span class="attr">name</span>=<span class="str">"toppings"</span> <span class="attr">value</span>=<span class="str">"pizza"</span><span class="tag">&gt;</span>
+<span class="tag">&lt;label</span> <span class="attr">for</span>=<span class="str">"pizza"</span><span class="tag">&gt;</span><span class="txt">Pizza</span><span class="tag">&lt;/label&gt;</span>
+
+<span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="str">"checkbox"</span> <span class="attr">id</span>=<span class="str">"tacos"</span> <span class="attr">name</span>=<span class="str">"toppings"</span> <span class="attr">value</span>=<span class="str">"tacos"</span><span class="tag">&gt;</span>
+<span class="tag">&lt;label</span> <span class="attr">for</span>=<span class="str">"tacos"</span><span class="tag">&gt;</span><span class="txt">Tacos</span><span class="tag">&lt;/label&gt;</span></code></pre>
+      </div>
+
+      <h2><span class="num-chip">2</span>Radio Buttons</h2>
+      <p>Use <code class="inline">type="radio"</code> when someone must pick <strong>exactly one</strong> option from a group. The trick that makes them work as a group is giving every radio button in that group the <em>same</em> <code class="inline">name</code> — this tells the browser they're mutually exclusive.</p>
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">radio.html</span></div>
+        <pre><code><span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="str">"radio"</span> <span class="attr">id</span>=<span class="str">"small"</span> <span class="attr">name</span>=<span class="str">"size"</span> <span class="attr">value</span>=<span class="str">"small"</span><span class="tag">&gt;</span>
+<span class="tag">&lt;label</span> <span class="attr">for</span>=<span class="str">"small"</span><span class="tag">&gt;</span><span class="txt">Small</span><span class="tag">&lt;/label&gt;</span>
+
+<span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="str">"radio"</span> <span class="attr">id</span>=<span class="str">"large"</span> <span class="attr">name</span>=<span class="str">"size"</span> <span class="attr">value</span>=<span class="str">"large"</span><span class="tag">&gt;</span>
+<span class="tag">&lt;label</span> <span class="attr">for</span>=<span class="str">"large"</span><span class="tag">&gt;</span><span class="txt">Large</span><span class="tag">&lt;/label&gt;</span></code></pre>
+      </div>
+      <div class="box warning">
+        <div class="box-title">⚠️ Same name, different id</div>
+        <p>Every radio button in one group shares the same <code class="inline">name</code> (so the browser groups them), but each still needs its own unique <code class="inline">id</code> (so its label connects to the right one). Mixing this up is the #1 radio button bug.</p>
+      </div>
+
+      <h2><span class="num-chip">3</span>Dropdowns &amp; Text Areas</h2>
+      <p>A dropdown menu uses <code class="inline">&lt;select&gt;</code> as the container, with each choice as an <code class="inline">&lt;option&gt;</code> inside it. For longer, multi-line text (like a comment or message), use <code class="inline">&lt;textarea&gt;</code> instead of &lt;input&gt;.</p>
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">select-textarea.html</span></div>
+        <pre><code><span class="tag">&lt;label</span> <span class="attr">for</span>=<span class="str">"grade"</span><span class="tag">&gt;</span><span class="txt">Grade Level</span><span class="tag">&lt;/label&gt;</span>
+<span class="tag">&lt;select</span> <span class="attr">id</span>=<span class="str">"grade"</span> <span class="attr">name</span>=<span class="str">"grade"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;option</span> <span class="attr">value</span>=<span class="str">"6"</span><span class="tag">&gt;</span><span class="txt">Grade 6</span><span class="tag">&lt;/option&gt;</span>
+  <span class="tag">&lt;option</span> <span class="attr">value</span>=<span class="str">"7"</span><span class="tag">&gt;</span><span class="txt">Grade 7</span><span class="tag">&lt;/option&gt;</span>
+  <span class="tag">&lt;option</span> <span class="attr">value</span>=<span class="str">"8"</span><span class="tag">&gt;</span><span class="txt">Grade 8</span><span class="tag">&lt;/option&gt;</span>
+<span class="tag">&lt;/select&gt;</span>
+
+<span class="tag">&lt;label</span> <span class="attr">for</span>=<span class="str">"comments"</span><span class="tag">&gt;</span><span class="txt">Comments</span><span class="tag">&lt;/label&gt;</span>
+<span class="tag">&lt;textarea</span> <span class="attr">id</span>=<span class="str">"comments"</span> <span class="attr">name</span>=<span class="str">"comments"</span> <span class="attr">rows</span>=<span class="str">"4"</span><span class="tag">&gt;&lt;/textarea&gt;</span></code></pre>
+      </div>
+
+      <h2><span class="num-chip">4</span>Buttons &amp; Basic Validation</h2>
+      <p>A <code class="inline">&lt;button type="submit"&gt;</code> sends the form; <code class="inline">type="reset"</code> clears it. To stop a form from submitting until a field is filled in, add the <code class="inline">required</code> attribute — no JavaScript needed.</p>
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">validation.html</span></div>
+        <pre><code><span class="tag">&lt;label</span> <span class="attr">for</span>=<span class="str">"email"</span><span class="tag">&gt;</span><span class="txt">Email</span><span class="tag">&lt;/label&gt;</span>
+<span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="str">"email"</span> <span class="attr">id</span>=<span class="str">"email"</span> <span class="attr">name</span>=<span class="str">"email"</span> <span class="attr">required</span><span class="tag">&gt;</span>
+
+<span class="tag">&lt;button</span> <span class="attr">type</span>=<span class="str">"submit"</span><span class="tag">&gt;</span><span class="txt">Send</span><span class="tag">&lt;/button&gt;</span></code></pre>
+      </div>
+      <p>Try submitting a form with a required field left empty — the browser blocks it and shows a built-in warning message, automatically.</p>
+
+      <div class="box vocab">
+        <div class="box-title">📚 Key Vocabulary</div>
+        <dl class="vocab-grid">
+          <div class="vocab-item"><dt>Checkbox</dt><dd>An input allowing multiple independent selections</dd></div>
+          <div class="vocab-item"><dt>Radio button</dt><dd>An input allowing one choice from a grouped set</dd></div>
+          <div class="vocab-item"><dt>select / option</dt><dd>Elements that create a dropdown menu of choices</dd></div>
+          <div class="vocab-item"><dt>textarea</dt><dd>A multi-line text input field</dd></div>
+          <div class="vocab-item"><dt>required</dt><dd>An attribute that blocks submission until a field is filled</dd></div>
+        </dl>
+      </div>
+
+      <div class="box challenge">
+        <div class="box-title">🚀 Challenges</div>
+        <p class="challenge-intro">Three challenges, each a little tougher than the last. Challenge 1 is the must-do; Challenges 2 and 3 are where you level up.</p>
+        <div class="challenge-item">
+          <div class="challenge-item__head"><span class="challenge-item__num">Challenge 1</span><span class="challenge-level core">Core</span><span class="challenge-item__name">The Feedback Form</span></div>
+          <p>Build <code class="inline">feedback.html</code>: a form with a radio group ("How was your day?" — Great / Okay / Rough), at least two checkboxes ("What did you enjoy?"), a dropdown, a textarea for comments, a required email field, and a submit button.</p>
+        </div>
+        <div class="challenge-item">
+          <div class="challenge-item__head"><span class="challenge-item__num">Challenge 2</span><span class="challenge-level levelup">Level Up</span><span class="challenge-item__name">Pizza Palace Order Form</span></div>
+          <p>Build <code class="inline">order.html</code> for a pretend pizza shop. Your form must include:</p>
+        <ul>
+          <li>A radio group for size: Small, Medium, Large (one shared <code class="inline">name</code>, three different ids)</li>
+          <li>At least four topping checkboxes</li>
+          <li>A dropdown to choose Pickup or Delivery</li>
+          <li>A textarea for "Special instructions" with <code class="inline">rows="3"</code></li>
+          <li>A required name field</li>
+          <li>A submit button <strong>and</strong> a reset button</li>
+        </ul>
+        <p><strong>Test it three ways:</strong> try picking two sizes (only one should stay selected), try submitting with no name (the browser should stop you), then fill everything in and click Reset (it should all clear).</p>
+        </div>
+        <div class="challenge-item">
+          <div class="challenge-item__head"><span class="challenge-item__num">Challenge 3</span><span class="challenge-level boss">Boss Level</span><span class="challenge-item__name">Fix &amp; Upgrade the Survey</span></div>
+          <p>Someone built this club survey in a hurry and it's broken. Copy it into <code class="inline">survey.html</code>.</p>
+        <div class="code-window">
+          <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">survey.html</span></div>
+          <pre><code><span class="tag">&lt;form</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;p</span><span class="tag">&gt;</span>Favourite subject?<span class="tag">&lt;/p</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="str">"radio"</span> <span class="attr">id</span>=<span class="str">"maths"</span> <span class="attr">name</span>=<span class="str">"subject1"</span> <span class="attr">value</span>=<span class="str">"maths"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;label</span> <span class="attr">for</span>=<span class="str">"maths"</span><span class="tag">&gt;</span>Maths<span class="tag">&lt;/label</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="str">"radio"</span> <span class="attr">id</span>=<span class="str">"maths"</span> <span class="attr">name</span>=<span class="str">"subject2"</span> <span class="attr">value</span>=<span class="str">"science"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;label</span> <span class="attr">for</span>=<span class="str">"maths"</span><span class="tag">&gt;</span>Science<span class="tag">&lt;/label</span><span class="tag">&gt;</span>
+
+  <span class="tag">&lt;p</span><span class="tag">&gt;</span>Which clubs do you attend?<span class="tag">&lt;/p</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="str">"radio"</span> <span class="attr">id</span>=<span class="str">"chess"</span> <span class="attr">name</span>=<span class="str">"clubs"</span> <span class="attr">value</span>=<span class="str">"chess"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;label</span> <span class="attr">for</span>=<span class="str">"chess"</span><span class="tag">&gt;</span>Chess<span class="tag">&lt;/label</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="str">"radio"</span> <span class="attr">id</span>=<span class="str">"drama"</span> <span class="attr">name</span>=<span class="str">"clubs"</span> <span class="attr">value</span>=<span class="str">"drama"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;label</span> <span class="attr">for</span>=<span class="str">"drama"</span><span class="tag">&gt;</span>Drama<span class="tag">&lt;/label</span><span class="tag">&gt;</span>
+
+  <span class="tag">&lt;label</span> <span class="attr">for</span>=<span class="str">"mail"</span><span class="tag">&gt;</span>Email<span class="tag">&lt;/label</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="str">"email"</span> <span class="attr">id</span>=<span class="str">"mail"</span> <span class="attr">name</span>=<span class="str">"mail"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;button</span><span class="tag">&gt;</span>Send<span class="tag">&lt;/button</span><span class="tag">&gt;</span>
+<span class="tag">&lt;/form</span><span class="tag">&gt;</span></code></pre>
+        </div>
+        <p><strong>Fix it</strong> so that: (1) the subject radio buttons work as one group, (2) each subject has its own unique id and a label that connects to it, (3) visitors can pick <em>more than one</em> club (hint: wrong input type!), and (4) the email can't be left empty.</p>
+        <p><strong>Then upgrade it:</strong> add a third subject, a "How did you hear about our clubs?" dropdown, a textarea for suggestions, a Reset button, and give the Send button an explicit <code class="inline">type="submit"</code>.</p>
+        </div>
+      </div>
+
+      <div class="box recap">
+        <div class="box-title">✅ Recap</div>
+        <p>Checkboxes allow multiple picks; radio buttons (grouped by matching name) allow exactly one. select/option builds dropdowns, textarea holds multi-line text, and required gives free built-in validation. Next lesson: organizing pages with div, span, and semantic HTML.</p>
+      </div>
+
+    </div>
+
+    <footer class="site-footer">CIOS HTML Course Book · Lessons 9 &amp; 10 of 16 · Standalone excerpt</footer>
+  </main>
+
+</body>
+</html>

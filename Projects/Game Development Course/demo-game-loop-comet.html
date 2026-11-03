@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head><style>
+  body{margin:0;background:#0d1024;display:flex;justify-content:center;padding:14px}
+  canvas{background:#0b0e24;border:3px solid #6c8cff;border-radius:12px}
+</style></head>
+<body>
+  <canvas id="game" width="480" height="260"></canvas>
+  <script>
+    const canvas = document.getElementById("game");
+    const ctx = canvas.getContext("2d");
+    const W = canvas.width, H = canvas.height;
+
+    // ---- the world (its current state) ----
+    // vx / vy = "velocity": how far the comet moves each frame.
+    // Negative vx means "moving left", negative vy means "moving up".
+    let comet = { x: 80, y: 80, vx: 2.6, vy: 1.9, r: 10, hue: 160 };
+
+    // A list of shockwave rings. Starts empty; we add one on every bounce.
+    let rings = [];
+
+    // ---- STEP 1: update the world ----
+    function update() {
+      // Move the comet by its velocity.
+      comet.x += comet.vx;
+      comet.y += comet.vy;
+
+      // Did it hit a wall? Then flip that direction and make a ring.
+      if (comet.x - comet.r < 0 || comet.x + comet.r > W) {
+        comet.vx = -comet.vx;          // bounce sideways
+        bounce();
+      }
+      if (comet.y - comet.r < 0 || comet.y + comet.r > H) {
+        comet.vy = -comet.vy;          // bounce up/down
+        bounce();
+      }
+
+      // Grow every ring a little, and delete the ones that got too big.
+      for (let ring of rings) ring.radius += 2.5;
+      rings = rings.filter(ring => ring.radius < 70);
+    }
+
+    function bounce() {
+      comet.hue = (comet.hue + 40) % 360;   // shift the colour on each hit
+      rings.push({ x: comet.x, y: comet.y, radius: comet.r });
+    }
+
+    // ---- STEP 2: draw the world ----
+    function draw() {
+      // THE TRICK: instead of wiping the frame completely with clearRect,
+      // we paint a *see-through* dark rectangle over it. Old frames don't
+      // vanish, they just fade a bit each time - and that leftover fading
+      // is what we see as the comet's tail.
+      ctx.fillStyle = "rgba(11, 14, 36, 0.16)";
+      ctx.fillRect(0, 0, W, H);
+
+      // Draw each shockwave ring, fading out as it grows.
+      for (let ring of rings) {
+        ctx.strokeStyle = "hsla(" + comet.hue + ", 90%, 70%, " + (1 - ring.radius / 70) + ")";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(ring.x, ring.y, ring.radius, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+
+      // Draw the comet itself. shadowBlur gives it the neon glow.
+      ctx.shadowBlur = 25;
+      ctx.shadowColor = "hsl(" + comet.hue + ", 90%, 60%)";
+      ctx.fillStyle   = "hsl(" + comet.hue + ", 90%, 70%)";
+      ctx.beginPath();
+      ctx.arc(comet.x, comet.y, comet.r, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.shadowBlur = 0;   // turn the glow off so it doesn't affect other drawings
+    }
+
+    // ---- the loop: update, draw, repeat forever ----
+    function loop() {
+      update();
+      draw();
+      requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+  </script>
+</body>
+</html>

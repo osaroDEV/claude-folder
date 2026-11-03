@@ -1,0 +1,54 @@
+CIOS INSTAGRAM — POST 2 OF 5 (TESTIMONIAL SERIES)
+Chloe, age 15 · Frontend Developer · 6-slide carousel
+CTA keyword: START
+
+────────────────────────────────────────
+CAPTION (paste this)
+────────────────────────────────────────
+
+"Overwhelming and boring." That's how coding tutorials felt to Chloe — right up until she built her own app.
+
+David's daughter was already curious about technology. That was never the issue. The issue was that every traditional tutorial she tried lost her. In his words, the Frontend course "completely unlocked her potential."
+
+Working alongside her tutors, she built StudyPulse: a task tracker app that adapts to any screen, styled and built by her in Tailwind and React. A real, working application — the kind of thing she used to think other people made.
+
+David's words:
+
+"Seeing her present a real, functional application to our family was incredible."
+
+There's a specific kind of confidence that only comes from finishing something difficult. You can't lecture a teenager into it. They have to build their way there.
+
+Ages 8 to 18. Live sessions paced to your child, not to a syllabus.
+
+Comment "START" and we'll send you the Frontend Developer outline and book a free taster session. 🚀
+
+#LearnToCode #CodingForTeens #WebDevelopment #TechForYouth #CodingSchool #GirlsWhoCode #CodeIllustrated
+
+────────────────────────────────────────
+SLIDE ORDER
+────────────────────────────────────────
+
+01  Cover — "Went from zero coding knowledge to launching a full interactive web app."
+02  The real problem — She was never the problem. The tutorials were.
+03  The project — StudyPulse
+04  Quote — "Seeing her present a real, functional application to our family was incredible."
+05  What changed — three before/after rows
+06  CTA — Comment "START"
+
+────────────────────────────────────────
+NOTES
+────────────────────────────────────────
+
+· First alt text (slide 01): Dark navy card reading "Went from zero coding knowledge to
+  launching a full interactive web app." — a parent testimonial from David O., parent of
+  Chloe, age 15.
+
+· #GirlsWhoCode belongs on this post specifically. Drop it from the others in the series
+  where it doesn't apply.
+
+· If you have a screenshot of StudyPulse, rebuild slide 03 around it — a laptop and phone
+  mockup side by side showing the responsive layout proves more than the caption does.
+
+· Reply publicly to every "START" comment with something short before you DM.
+
+· Confirm written consent from David before posting Chloe's name and age.

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lesson 16: Publishing &amp; Next Steps — Code Your World: HTML</title>
+<link rel="stylesheet" href="../assets/style.css" />
+</head>
+<body>
+
+<div class="top-progress"><div class="top-progress__fill" style="width:0%"></div></div>
+<button class="sidebar-toggle" aria-label="Toggle menu">☰ Menu</button>
+<div class="sidebar-scrim"></div>
+
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand"><div class="brand__mark">&lt;/&gt;</div><div class="brand__text"><div class="kicker">CIOS Course Book</div><div class="name">Code Your World: HTML</div></div></div>
+    <div class="sidebar-progress">
+      <div class="sidebar-progress__label"><span>Your progress</span><strong class="sidebar-progress__count">0 / 16</strong></div>
+      <div class="sidebar-progress__track"><div class="sidebar-progress__fill" style="width:0%"></div></div>
+    </div>
+    <div class="nav-group__title">Start Here</div>
+    <ul class="nav-list">
+      <li><a href="../index.html">🏠 <span>Course Home</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 1 · Getting Started</div>
+    <ul class="nav-list">
+      <li><a href="lesson-01.html" data-lesson-id="l01"><span class="num">1</span><span>Welcome to the Web</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-02.html" data-lesson-id="l02"><span class="num">2</span><span>Your First Web Page</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 2 · Text Foundations</div>
+    <ul class="nav-list">
+      <li><a href="lesson-03.html" data-lesson-id="l03"><span class="num">3</span><span>Headings &amp; Paragraphs</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-04.html" data-lesson-id="l04"><span class="num">4</span><span>Text Formatting</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 3 · Organizing Content</div>
+    <ul class="nav-list">
+      <li><a href="lesson-05.html" data-lesson-id="l05"><span class="num">5</span><span>Lists</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-06.html" data-lesson-id="l06"><span class="num">6</span><span>Links</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 4 · Media &amp; Data</div>
+    <ul class="nav-list">
+      <li><a href="lesson-07.html" data-lesson-id="l07"><span class="num">7</span><span>Images</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-08.html" data-lesson-id="l08"><span class="num">8</span><span>Tables</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 5 · Forms</div>
+    <ul class="nav-list">
+      <li><a href="lesson-09.html" data-lesson-id="l09"><span class="num">9</span><span>Forms Part 1</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-10.html" data-lesson-id="l10"><span class="num">10</span><span>Forms Part 2</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 6 · Structure &amp; Media</div>
+    <ul class="nav-list">
+      <li><a href="lesson-11.html" data-lesson-id="l11"><span class="num">11</span><span>Div, Span &amp; Semantics</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-12.html" data-lesson-id="l12"><span class="num">12</span><span>Audio, Video &amp; Embeds</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 7 · Real-World Skills</div>
+    <ul class="nav-list">
+      <li><a href="lesson-13.html" data-lesson-id="l13"><span class="num">13</span><span>Attributes &amp; Accessibility</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-14.html" data-lesson-id="l14"><span class="num">14</span><span>Mini Project: Plan</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 8 · Project &amp; Beyond</div>
+    <ul class="nav-list">
+      <li><a href="lesson-15.html" data-lesson-id="l15"><span class="num">15</span><span>Mini Project: Build</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-16.html" class="active" data-lesson-id="l16"><span class="num">16</span><span>Publishing &amp; Next Steps</span><span class="check">✓</span></a></li>
+    </ul>
+  </aside>
+
+  <main class="main">
+    <div class="content">
+
+      <div class="lesson-kicker"><span class="pill">Lesson 16 of 16</span><span class="pill week">Week 8</span><span class="pill time">⏱ 60 minutes</span></div>
+      <h1 class="lesson-title">Validating, Publishing &amp; What's Next</h1>
+      <p class="lesson-sub">The final lesson! Let's check your project is solid, put it online for others to see, and map out where your coding journey goes from here.</p>
+
+      <div class="box objectives">
+        <div class="box-title">🎯 Learning Objectives</div>
+        <ul>
+          <li>Explain why validating HTML matters</li>
+          <li>Recognize and fix the most common validation errors</li>
+          <li>Understand the basic steps to publish a page online</li>
+          <li>Identify what to learn next after HTML</li>
+        </ul>
+      </div>
+
+      <h2><span class="num-chip">1</span>Why Validate Your HTML?</h2>
+      <p>Browsers are surprisingly forgiving — they'll often still display a page even with mistakes in the code, silently guessing what you meant. That's convenient, but risky: your page might look fine in one browser and break in another. <strong>Validating</strong> means running your code through a checker that strictly confirms it follows the official HTML rules.</p>
+      <p>The W3C (the organization that maintains the HTML standard) provides a free validator online. You paste in your code or a page URL, and it lists every error and warning with an explanation.</p>
+
+      <h2><span class="num-chip">2</span>Common Errors &amp; How to Fix Them</h2>
+      <table class="grid-table">
+        <thead><tr><th>Error</th><th>Fix</th></tr></thead>
+        <tbody>
+          <tr><td>"Element img is missing required attribute alt"</td><td>Add a real alt attribute to every image</td></tr>
+          <tr><td>"Stray end tag"</td><td>You have a closing tag with no matching opening tag — remove it or add the opening tag</td></tr>
+          <tr><td>"Unclosed element"</td><td>You forgot a closing tag — find and add it</td></tr>
+          <tr><td>"Duplicate ID"</td><td>Two elements share the same id — ids must be unique on a page</td></tr>
+          <tr><td>"Bad value for attribute"</td><td>Usually a typo in an attribute value, like a misspelled type</td></tr>
+        </tbody>
+      </table>
+      <div class="box tip">
+        <div class="box-title">💡 Validate Early and Often</div>
+        <p>Don't wait until a project is "finished" to validate — check it after each major section. Small, frequent fixes are far easier than untangling a page full of accumulated errors at the end.</p>
+      </div>
+
+      <h2><span class="num-chip">3</span>Publishing Your Page</h2>
+      <p>A finished HTML file only needs a place to live online to become a real website. At a beginner level, there are simple, often free ways to do this — for example, free static hosting services (like GitHub Pages) let you upload your HTML files and instantly get a shareable web address. The general steps are always similar:</p>
+      <ol>
+        <li>Make sure all your file names and folder links are correct and lowercase</li>
+        <li>Choose a hosting service and create an account (with a parent or teacher's help if needed)</li>
+        <li>Upload your project folder (index.html, images, etc.)</li>
+        <li>Visit the web address it gives you to see your page live!</li>
+      </ol>
+      <div class="box warning">
+        <div class="box-title">⚠️ Ask Before You Publish</div>
+        <p>Before putting any page online publicly, check with a parent, guardian, or teacher — especially if it includes your photo or personal details. It's smart to avoid posting your full address, school name, or other identifying details on a public page.</p>
+      </div>
+
+      <h2><span class="num-chip">4</span>What's Next After HTML</h2>
+      <p>You now have a real, transferable skill: you can read and write the language every website on Earth is built with. Here's where most learners go next:</p>
+      <div class="two-col">
+        <div class="info-card">
+          <div class="icon">🎨</div>
+          <h3>CSS</h3>
+          <p>Cascading Style Sheets — controls color, fonts, spacing, and layout. This is how you'll make your pages look genuinely beautiful.</p>
+        </div>
+        <div class="info-card">
+          <div class="icon">⚡</div>
+          <h3>JavaScript</h3>
+          <p>Adds interactivity and logic — button clicks, animations, games, and dynamic behavior.</p>
+        </div>
+      </div>
+      <p>Everything you built in this course — the structure, the semantics, the accessibility habits — becomes the strong foundation that CSS and JavaScript build on top of.</p>
+
+      <div class="box vocab">
+        <div class="box-title">📚 Key Vocabulary</div>
+        <dl class="vocab-grid">
+          <div class="vocab-item"><dt>Validator</dt><dd>A tool that checks HTML for errors against the official standard</dd></div>
+          <div class="vocab-item"><dt>Hosting</dt><dd>A service that stores your files and makes them accessible online</dd></div>
+          <div class="vocab-item"><dt>Publish / deploy</dt><dd>Making your finished page available on the internet</dd></div>
+          <div class="vocab-item"><dt>CSS</dt><dd>The language that styles and lays out HTML content</dd></div>
+          <div class="vocab-item"><dt>JavaScript</dt><dd>The language that adds interactivity and logic to pages</dd></div>
+        </dl>
+      </div>
+
+      <div class="box challenge">
+        <div class="box-title">🚀 Final Challenges</div>
+        <p class="challenge-intro">Three challenges, each a little tougher than the last. Challenge 1 is the must-do; Challenges 2 and 3 are where you level up.</p>
+        <div class="challenge-item">
+          <div class="challenge-item__head"><span class="challenge-item__num">Challenge 1</span><span class="challenge-level core">Core</span><span class="challenge-item__name">Validate &amp; Publish</span></div>
+          <p>Run your finished profile page through an HTML validator and fix every error it reports. With a parent or teacher's help, publish your page online using a free hosting option. Share the link with a classmate, friend, or family member — you built a real website!</p>
+        </div>
+        <div class="challenge-item">
+          <div class="challenge-item__head"><span class="challenge-item__num">Challenge 2</span><span class="challenge-level levelup">Level Up</span><span class="challenge-item__name">Validator Detective</span></div>
+          <p>Learn to read error messages by causing them on purpose. Make a copy of your page called <code class="inline">broken-test.html</code> and break it in three ways:</p>
+        <ul>
+          <li>Delete one image's <code class="inline">alt</code> attribute</li>
+          <li>Give two different elements the same id</li>
+          <li>Delete one closing <code class="inline">&lt;/section&gt;</code> tag</li>
+        </ul>
+        <p>Paste the code into the W3C validator (<code class="inline">validator.w3.org</code> → "Validate by Direct Input"). Match each error message to a row in the Common Errors table above. Then delete <code class="inline">broken-test.html</code> — never publish the broken copy!</p>
+        </div>
+        <div class="challenge-item">
+          <div class="challenge-item__head"><span class="challenge-item__num">Challenge 3</span><span class="challenge-level boss">Boss Level</span><span class="challenge-item__name">My Coding Journey Page</span></div>
+          <p>Build <code class="inline">journey.html</code> — a portfolio page showing everything you made in this course:</p>
+        <ul>
+          <li>An &lt;h1&gt; and a short intro paragraph</li>
+          <li>An ordered list of at least five pages you built (like <code class="inline">signup.html</code>, <code class="inline">feedback.html</code>, <code class="inline">news.html</code>) — each one a working link, plus one sentence about what it taught you</li>
+          <li>A table with two columns, <strong>Skill</strong> and <strong>How confident I feel</strong> (⭐ to ⭐⭐⭐), with at least five skills</li>
+          <li>A link back to your profile page — and a link to <code class="inline">journey.html</code> in your profile page's nav</li>
+          <li>A &lt;footer&gt; finishing the sentence: "Next, I want to learn CSS or JavaScript because…"</li>
+        </ul>
+        <p>Copy your practice files into your <code class="inline">my-profile-page</code> folder so the links still work once it's online. Validate <code class="inline">journey.html</code> until it has zero errors, then publish it alongside your profile page.</p>
+        </div>
+      </div>
+
+      <div class="box recap">
+        <div class="box-title">✅ Course Recap</div>
+        <p>Across 16 lessons, you learned document structure, text and formatting, lists, links, images, tables, forms, semantic layout, media embeds, attributes, accessibility, and how to plan, build, validate, and publish a complete web page. That's the real, professional HTML workflow — congratulations on completing the course!</p>
+      </div>
+
+      <div class="mark-complete"><button data-lesson-id="l16">Mark Lesson as Complete</button></div>
+
+      <div class="lesson-pager">
+        <a class="pager-btn" href="lesson-15.html"><div class="dir">← Previous</div><div class="title">Lesson 15: Mini Project — Build</div></a>
+        <a class="pager-btn next" href="../index.html"><div class="dir">Finished! →</div><div class="title">Back to Course Home</div></a>
+      </div>
+
+    </div>
+    <footer class="site-footer">CIOS HTML Course Book · Lesson 16 of 16 · Course Complete 🎉</footer>
+  </main>
+</div>
+
+<script src="../assets/script.js"></script>
+</body>
+</html>

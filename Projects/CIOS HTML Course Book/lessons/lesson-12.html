@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lesson 12: Audio, Video &amp; Embeds — Code Your World: HTML</title>
+<link rel="stylesheet" href="../assets/style.css" />
+</head>
+<body>
+
+<div class="top-progress"><div class="top-progress__fill" style="width:0%"></div></div>
+<button class="sidebar-toggle" aria-label="Toggle menu">☰ Menu</button>
+<div class="sidebar-scrim"></div>
+
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand"><div class="brand__mark">&lt;/&gt;</div><div class="brand__text"><div class="kicker">CIOS Course Book</div><div class="name">Code Your World: HTML</div></div></div>
+    <div class="sidebar-progress">
+      <div class="sidebar-progress__label"><span>Your progress</span><strong class="sidebar-progress__count">0 / 16</strong></div>
+      <div class="sidebar-progress__track"><div class="sidebar-progress__fill" style="width:0%"></div></div>
+    </div>
+    <div class="nav-group__title">Start Here</div>
+    <ul class="nav-list">
+      <li><a href="../index.html">🏠 <span>Course Home</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 1 · Getting Started</div>
+    <ul class="nav-list">
+      <li><a href="lesson-01.html" data-lesson-id="l01"><span class="num">1</span><span>Welcome to the Web</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-02.html" data-lesson-id="l02"><span class="num">2</span><span>Your First Web Page</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 2 · Text Foundations</div>
+    <ul class="nav-list">
+      <li><a href="lesson-03.html" data-lesson-id="l03"><span class="num">3</span><span>Headings &amp; Paragraphs</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-04.html" data-lesson-id="l04"><span class="num">4</span><span>Text Formatting</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 3 · Organizing Content</div>
+    <ul class="nav-list">
+      <li><a href="lesson-05.html" data-lesson-id="l05"><span class="num">5</span><span>Lists</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-06.html" data-lesson-id="l06"><span class="num">6</span><span>Links</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 4 · Media &amp; Data</div>
+    <ul class="nav-list">
+      <li><a href="lesson-07.html" data-lesson-id="l07"><span class="num">7</span><span>Images</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-08.html" data-lesson-id="l08"><span class="num">8</span><span>Tables</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 5 · Forms</div>
+    <ul class="nav-list">
+      <li><a href="lesson-09.html" data-lesson-id="l09"><span class="num">9</span><span>Forms Part 1</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-10.html" data-lesson-id="l10"><span class="num">10</span><span>Forms Part 2</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 6 · Structure &amp; Media</div>
+    <ul class="nav-list">
+      <li><a href="lesson-11.html" data-lesson-id="l11"><span class="num">11</span><span>Div, Span &amp; Semantics</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-12.html" class="active" data-lesson-id="l12"><span class="num">12</span><span>Audio, Video &amp; Embeds</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 7 · Real-World Skills</div>
+    <ul class="nav-list">
+      <li><a href="lesson-13.html" data-lesson-id="l13"><span class="num">13</span><span>Attributes &amp; Accessibility</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-14.html" data-lesson-id="l14"><span class="num">14</span><span>Mini Project: Plan</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 8 · Project &amp; Beyond</div>
+    <ul class="nav-list">
+      <li><a href="lesson-15.html" data-lesson-id="l15"><span class="num">15</span><span>Mini Project: Build</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-16.html" data-lesson-id="l16"><span class="num">16</span><span>Publishing &amp; Next Steps</span><span class="check">✓</span></a></li>
+    </ul>
+  </aside>
+
+  <main class="main">
+    <div class="content">
+
+      <div class="lesson-kicker"><span class="pill">Lesson 12 of 16</span><span class="pill week">Week 6</span><span class="pill time">⏱ 60 minutes</span></div>
+      <h1 class="lesson-title">Audio, Video &amp; Embedding Content</h1>
+      <p class="lesson-sub">HTML isn't just text and images — it can play sound, show video, and even embed content from other websites.</p>
+
+      <div class="box objectives">
+        <div class="box-title">🎯 Learning Objectives</div>
+        <ul>
+          <li>Embed audio using the &lt;audio&gt; element</li>
+          <li>Embed video using the &lt;video&gt; element</li>
+          <li>Provide multiple file formats with &lt;source&gt;</li>
+          <li>Embed external content using &lt;iframe&gt;</li>
+        </ul>
+      </div>
+
+      <h2><span class="num-chip">1</span>Adding Audio</h2>
+      <p>The <code class="inline">&lt;audio&gt;</code> element plays sound files. Add the <code class="inline">controls</code> attribute so visitors get play/pause/volume buttons — without it, there's no visible player at all.</p>
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">audio.html</span></div>
+        <pre><code><span class="tag">&lt;audio</span> <span class="attr">src</span>=<span class="str">"audio/theme-song.mp3"</span> <span class="attr">controls</span><span class="tag">&gt;&lt;/audio&gt;</span></code></pre>
+      </div>
+
+      <h2><span class="num-chip">2</span>Adding Video</h2>
+      <p>The <code class="inline">&lt;video&gt;</code> element works the same way, plus a few extra useful attributes: <code class="inline">width</code>/<code class="inline">height</code> to size the player, and <code class="inline">poster</code> to show a preview image before playback starts.</p>
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">video.html</span></div>
+        <pre><code><span class="tag">&lt;video</span> <span class="attr">src</span>=<span class="str">"video/intro.mp4"</span> <span class="attr">controls</span> <span class="attr">width</span>=<span class="str">"480"</span> <span class="attr">poster</span>=<span class="str">"images/preview.jpg"</span><span class="tag">&gt;&lt;/video&gt;</span></code></pre>
+      </div>
+      <div class="preview-window">
+        <div class="preview-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="url">🔒 video.html</span></div>
+        <div class="preview-window__body">
+          <div style="width:280px;height:158px;border-radius:10px;background:#12152b;display:flex;align-items:center;justify-content:center;color:#fff;font-size:26px;">▶️</div>
+        </div>
+      </div>
+
+      <h2><span class="num-chip">3</span>Multiple Formats with &lt;source&gt;</h2>
+      <p>Not every browser supports every video/audio file format. Instead of a single <code class="inline">src</code>, you can list several <code class="inline">&lt;source&gt;</code> options inside the tag — the browser picks the first one it can play.</p>
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">video-sources.html</span></div>
+        <pre><code><span class="tag">&lt;video</span> <span class="attr">controls</span> <span class="attr">width</span>=<span class="str">"480"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;source</span> <span class="attr">src</span>=<span class="str">"video/intro.mp4"</span> <span class="attr">type</span>=<span class="str">"video/mp4"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;source</span> <span class="attr">src</span>=<span class="str">"video/intro.webm"</span> <span class="attr">type</span>=<span class="str">"video/webm"</span><span class="tag">&gt;</span>
+  <span class="txt">Your browser doesn't support video playback.</span>
+<span class="tag">&lt;/video&gt;</span></code></pre>
+      </div>
+      <p>The plain text at the end is a fallback message, only shown if the browser can't play any of the listed sources.</p>
+
+      <h2><span class="num-chip">4</span>Embedding Other Content with &lt;iframe&gt;</h2>
+      <p>An <code class="inline">&lt;iframe&gt;</code> (inline frame) embeds an entire other web page inside yours — commonly used for maps, YouTube videos, or other widgets that provide "embed" code.</p>
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">iframe.html</span></div>
+        <pre><code><span class="tag">&lt;iframe</span>
+  <span class="attr">src</span>=<span class="str">"https://www.youtube.com/embed/dQw4w9WgXcQ"</span>
+  <span class="attr">width</span>=<span class="str">"480"</span>
+  <span class="attr">height</span>=<span class="str">"270"</span>
+  <span class="attr">title</span>=<span class="str">"Sample embedded video"</span><span class="tag">&gt;</span>
+<span class="tag">&lt;/iframe&gt;</span></code></pre>
+      </div>
+      <div class="box warning">
+        <div class="box-title">⚠️ Only Embed Trusted Sites</div>
+        <p>An iframe loads content from another website directly into yours. Only embed sources you trust (like an official YouTube or Google Maps embed code), and always include a descriptive <code class="inline">title</code> attribute so screen reader users know what the embedded frame contains.</p>
+      </div>
+
+      <div class="box vocab">
+        <div class="box-title">📚 Key Vocabulary</div>
+        <dl class="vocab-grid">
+          <div class="vocab-item"><dt>controls</dt><dd>Attribute that shows play/pause/volume buttons</dd></div>
+          <div class="vocab-item"><dt>poster</dt><dd>A preview image shown before a video plays</dd></div>
+          <div class="vocab-item"><dt>&lt;source&gt;</dt><dd>Lists an alternate file format for audio/video</dd></div>
+          <div class="vocab-item"><dt>&lt;iframe&gt;</dt><dd>Embeds another web page inside the current one</dd></div>
+        </dl>
+      </div>
+
+      <div class="box challenge">
+        <div class="box-title">🚀 Challenges</div>
+        <p class="challenge-intro">Three challenges, each a little tougher than the last. Challenge 1 is the must-do; Challenges 2 and 3 are where you level up.</p>
+        <div class="challenge-item">
+          <div class="challenge-item__head"><span class="challenge-item__num">Challenge 1</span><span class="challenge-level core">Core</span><span class="challenge-item__name">Add Media to Your Page</span></div>
+          <p>Add either an &lt;audio&gt; or &lt;video&gt; element with controls to one of your existing pages (any royalty-free file works). Then embed one &lt;iframe&gt; — for example, an embedded map or video — complete with a descriptive title attribute.</p>
+        </div>
+        <div class="challenge-item">
+          <div class="challenge-item__head"><span class="challenge-item__num">Challenge 2</span><span class="challenge-level levelup">Level Up</span><span class="challenge-item__name">Movie Trailer Card</span></div>
+          <p>Build <code class="inline">trailer.html</code> — a "coming soon" card for a film (a real one, or one you invent!). Include:</p>
+        <ul>
+          <li>A &lt;video&gt; with <code class="inline">controls</code>, a <code class="inline">width</code>, and a <code class="inline">poster</code> image</li>
+          <li>Two &lt;source&gt; tags inside it — one MP4 and one WebM, each with the correct <code class="inline">type</code> value — plus a fallback message</li>
+          <li>The whole video wrapped in a &lt;figure&gt; with a &lt;figcaption&gt; giving the film's title and year</li>
+          <li>A short paragraph below it describing the film</li>
+        </ul>
+        <p><strong>Tip:</strong> put the MP4 source first. If you only have an MP4 file, that's fine — the browser plays the first source it can and skips the rest.</p>
+        </div>
+        <div class="challenge-item">
+          <div class="challenge-item__head"><span class="challenge-item__num">Challenge 3</span><span class="challenge-level boss">Boss Level</span><span class="challenge-item__name">My Favourite Place</span></div>
+          <p>Build <code class="inline">place.html</code> about a public place you love — a park, a beach, a market, a town you've visited. (Pick a public place, not your home address!) Your page needs:</p>
+        <ul>
+          <li>Semantic structure: &lt;header&gt;, &lt;main&gt; with at least two &lt;section&gt;s, and a &lt;footer&gt;</li>
+          <li>An &lt;iframe&gt; map of the place (in Google Maps: Share → Embed a map → copy the code) with a descriptive <code class="inline">title</code></li>
+          <li>An &lt;audio&gt; player of a sound that matches the place (waves, birds, market noise) using a &lt;source&gt; tag and fallback text</li>
+          <li>An ordered list: "Top 3 things to do there"</li>
+        </ul>
+        <p><strong>Experiment:</strong> delete the <code class="inline">controls</code> attribute from your audio and refresh. What do you see? Put it back, then write a comment explaining what <code class="inline">controls</code> does.</p>
+        </div>
+      </div>
+
+      <div class="box recap">
+        <div class="box-title">✅ Recap</div>
+        <p>&lt;audio&gt; and &lt;video&gt; embed media with the controls attribute enabling playback UI. Multiple &lt;source&gt; tags offer format fallbacks. &lt;iframe&gt; embeds another page entirely — use only trusted sources and always add a title. Next lesson: attributes and accessibility, in depth.</p>
+      </div>
+
+      <div class="mark-complete"><button data-lesson-id="l12">Mark Lesson as Complete</button></div>
+
+      <div class="lesson-pager">
+        <a class="pager-btn" href="lesson-11.html"><div class="dir">← Previous</div><div class="title">Lesson 11: Div, Span &amp; Semantics</div></a>
+        <a class="pager-btn next" href="lesson-13.html"><div class="dir">Next →</div><div class="title">Lesson 13: Attributes &amp; Accessibility</div></a>
+      </div>
+
+    </div>
+    <footer class="site-footer">CIOS HTML Course Book · Lesson 12 of 16</footer>
+  </main>
+</div>
+
+<script src="../assets/script.js"></script>
+</body>
+</html>

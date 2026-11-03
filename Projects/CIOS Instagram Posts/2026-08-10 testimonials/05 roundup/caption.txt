@@ -1,0 +1,62 @@
+CIOS INSTAGRAM — POST 5 OF 5 (TESTIMONIAL SERIES)
+Round-up: four students, four starting points · 7-slide carousel
+CTA keyword: PROOF
+
+────────────────────────────────────────
+CAPTION (paste this)
+────────────────────────────────────────
+
+Four children. Four completely different starting points. One thing they now have in common.
+
+Emmanuel, 10, was spending hours watching gaming videos. He published an interactive pet profile page he built himself.
+
+Folorunsho, 11, gave up the second a maths or logic problem got difficult. He stayed up fixing the broken code in his own 2D game.
+
+Chloe, 15, found traditional coding tutorials overwhelming and boring. She built StudyPulse — a working task tracker app that runs on any screen.
+
+Tariq, 17, loved playing fantasy sports but had no idea how the numbers worked. He built StatTracker, a season-analysis dashboard, in Python.
+
+Not one of them started as "a coding kid." That category doesn't exist. There are only children who've been shown how, and children who haven't.
+
+Ages 8 to 18. Live 1-on-1 mentorship. No pre-recorded videos, no rushed bootcamps.
+
+Comment "PROOF" and we'll send you our full course guide plus a free taster session for your child. 🚀
+
+#CodingForKids #LearnToCode #StudentProjects #TechForYouth #CodingSchool #STEMKids #CodeIllustrated
+
+────────────────────────────────────────
+SLIDE ORDER
+────────────────────────────────────────
+
+01  Cover — Four children. Four starting points. Four things they built.
+02  Emmanuel · age 10 · Junior Web Creator
+03  Folorunsho · age 11 · Game Development
+04  Chloe · age 15 · Frontend Developer
+05  Tariq · age 17 · Data Science Intro
+06  Results that speak loud — 100+ students · 4.6/5 · 250+ hours · 5+ mentors
+07  CTA — Comment "PROOF"
+
+────────────────────────────────────────
+NOTES
+────────────────────────────────────────
+
+· CHECK SLIDE 02 BEFORE POSTING. The source document's name strip for slide 02 still reads
+  "MARCUS · AGE 10 · JUNIOR WEB CREATOR" — a leftover from the original name conflict.
+  It should read "EMMANUEL · AGE 10 · JUNIOR WEB CREATOR". Verify the rendered PNG.
+
+· First alt text (slide 01): Dark navy card reading "Four children. Four starting points.
+  Four things they built." with the subline "None of them started as 'a coding kid.'"
+
+· Pin this post to the top of the profile once it's live. It's the strongest first
+  impression for a parent landing on the account cold.
+
+· Slides 02–05 must share an identical layout — same name-strip position, same block
+  heights, same quote placement. Only the background alternates. The repeating pattern is
+  what reads as credibility.
+
+· If you have screenshots of all four projects, drop a small one into the bottom-right of
+  each student slide.
+
+· Reply publicly to every "PROOF" comment with something short before you DM.
+
+· Confirm written consent from all four families before posting names and ages.

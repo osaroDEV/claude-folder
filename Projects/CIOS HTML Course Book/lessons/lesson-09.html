@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lesson 9: Forms Part 1 — Code Your World: HTML</title>
+<link rel="stylesheet" href="../assets/style.css" />
+</head>
+<body>
+
+<div class="top-progress"><div class="top-progress__fill" style="width:0%"></div></div>
+<button class="sidebar-toggle" aria-label="Toggle menu">☰ Menu</button>
+<div class="sidebar-scrim"></div>
+
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand"><div class="brand__mark">&lt;/&gt;</div><div class="brand__text"><div class="kicker">CIOS Course Book</div><div class="name">Code Your World: HTML</div></div></div>
+    <div class="sidebar-progress">
+      <div class="sidebar-progress__label"><span>Your progress</span><strong class="sidebar-progress__count">0 / 16</strong></div>
+      <div class="sidebar-progress__track"><div class="sidebar-progress__fill" style="width:0%"></div></div>
+    </div>
+    <div class="nav-group__title">Start Here</div>
+    <ul class="nav-list">
+      <li><a href="../index.html">🏠 <span>Course Home</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 1 · Getting Started</div>
+    <ul class="nav-list">
+      <li><a href="lesson-01.html" data-lesson-id="l01"><span class="num">1</span><span>Welcome to the Web</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-02.html" data-lesson-id="l02"><span class="num">2</span><span>Your First Web Page</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 2 · Text Foundations</div>
+    <ul class="nav-list">
+      <li><a href="lesson-03.html" data-lesson-id="l03"><span class="num">3</span><span>Headings &amp; Paragraphs</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-04.html" data-lesson-id="l04"><span class="num">4</span><span>Text Formatting</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 3 · Organizing Content</div>
+    <ul class="nav-list">
+      <li><a href="lesson-05.html" data-lesson-id="l05"><span class="num">5</span><span>Lists</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-06.html" data-lesson-id="l06"><span class="num">6</span><span>Links</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 4 · Media &amp; Data</div>
+    <ul class="nav-list">
+      <li><a href="lesson-07.html" data-lesson-id="l07"><span class="num">7</span><span>Images</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-08.html" data-lesson-id="l08"><span class="num">8</span><span>Tables</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 5 · Forms</div>
+    <ul class="nav-list">
+      <li><a href="lesson-09.html" class="active" data-lesson-id="l09"><span class="num">9</span><span>Forms Part 1</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-10.html" data-lesson-id="l10"><span class="num">10</span><span>Forms Part 2</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 6 · Structure &amp; Media</div>
+    <ul class="nav-list">
+      <li><a href="lesson-11.html" data-lesson-id="l11"><span class="num">11</span><span>Div, Span &amp; Semantics</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-12.html" data-lesson-id="l12"><span class="num">12</span><span>Audio, Video &amp; Embeds</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 7 · Real-World Skills</div>
+    <ul class="nav-list">
+      <li><a href="lesson-13.html" data-lesson-id="l13"><span class="num">13</span><span>Attributes &amp; Accessibility</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-14.html" data-lesson-id="l14"><span class="num">14</span><span>Mini Project: Plan</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 8 · Project &amp; Beyond</div>
+    <ul class="nav-list">
+      <li><a href="lesson-15.html" data-lesson-id="l15"><span class="num">15</span><span>Mini Project: Build</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-16.html" data-lesson-id="l16"><span class="num">16</span><span>Publishing &amp; Next Steps</span><span class="check">✓</span></a></li>
+    </ul>
+  </aside>
+
+  <main class="main">
+    <div class="content">
+
+      <div class="lesson-kicker"><span class="pill">Lesson 9 of 16</span><span class="pill week">Week 5</span><span class="pill time">⏱ 60 minutes</span></div>
+      <h1 class="lesson-title">Forms Part 1: Collecting Input</h1>
+      <p class="lesson-sub">Forms are how websites collect information from visitors — sign-ups, searches, quizzes, and more. Let's build your first one.</p>
+
+      <div class="box objectives">
+        <div class="box-title">🎯 Learning Objectives</div>
+        <ul>
+          <li>Create a form using the &lt;form&gt; element</li>
+          <li>Add text-based inputs using &lt;input&gt; and its type attribute</li>
+          <li>Correctly connect a &lt;label&gt; to its input</li>
+          <li>Use placeholder text appropriately</li>
+        </ul>
+      </div>
+
+      <h2><span class="num-chip">1</span>The &lt;form&gt; Element</h2>
+      <p>Everything a visitor fills in belongs inside a <code class="inline">&lt;form&gt;</code> element. For now, we'll focus on building forms visually — later courses cover sending form data to a server using the <code class="inline">action</code> and <code class="inline">method</code> attributes.</p>
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">form-shell.html</span></div>
+        <pre><code><span class="tag">&lt;form&gt;</span>
+  <span class="cmt">&lt;!-- inputs go here --&gt;</span>
+<span class="tag">&lt;/form&gt;</span></code></pre>
+      </div>
+
+      <h2><span class="num-chip">2</span>Text Inputs &amp; Input Types</h2>
+      <p>The <code class="inline">&lt;input&gt;</code> tag is self-closing and creates most form fields. Its <code class="inline">type</code> attribute decides what kind of field it becomes — and modern browsers even validate some types automatically.</p>
+      <table class="grid-table">
+        <thead><tr><th>type value</th><th>Creates</th></tr></thead>
+        <tbody>
+          <tr><td><code class="inline">text</code></td><td>A single-line text field</td></tr>
+          <tr><td><code class="inline">email</code></td><td>A field that checks for a valid email pattern</td></tr>
+          <tr><td><code class="inline">password</code></td><td>A field that hides typed characters</td></tr>
+          <tr><td><code class="inline">number</code></td><td>A field that only accepts numbers, often with up/down arrows</td></tr>
+          <tr><td><code class="inline">date</code></td><td>A field with a built-in date picker</td></tr>
+        </tbody>
+      </table>
+
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">inputs.html</span></div>
+        <pre><code><span class="tag">&lt;form&gt;</span>
+  <span class="tag">&lt;label</span> <span class="attr">for</span>=<span class="str">"fullname"</span><span class="tag">&gt;</span><span class="txt">Full Name</span><span class="tag">&lt;/label&gt;</span>
+  <span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="str">"text"</span> <span class="attr">id</span>=<span class="str">"fullname"</span> <span class="attr">name</span>=<span class="str">"fullname"</span> <span class="attr">placeholder</span>=<span class="str">"e.g. Amara Obi"</span><span class="tag">&gt;</span>
+<span class="tag">&lt;/form&gt;</span></code></pre>
+      </div>
+      <div class="preview-window">
+        <div class="preview-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="url">🔒 inputs.html</span></div>
+        <div class="preview-window__body">
+          <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;">Full Name</label>
+          <input type="text" placeholder="e.g. Amara Obi" style="width:100%;padding:9px 12px;border:1px solid #e2e5f7;border-radius:8px;font-size:14px;" disabled>
+        </div>
+      </div>
+
+      <h2><span class="num-chip">3</span>Labels: Why for/id Matters</h2>
+      <p>The <code class="inline">&lt;label&gt;</code> tag gives an input a visible, readable name — and connecting it correctly matters more than it looks. The label's <code class="inline">for</code> attribute must exactly match the input's <code class="inline">id</code>. When connected properly, clicking the label text also focuses (or checks) the input, and screen readers announce the label whenever the input is focused.</p>
+      <div class="box tip">
+        <div class="box-title">💡 Test It Yourself</div>
+        <p>Once you build a labeled input, click directly on the label text (not the box). If it's connected correctly, your cursor will jump into the input automatically. If nothing happens, double-check that <code class="inline">for</code> and <code class="inline">id</code> match exactly, including capitalization.</p>
+      </div>
+
+      <h2><span class="num-chip">4</span>Placeholder vs. Label — Don't Confuse Them</h2>
+      <div class="box warning">
+        <div class="box-title">⚠️ A Common Mistake</div>
+        <p>New developers sometimes skip the &lt;label&gt; and rely only on <code class="inline">placeholder</code> text to explain a field. Don't — placeholder text disappears the moment someone starts typing, and screen readers may not announce it reliably. Placeholder text should only show an <em>example</em> of expected input (like "e.g. Amara Obi"), never replace a real label.</p>
+      </div>
+
+      <div class="box vocab">
+        <div class="box-title">📚 Key Vocabulary</div>
+        <dl class="vocab-grid">
+          <div class="vocab-item"><dt>&lt;form&gt;</dt><dd>Container element for all input fields</dd></div>
+          <div class="vocab-item"><dt>&lt;input&gt;</dt><dd>A self-closing tag that creates a form field, styled by its type</dd></div>
+          <div class="vocab-item"><dt>&lt;label&gt;</dt><dd>Readable text describing a field, linked via for/id</dd></div>
+          <div class="vocab-item"><dt>placeholder</dt><dd>Faint example text shown inside an empty field</dd></div>
+          <div class="vocab-item"><dt>name attribute</dt><dd>Identifies the field's data when a form is submitted</dd></div>
+        </dl>
+      </div>
+
+      <div class="box challenge">
+        <div class="box-title">🚀 Challenges</div>
+        <p class="challenge-intro">Three challenges, each a little tougher than the last. Challenge 1 is the must-do; Challenges 2 and 3 are where you level up.</p>
+        <div class="challenge-item">
+          <div class="challenge-item__head"><span class="challenge-item__num">Challenge 1</span><span class="challenge-level core">Core</span><span class="challenge-item__name">The Sign-Up Form</span></div>
+          <p>Build <code class="inline">signup.html</code> with a &lt;form&gt; containing three properly labeled fields: full name (text), email (email), and age (number). Every &lt;label&gt; must be correctly linked to its &lt;input&gt; using matching for/id pairs. Test that clicking each label focuses its field.</p>
+        </div>
+        <div class="challenge-item">
+          <div class="challenge-item__head"><span class="challenge-item__num">Challenge 2</span><span class="challenge-level levelup">Level Up</span><span class="challenge-item__name">Label Detective</span></div>
+          <p>This form has <strong>5 bugs</strong> hiding in it. Copy it into a new file called <code class="inline">detective.html</code>, find every bug, and fix it.</p>
+        <div class="code-window">
+          <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">detective.html</span></div>
+          <pre><code><span class="tag">&lt;form</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;label</span> <span class="attr">for</span>=<span class="str">"username"</span><span class="tag">&gt;</span>Username<span class="tag">&lt;/label</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="str">"text"</span> <span class="attr">id</span>=<span class="str">"user-name"</span> <span class="attr">name</span>=<span class="str">"username"</span><span class="tag">&gt;</span>
+
+  <span class="tag">&lt;label</span> <span class="attr">for</span>=<span class="str">"Email"</span><span class="tag">&gt;</span>Email<span class="tag">&lt;/label</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="str">"email"</span> <span class="attr">id</span>=<span class="str">"email"</span> <span class="attr">name</span>=<span class="str">"email"</span><span class="tag">&gt;</span>
+
+  <span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="str">"password"</span> <span class="attr">id</span>=<span class="str">"password"</span> <span class="attr">placeholder</span>=<span class="str">"Password"</span><span class="tag">&gt;</span>
+
+  <span class="tag">&lt;label</span> <span class="attr">for</span>=<span class="str">"birthday"</span><span class="tag">&gt;</span>Birthday<span class="tag">&lt;/label</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="str">"date"</span> <span class="attr">id</span>=<span class="str">"birthday"</span><span class="tag">&gt;</span>
+<span class="tag">&lt;/form</span><span class="tag">&gt;</span></code></pre>
+        </div>
+        <p><strong>Clues:</strong> two labels don't connect to their inputs, one field uses a placeholder pretending to be a label, and two fields are missing their <code class="inline">name</code> attribute. When you're done, click every label to prove it jumps into the right box.</p>
+        </div>
+        <div class="challenge-item">
+          <div class="challenge-item__head"><span class="challenge-item__num">Challenge 3</span><span class="challenge-level boss">Boss Level</span><span class="challenge-item__name">Library Card Designer</span></div>
+          <p>Your school library wants an online library card form. Build <code class="inline">library-card.html</code> with these six fields — but this time <strong>you</strong> choose the best <code class="inline">type</code> for each one:</p>
+        <ul>
+          <li>Full name</li>
+          <li>Email address</li>
+          <li>Date of birth</li>
+          <li>A secret 4-digit PIN that nobody looking over your shoulder should see</li>
+          <li>How many books you read last month</li>
+          <li>Your favourite author</li>
+        </ul>
+        <p><strong>Rules:</strong> every field needs a connected label and a <code class="inline">name</code> attribute. Add a placeholder example to at least two fields (as an example only — never instead of a label). Above each input, write an HTML comment explaining your choice, like <code class="inline">&lt;!-- date: gives a built-in date picker --&gt;</code>.</p>
+        </div>
+      </div>
+
+      <div class="box recap">
+        <div class="box-title">✅ Recap</div>
+        <p>Forms collect input inside &lt;form&gt;, using &lt;input&gt; fields whose type attribute determines behavior. Always pair a &lt;label&gt; with its input using matching for/id — never rely on placeholder text alone. Next lesson: checkboxes, dropdowns, and buttons.</p>
+      </div>
+
+      <div class="mark-complete"><button data-lesson-id="l09">Mark Lesson as Complete</button></div>
+
+      <div class="lesson-pager">
+        <a class="pager-btn" href="lesson-08.html"><div class="dir">← Previous</div><div class="title">Lesson 8: Building Tables</div></a>
+        <a class="pager-btn next" href="lesson-10.html"><div class="dir">Next →</div><div class="title">Lesson 10: Forms Part 2</div></a>
+      </div>
+
+    </div>
+    <footer class="site-footer">CIOS HTML Course Book · Lesson 9 of 16</footer>
+  </main>
+</div>
+
+<script src="../assets/script.js"></script>
+</body>
+</html>

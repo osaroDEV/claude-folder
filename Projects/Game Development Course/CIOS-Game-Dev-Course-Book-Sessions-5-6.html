@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Game Dev Pro — Course Companion (Beginner)</title>
+<style>
+  :root{
+    --bg:#0f1226; --bg2:#161a36; --panel:#1c2147; --panel2:#232a5c;
+    --ink:#e9ecff; --muted:#a3aad6; --line:#2c3470;
+    --brand:#6c8cff; --brand2:#9a6bff; --accent:#34d399; --warn:#fbbf24; --bad:#fb7185;
+    --code-bg:#0b0e24; --radius:14px; --maxw:1280px;
+    --mono:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;
+    --sans:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{background:linear-gradient(180deg,#0c0f22,#0f1226 40%);color:var(--ink);font-family:var(--sans);line-height:1.6;font-size:16px}
+  a{color:var(--brand)}
+  /* Header */
+  header.topbar{position:sticky;top:0;z-index:30;background:rgba(13,16,38,.85);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .topbar-inner{max-width:var(--maxw);margin:0 auto;display:flex;align-items:center;gap:14px;padding:12px 18px}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.3px}
+  .logo .badge{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--brand),var(--brand2));display:grid;place-items:center;font-size:18px}
+  .logo small{display:block;font-weight:500;color:var(--muted);font-size:11px;letter-spacing:.5px}
+  .topbar .spacer{flex:1}
+  .progresswrap{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)}
+  .pbar{width:160px;height:8px;background:#0c1030;border-radius:99px;overflow:hidden;border:1px solid var(--line)}
+  .pbar > i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--brand));transition:width .4s}
+  .menu-btn{display:none;background:var(--panel);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:8px 11px;cursor:pointer;font-size:18px}
+  /* Layout */
+  .layout{max-width:var(--maxw);margin:0 auto;display:grid;grid-template-columns:320px 1fr;gap:26px;padding:22px 18px 80px}
+  aside.sidebar{position:sticky;top:74px;align-self:start;max-height:calc(100vh - 90px);overflow:auto;padding-right:6px}
+  .search{width:100%;padding:10px 12px;background:var(--panel);border:1px solid var(--line);border-radius:10px;color:var(--ink);margin-bottom:14px;font-size:14px}
+  .search::placeholder{color:var(--muted)}
+  .month-group{margin-bottom:16px}
+  .month-title{font-size:12px;letter-spacing:1.2px;text-transform:uppercase;color:var(--brand);font-weight:800;margin:6px 4px 8px}
+  .month-sub{font-size:11px;color:var(--muted);font-weight:500;text-transform:none;letter-spacing:.2px;margin-top:2px}
+  .navitem{display:flex;align-items:center;gap:10px;padding:9px 11px;border-radius:10px;cursor:pointer;color:var(--muted);border:1px solid transparent;font-size:14px}
+  .navitem:hover{background:var(--panel);color:var(--ink)}
+  .navitem.active{background:linear-gradient(135deg,rgba(108,140,255,.25),rgba(154,107,255,.18));border-color:var(--line);color:var(--ink)}
+  .navitem .num{flex:none;width:26px;height:26px;border-radius:8px;background:#0c1030;border:1px solid var(--line);display:grid;place-items:center;font-size:12px;font-weight:700;color:var(--muted)}
+  .navitem.done .num{background:var(--accent);color:#08130d;border-color:transparent}
+  .navitem .t{flex:1;line-height:1.25}
+  .navitem .wk{font-size:10px;color:var(--muted);display:block}
+  .navitem.locked{opacity:.55}
+  /* Main */
+  main.content{min-width:0}
+  .card{background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);padding:26px 30px;box-shadow:0 10px 40px rgba(0,0,0,.25)}
+  .crumbs{font-size:12.5px;color:var(--muted);letter-spacing:.3px;text-transform:uppercase;margin-bottom:8px}
+  h1.session-title{font-size:30px;line-height:1.15;margin:0 0 6px}
+  .session-meta{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 20px}
+  .chip{font-size:12px;padding:5px 11px;border-radius:99px;background:var(--panel);border:1px solid var(--line);color:var(--muted)}
+  .chip.brand{color:var(--ink);border-color:var(--brand);background:rgba(108,140,255,.12)}
+  .obj{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:0 0 24px}
+  .obj h3{margin:0 0 8px;font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--accent)}
+  .obj ul{margin:0;padding-left:20px}
+  .obj li{margin:4px 0}
+  .content h2{font-size:22px;margin:34px 0 10px;padding-top:6px;border-top:1px solid var(--line);padding-top:22px}
+  .content h2:first-of-type{border-top:none;padding-top:0}
+  .content h3{font-size:17px;margin:22px 0 6px;color:#cfd6ff}
+  .content p{margin:10px 0}
+  .content ul,.content ol{margin:10px 0;padding-left:22px}
+  .content li{margin:6px 0}
+  code.inline{font-family:var(--mono);background:#0c1030;border:1px solid var(--line);padding:1px 6px;border-radius:6px;font-size:13.5px;color:#ffd9a0}
+  kbd{font-family:var(--mono);background:#0c1030;border:1px solid var(--line);border-bottom-width:2px;padding:1px 7px;border-radius:6px;font-size:12.5px}
+  /* callouts */
+  .note{border-radius:12px;padding:14px 16px 14px 16px;margin:18px 0;border:1px solid var(--line);position:relative}
+  .note .nt{font-weight:700;font-size:13px;letter-spacing:.4px;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+  .note.tip{background:rgba(52,211,153,.08);border-color:rgba(52,211,153,.4)}
+  .note.tip .nt{color:var(--accent)}
+  .note.warn{background:rgba(251,191,36,.08);border-color:rgba(251,191,36,.4)}
+  .note.warn .nt{color:var(--warn)}
+  .note.info{background:rgba(108,140,255,.08);border-color:rgba(108,140,255,.4)}
+  .note.info .nt{color:var(--brand)}
+  .note.key{background:rgba(154,107,255,.08);border-color:rgba(154,107,255,.45)}
+  .note.key .nt{color:#c5a8ff}
+  /* static code */
+  .codeblock{position:relative;margin:16px 0}
+  .codeblock pre{margin:0;background:var(--code-bg);border:1px solid var(--line);border-radius:12px;padding:16px 16px;overflow:auto;font-family:var(--mono);font-size:13.5px;line-height:1.55}
+  .codeblock .lang{position:absolute;top:8px;right:54px;font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+  .copybtn{position:absolute;top:7px;right:8px;background:var(--panel);border:1px solid var(--line);color:var(--muted);border-radius:7px;padding:3px 9px;font-size:11px;cursor:pointer}
+  .copybtn:hover{color:var(--ink)}
+  .tok-key{color:#ff9ecd}.tok-str{color:#9be8a0}.tok-num{color:#ffd9a0}.tok-com{color:#6f78b0;font-style:italic}.tok-fn{color:#8fd3ff}
+  /* runnable demo */
+  .runner{margin:18px 0;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--code-bg)}
+  .runner .rhead{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--panel);border-bottom:1px solid var(--line);font-size:12px;color:var(--muted)}
+  .runner .rhead .dot{width:10px;height:10px;border-radius:99px;background:#3a4280}
+  .runner .rhead .label{flex:1;font-weight:600;color:var(--ink)}
+  .runner textarea{width:100%;border:none;background:var(--code-bg);color:#e7ecff;font-family:var(--mono);font-size:13px;line-height:1.5;padding:14px;resize:vertical;min-height:150px;outline:none}
+  .runner .ractions{display:flex;gap:8px;padding:8px 12px;background:var(--panel);border-top:1px solid var(--line)}
+  .btn{background:linear-gradient(135deg,var(--brand),var(--brand2));color:white;border:none;border-radius:9px;padding:8px 16px;font-size:13px;font-weight:600;cursor:pointer}
+  .btn.ghost{background:var(--panel2);color:var(--ink);border:1px solid var(--line)}
+  .btn:hover{filter:brightness(1.08)}
+  .runner .stage{background:#fff;min-height:60px}
+  .runner iframe{width:100%;border:none;display:block;background:#fff;min-height:220px}
+  /* exercise */
+  .exercise{background:linear-gradient(135deg,rgba(154,107,255,.1),rgba(108,140,255,.06));border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:20px 0}
+  .exercise .xh{font-weight:800;color:#c5a8ff;font-size:13px;letter-spacing:.6px;text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+  /* outline (sessions not yet fully written) */
+  .outline-banner{background:rgba(108,140,255,.08);border:1px dashed var(--brand);border-radius:12px;padding:16px 18px;margin:8px 0 22px;color:var(--muted);font-size:14px}
+  .outline-banner b{color:var(--ink)}
+  .footer-nav{display:flex;justify-content:space-between;gap:12px;margin-top:30px}
+  .footer-nav button{flex:1;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;color:var(--ink);cursor:pointer}
+  .footer-nav button:hover{border-color:var(--brand)}
+  .footer-nav button.next{text-align:right}
+  .footer-nav button span{display:block;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+  .footer-nav button.disabled{opacity:.4;pointer-events:none}
+  .complete-row{display:flex;align-items:center;gap:12px;margin-top:24px;padding-top:20px;border-top:1px solid var(--line);flex-wrap:wrap}
+  .checkbtn{display:inline-flex;align-items:center;gap:9px;background:var(--panel);border:1px solid var(--line);border-radius:99px;padding:9px 18px;cursor:pointer;font-weight:600;font-size:14px}
+  .checkbtn.done{background:var(--accent);color:#08130d;border-color:transparent}
+  .home-hero{padding:8px 4px}
+  .home-hero h1{font-size:34px;margin:0 0 8px;background:linear-gradient(90deg,#fff,#b9c4ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .home-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-top:20px}
+  .home-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px}
+  .home-card .big{font-size:26px;font-weight:800}
+  .home-card .lbl{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px}
+  @media (max-width:900px){
+    .layout{grid-template-columns:1fr}
+    aside.sidebar{position:fixed;top:0;left:0;bottom:0;width:300px;max-height:none;background:var(--bg);z-index:40;padding:74px 14px 20px;transform:translateX(-105%);transition:transform .25s;border-right:1px solid var(--line)}
+    aside.sidebar.open{transform:none}
+    .menu-btn{display:block}
+    .scrim{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:35}
+    .scrim.show{display:block}
+    .card{padding:20px 18px}
+  }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <button class="menu-btn" id="menuBtn" aria-label="Menu">☰</button>
+    <div class="logo">
+      <div class="badge">🎮</div>
+      <div>Game Dev Pro<small>BEGINNER COURSE COMPANION</small></div>
+    </div>
+    <div class="spacer"></div>
+    <div class="progresswrap">
+      <span id="progressLabel">0 / 24</span>
+      <div class="pbar"><i id="pbarFill"></i></div>
+    </div>
+  </div>
+</header>
+
+<div class="scrim" id="scrim"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <input class="search" id="search" placeholder="🔍  Search sessions…" />
+    <div id="nav"></div>
+  </aside>
+  <main class="content">
+    <div class="card" id="content"></div>
+  </main>
+</div>
+
+<script>
+/* ============================================================
+   GAME DEV PRO — COURSE COMPANION
+   Engine: rendering, navigation, live code runner, progress.
+   Course content lives in the SESSIONS array further below.
+   ============================================================ */
+
+let SESSIONS = [];
+
+/* ---------- tiny syntax highlighter (HTML/CSS/JS-ish) ----------
+   Single-pass tokenizer. We scan the RAW code once and emit HTML,
+   escaping each plain slice as we go. Because we never re-scan the
+   output, the <span> tags we inject (which contain class="...") can
+   never be corrupted by a later pass. */
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+const HL_KEYWORDS = new Set(['const','let','var','function','return','if','else','for','while','new','class','this','true','false','null','undefined','import','export','of','in','break','continue','switch','case','document','window','console']);
+function highlight(code){
+  // one regex, alternation order matters: comments, strings, numbers, words
+  const re = /(\/\/[^\n]*|<!--[\s\S]*?-->)|("(?:[^"\\\n]|\\.)*"|'(?:[^'\\\n]|\\.)*'|`(?:[^`\\]|\\.)*`)|(\b\d+(?:\.\d+)?\b)|([A-Za-z_$][A-Za-z0-9_$]*)/g;
+  let out = '', last = 0, m;
+  while((m = re.exec(code)) !== null){
+    out += esc(code.slice(last, m.index));   // plain text before the match
+    if(m[1])      out += '<span class="tok-com">' + esc(m[1]) + '</span>';
+    else if(m[2]) out += '<span class="tok-str">' + esc(m[2]) + '</span>';
+    else if(m[3]) out += '<span class="tok-num">' + m[3] + '</span>';
+    else if(m[4]) out += HL_KEYWORDS.has(m[4]) ? '<span class="tok-key">' + m[4] + '</span>' : esc(m[4]);
+    last = re.lastIndex;
+  }
+  out += esc(code.slice(last));              // trailing plain text
+  return out;
+}
+
+/* ---------- block renderers ---------- */
+function rid(){return 'x'+Math.random().toString(36).slice(2,9);}
+
+function renderBlock(b){
+  if(typeof b === 'string') return `<p>${b}</p>`;
+  switch(b.type){
+    case 'h': return `<h2>${b.text}</h2>`;
+    case 'h3': return `<h3>${b.text}</h3>`;
+    case 'p': return `<p>${b.html}</p>`;
+    case 'list': return `<ul>${b.items.map(i=>`<li>${i}</li>`).join('')}</ul>`;
+    case 'olist': return `<ol>${b.items.map(i=>`<li>${i}</li>`).join('')}</ol>`;
+    case 'note': {
+      const k = b.kind||'info';
+      const icon = {tip:'💡',warn:'⚠️',info:'ℹ️',key:'🔑'}[k]||'ℹ️';
+      const title = b.title || ({tip:'Tip',warn:'Watch out',info:'Note',key:'Key idea'}[k]);
+      return `<div class="note ${k}"><div class="nt">${icon} ${title}</div><div>${b.html}</div></div>`;
+    }
+    case 'exercise':
+      return `<div class="exercise"><div class="xh">✏️ ${b.title||'Your turn'}</div><div>${b.html}</div></div>`;
+    case 'code': {
+      const id=rid();
+      return `<div class="codeblock"><span class="lang">${b.lang||'code'}</span>
+        <button class="copybtn" data-copy="${id}">Copy</button>
+        <pre id="${id}"><code>${highlight(b.code)}</code></pre></div>`;
+    }
+    case 'run': {
+      const id=rid();
+      const code = b.code;
+      return `<div class="runner" data-runner>
+        <div class="rhead"><span class="dot"></span><span class="dot" style="background:#4a5290"></span><span class="dot" style="background:#5a63a8"></span>
+        <span class="label">${b.label||'Live editor — try changing the code, then press Run'}</span></div>
+        <textarea spellcheck="false" id="${id}">${esc(code)}</textarea>
+        <div class="ractions">
+          <button class="btn" data-run="${id}">▶ Run</button>
+          <button class="btn ghost" data-reset="${id}">↺ Reset</button>
+        </div>
+        <iframe data-stage="${id}" sandbox="allow-scripts" title="output"></iframe>
+      </div>`;
+    }
+    default: return '';
+  }
+}
+
+/* ---------- wire up interactive bits after render ---------- */
+function wireInteractions(root){
+  // copy buttons
+  root.querySelectorAll('[data-copy]').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const pre=document.getElementById(btn.dataset.copy);
+      const text=pre.innerText;
+      navigator.clipboard?.writeText(text);
+      const old=btn.textContent;btn.textContent='Copied!';setTimeout(()=>btn.textContent=old,1200);
+    });
+  });
+  // runnable demos
+  root.querySelectorAll('[data-runner]').forEach(r=>{
+    const ta=r.querySelector('textarea');
+    const id=ta.id;
+    const stage=r.querySelector(`[data-stage="${id}"]`);
+    const original=ta.value;
+    const run=()=>{ stage.srcdoc = ta.value; };
+    r.querySelector(`[data-run="${id}"]`).addEventListener('click',run);
+    r.querySelector(`[data-reset="${id}"]`).addEventListener('click',()=>{ta.value=original;run();});
+    // auto-run once so students see output immediately
+    run();
+    // grow textarea to fit
+    ta.style.height = Math.min(460, Math.max(150, ta.value.split('\n').length*20+24))+'px';
+  });
+}
+
+/* ---------- progress (saved in this browser) ---------- */
+const STORE='gamedevpro_progress_v1';
+function getDone(){ try{return JSON.parse(localStorage.getItem(STORE))||{};}catch(e){return {};} }
+function setDone(map){ try{localStorage.setItem(STORE,JSON.stringify(map));}catch(e){} }
+function isDone(id){ return !!getDone()[id]; }
+function toggleDone(id){ const m=getDone(); m[id]=!m[id]; setDone(m); }
+function doneCount(){ return Object.values(getDone()).filter(Boolean).length; }
+
+/* ---------- navigation / routing ---------- */
+let current = 'home';
+
+function buildNav(filter){
+  filter=(filter||'').toLowerCase();
+  const nav=document.getElementById('nav');
+  const months=[
+    {n:'Month 1 — Foundations', sub:'Setup, the web, HTML, CSS & JavaScript basics', range:[1,8]},
+    {n:'Month 2 — Core Game Mechanics', sub:'The game loop, input, motion, collisions, first games', range:[9,16]},
+    {n:'Month 3 — Real Projects & Polish', sub:'Breakout, a platformer, sound, scoring & shipping', range:[17,24]},
+  ];
+  let html = `<div class="navitem ${current==='home'?'active':''}" data-go="home"><span class="num">★</span><span class="t">Course Home<span class="wk">Start here</span></span></div>`;
+  months.forEach(m=>{
+    const items = SESSIONS.filter(s=>s.id>=m.range[0]&&s.id<=m.range[1])
+      .filter(s=> !filter || (s.title+s.objectives.join(' ')).toLowerCase().includes(filter));
+    if(!items.length) return;
+    html += `<div class="month-group"><div class="month-title">${m.n}<div class="month-sub">${m.sub}</div></div>`;
+    items.forEach(s=>{
+      const done=isDone(s.id)?'done':'';
+      const active=(current===s.id)?'active':'';
+      html += `<div class="navitem ${done} ${active}" data-go="${s.id}">
+        <span class="num">${isDone(s.id)?'✓':s.id}</span>
+        <span class="t">${s.title}<span class="wk">Week ${s.week} · Session ${s.id}</span></span></div>`;
+    });
+    html += `</div>`;
+  });
+  nav.innerHTML = html;
+  nav.querySelectorAll('[data-go]').forEach(el=>{
+    el.addEventListener('click',()=>{ go(el.dataset.go); closeSidebar(); });
+  });
+}
+
+function updateProgressUI(){
+  const c=doneCount();
+  document.getElementById('progressLabel').textContent = c+' / '+SESSIONS.length;
+  document.getElementById('pbarFill').style.width = (c/SESSIONS.length*100)+'%';
+}
+
+function renderHome(){
+  const total=SESSIONS.length, done=doneCount();
+  const full=SESSIONS.filter(s=>!s.outline).length;
+  return `<div class="home-hero">
+    <div class="crumbs">Welcome</div>
+    <h1>Build Real Games from Zero — with HTML, CSS & JavaScript</h1>
+    <p style="color:var(--muted);max-width:680px">A 3-month, twice-a-week journey designed for complete beginners. No prior coding needed. Every session builds on the last: you'll install your tools, learn the language of the web, and steadily create real playable 2D games — Pong, Snake, Breakout and a platformer — all in your browser.</p>
+    <div class="home-grid">
+      <div class="home-card"><div class="big">24</div><div class="lbl">Sessions</div></div>
+      <div class="home-card"><div class="big">12</div><div class="lbl">Weeks · 2×1hr / week</div></div>
+      <div class="home-card"><div class="big">${done}</div><div class="lbl">Completed by you</div></div>
+      <div class="home-card"><div class="big">4+</div><div class="lbl">Playable games</div></div>
+    </div>
+    <div class="note info" style="margin-top:24px"><div class="nt">ℹ️ This booklet covers Sessions 5 & 6</div><div>
+      This is an extracted companion for <b>Session 5 (Functions — Reusable Blocks of Code)</b> and <b>Session 6 (Making Decisions — if / else &amp; Comparisons)</b>. Read the explanations, then use the <b>green Run buttons</b> to edit and run code right here on the page (nothing to install for that). Mark a session <b>complete</b> at the bottom when you finish; your progress is saved in this browser.
+    </div></div>
+    <div class="note key" style="margin-top:8px"><div class="nt">🔑 The golden rule of learning to code</div><div>
+      Don't just read — <b>type the code yourself and break it on purpose</b>. Change a number, delete a line, see what happens, then fix it. That loop is where real understanding comes from.
+    </div></div>
+    <div style="margin-top:22px"><button class="btn" data-go="5">Start Session 5 →</button></div>
+  </div>`;
+}
+
+function renderSession(s){
+  const objectives = `<div class="obj"><h3>By the end of this session you will be able to</h3><ul>${s.objectives.map(o=>`<li>${o}</li>`).join('')}</ul></div>`;
+  let body='';
+  if(s.outline){
+    body = `<div class="outline-banner">📋 <b>Full session plan below.</b> This session's complete written walkthrough and live demos are being prepared. Everything you'll cover, in order, is listed here so you can see exactly where the course is heading.</div>`;
+    body += (s.blocks||[]).map(renderBlock).join('');
+  } else {
+    body = (s.blocks||[]).map(renderBlock).join('');
+  }
+  const prev=SESSIONS.find(x=>x.id===s.id-1);
+  const next=SESSIONS.find(x=>x.id===s.id+1);
+  const nav=`<div class="footer-nav">
+    <button class="${prev?'':'disabled'}" data-go="${prev?prev.id:'home'}"><span>Previous</span>${prev?('← '+prev.title):'← Home'}</button>
+    <button class="next ${next?'':'disabled'}" data-go="${next?next.id:'home'}"><span>Next</span>${next?(next.title+' →'):'Home →'}</button>
+  </div>`;
+  const complete=`<div class="complete-row">
+    <button class="checkbtn ${isDone(s.id)?'done':''}" id="completeBtn">${isDone(s.id)?'✓ Completed':'Mark this session complete'}</button>
+    <span style="color:var(--muted);font-size:13px">Week ${s.week} · ${s.duration||'≈ 60 min'} · Session ${s.id} of 24</span>
+  </div>`;
+  return `<div class="crumbs">Game Dev Pro · Week ${s.week} · Session ${s.id}</div>
+    <h1 class="session-title">${s.title}</h1>
+    <div class="session-meta">
+      <span class="chip brand">⏱ ${s.duration||'≈ 60 minutes'}</span>
+      <span class="chip">📅 Week ${s.week}</span>
+      <span class="chip">🧩 ${s.outline?'Planned':'Full lesson'}</span>
+    </div>
+    ${objectives}
+    <div class="content">${body}</div>
+    ${complete}
+    ${nav}`;
+}
+
+function go(target){
+  current = (target==='home')?'home':parseInt(target,10);
+  const c=document.getElementById('content');
+  if(current==='home'){
+    c.innerHTML=renderHome();
+  } else {
+    const s=SESSIONS.find(x=>x.id===current);
+    c.innerHTML=renderSession(s);
+    const cb=document.getElementById('completeBtn');
+    if(cb) cb.addEventListener('click',()=>{ toggleDone(s.id); go(s.id); updateProgressUI(); buildNav(document.getElementById('search').value); });
+  }
+  c.querySelectorAll('[data-go]').forEach(el=>el.addEventListener('click',()=>go(el.dataset.go)));
+  wireInteractions(c);
+  buildNav(document.getElementById('search').value);
+  window.scrollTo({top:0,behavior:'smooth'});
+  location.hash = current==='home'?'':('s'+current);
+}
+
+/* sidebar mobile */
+function openSidebar(){document.getElementById('sidebar').classList.add('open');document.getElementById('scrim').classList.add('show');}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('scrim').classList.remove('show');}
+
+/* boot */
+function boot(){
+  buildNav();
+  updateProgressUI();
+  const h=location.hash.replace('#','');
+  if(h.startsWith('s')) go(parseInt(h.slice(1),10)); else go('home');
+  document.getElementById('search').addEventListener('input',e=>buildNav(e.target.value));
+  document.getElementById('menuBtn').addEventListener('click',openSidebar);
+  document.getElementById('scrim').addEventListener('click',closeSidebar);
+}
+
+/* ============================================================
+   COURSE CONTENT is provided by the content script below, which
+   calls window.initCourse(data) once the SESSIONS array is ready.
+   ============================================================ */
+window.initCourse = function(data){ SESSIONS = data; boot(); };
+</script>
+
+<!-- Course content -->
+<script id="course-data">
+const SESSIONS_DATA = [
+
+{
+  id:5, week:3, duration:'≈ 60 minutes',
+  title:'Functions — Reusable Blocks of Code',
+  objectives:[
+    'Understand what a function is and why games depend on them',
+    'Write functions and call them to run the same code many times',
+    'Pass values in with parameters and get results back with return',
+    'Refactor repeated drawing code into tidy, reusable functions'
+  ],
+  blocks:[
+    {type:'p',html:`So far our code runs top to bottom, once. But games need to do the same thing over and over — draw the player, check the score, redraw the screen 60 times a second. A <b>function</b> is a named block of code you write once and <i>run whenever you like</i>. Functions are the single most important tool for keeping code organised, and from here on we'll use them constantly.`},
+    {type:'note',kind:'info',html:`Make a <code class="inline">session-05</code> folder. Today is mostly about how you <i>organise</i> code — a skill that pays off in every session that follows.`},
+
+    {type:'h',text:'1. A function is a named recipe'},
+    {type:'p',html:`Think of a function like a recipe card. You write the steps once, give the recipe a name, and then any time you want that result you just say the name. Here's the simplest possible function:`},
+    {type:'code',lang:'js',code:`// Define the function (write the recipe)
+function sayHello() {
+  console.log("Hello, game developer!");
+}
+
+// Call the function (use the recipe) — runs the code inside
+sayHello();
+sayHello();  // call it again — it runs again`},
+    {type:'list',items:[
+      `<code class="inline">function</code> is the keyword that starts a definition.`,
+      `<code class="inline">sayHello</code> is the name we chose. The empty <code class="inline">()</code> is where inputs go (none yet).`,
+      `The code between <code class="inline">{ }</code> is the function's <b>body</b> — it doesn't run until you call it.`,
+      `<code class="inline">sayHello()</code> with the parentheses is how you <b>call</b> (run) it.`
+    ]},
+    {type:'note',kind:'key',title:'Define vs call',html:`Writing <code class="inline">function sayHello() {…}</code> only <i>describes</i> the steps — nothing happens yet. The code runs only when you <b>call</b> it with <code class="inline">sayHello()</code>. Beginners often forget the parentheses; without them you're referring to the recipe, not cooking it.`},
+
+    {type:'h',text:'2. Parameters — giving a function inputs'},
+    {type:'p',html:`A recipe is more useful if you can change the ingredients. <b>Parameters</b> are named inputs you pass into a function. Inside the function they behave like variables:`},
+    {type:'code',lang:'js',code:`// 'name' is a parameter — a placeholder for whatever we pass in
+function greet(name) {
+  console.log("Welcome, " + name + "!");
+}
+
+greet("Ada");    // Welcome, Ada!
+greet("Sam");    // Welcome, Sam!`},
+    {type:'p',html:`You can have several parameters, separated by commas. This is how we'll draw a shape at any position and size:`},
+    {type:'code',lang:'js',code:`function drawCircle(x, y, radius) {
+  ctx.beginPath();
+  ctx.arc(x, y, radius, 0, Math.PI * 2);
+  ctx.fill();
+}
+
+drawCircle(50, 50, 20);    // small circle, top-left
+drawCircle(200, 120, 45);  // bigger circle, further down`},
+    {type:'note',kind:'tip',title:'Arguments vs parameters',html:`The names in the definition (<code class="inline">x, y, radius</code>) are <b>parameters</b>. The actual values you pass when calling (<code class="inline">200, 120, 45</code>) are <b>arguments</b>. Don't worry about the jargon — just remember: define with placeholders, call with real values.`},
+
+    {type:'h',text:'3. Return values — getting something back'},
+    {type:'p',html:`Some functions <i>do</i> something (like drawing). Others <i>calculate</i> something and hand the answer back with the <code class="inline">return</code> keyword:`},
+    {type:'code',lang:'js',code:`function add(a, b) {
+  return a + b;   // hand this value back to whoever called us
+}
+
+let total = add(3, 4);   // total is now 7
+console.log(total);
+
+// You can use the result directly:
+console.log("Double of 10 is " + add(10, 10));`},
+    {type:'note',kind:'warn',title:'return ends the function',html:`As soon as <code class="inline">return</code> runs, the function stops — any code after it is skipped. A function with no <code class="inline">return</code> simply gives back <code class="inline">undefined</code>, which is fine for "doer" functions like <code class="inline">drawCircle</code>.`},
+
+    {type:'h',text:'4. Why functions matter: DRY code'},
+    {type:'p',html:`Programmers follow a rule called <b>DRY — Don't Repeat Yourself</b>. If you copy-paste the same code in three places and later find a bug, you have to fix it three times. Put it in a function once, and you fix it in one place. Functions make your games shorter, clearer, and far easier to change.`},
+
+    {type:'h',text:'5. Hands-on: a scoreboard built from functions'},
+    {type:'p',html:`Remember the scoreboard from Session 4? Let's rebuild it cleanly using functions. Notice how <code class="inline">draw()</code> bundles all the drawing, and <code class="inline">addPoints(n)</code> takes a parameter so one button can add any amount. Press <b>Run</b>, then click the buttons.`},
+    {type:'run',label:'Functions in action — click the buttons',code:`<!DOCTYPE html>
+<html>
+<head><style>
+  body{font-family:system-ui;background:#0d1024;color:#e9ecff;text-align:center;padding:14px}
+  canvas{background:#0b0e24;border:3px solid #6c8cff;border-radius:12px}
+  button{margin:10px 4px 0;padding:9px 16px;border:none;border-radius:8px;
+    background:#6c8cff;color:#fff;font-size:14px;cursor:pointer}
+</style></head>
+<body>
+  <canvas id="game" width="340" height="150"></canvas><br>
+  <button id="b5">+5</button>
+  <button id="b10">+10</button>
+  <button id="reset">Reset</button>
+  <script>
+    const ctx = document.getElementById("game").getContext("2d");
+    let score = 0;
+
+    // One function that knows how to draw everything
+    function draw() {
+      ctx.fillStyle = "#0b0e24";
+      ctx.fillRect(0, 0, 340, 150);
+      ctx.fillStyle = "#34d399";
+      ctx.font = "28px system-ui";
+      ctx.fillText("Score: " + score, 90, 85);
+    }
+
+    // A function WITH A PARAMETER: add any number of points
+    function addPoints(amount) {
+      score += amount;
+      draw();           // redraw after changing the score
+    }
+
+    document.getElementById("b5").onclick  = function(){ addPoints(5);  };
+    document.getElementById("b10").onclick = function(){ addPoints(10); };
+    document.getElementById("reset").onclick = function(){ score = 0; draw(); };
+
+    draw();  // draw once at the start
+  <\/script>
+</body>
+</html>`},
+    {type:'p',html:`See how both buttons reuse the <i>same</i> <code class="inline">addPoints</code> function with a different argument? That's the power of parameters. And every button calls <code class="inline">draw()</code> instead of repeating the drawing code — that's DRY in action.`},
+
+    {type:'exercise',title:'Your turn',html:`<ol>
+      <li>Add a <code class="inline">-5</code> button that calls <code class="inline">addPoints(-5)</code>. (A negative argument works perfectly!)</li>
+      <li>Write a function <code class="inline">function double(n) { return n * 2; }</code> and <code class="inline">console.log(double(21))</code>.</li>
+      <li>Write a <code class="inline">drawBox(x, y, size, colour)</code> function and call it three times to draw three different squares on a canvas.</li>
+    </ol>`},
+    {type:'note',kind:'key',title:'Session 5 recap',html:`A <b>function</b> packages code under a name. <b>Define</b> it once, <b>call</b> it (with <code class="inline">()</code>) as often as you like. <b>Parameters</b> feed values in; <code class="inline">return</code> hands a result back. Functions keep code <b>DRY</b>. Next: making functions <i>decide</i> what to do with <code class="inline">if</code> statements.`}
+  ]
+},
+{
+  id:6, week:3, duration:'≈ 60 minutes',
+  title:'Making Decisions — if / else & Comparisons',
+  objectives:[
+    'Compare values with ===, <, >, <= and >=',
+    'Branch your code with if, else if and else',
+    'Combine conditions with AND (&&), OR (||) and NOT (!)',
+    'Keep a moving object inside the canvas using edge checks'
+  ],
+  blocks:[
+    {type:'p',html:`Every game is a flood of decisions: "did the ball hit the wall?", "is the player out of lives?", "is the game paused?". The <code class="inline">if</code> statement is how code <b>chooses</b> what to do. Master this and your programs stop being a fixed script and start <i>reacting</i> — which is exactly what a game is.`},
+    {type:'note',kind:'info',html:`Create <code class="inline">session-06</code>. Combine today's <code class="inline">if</code> statements with the functions from Session 5 and you have the core of real game logic.`},
+
+    {type:'h',text:'1. Comparing values'},
+    {type:'p',html:`Before we can decide, we need to <i>ask questions</i>. Comparison operators ask a question and answer with a boolean — <code class="inline">true</code> or <code class="inline">false</code>:`},
+    {type:'code',lang:'js',code:`5 > 3       // true   (greater than)
+5 < 3       // false  (less than)
+10 >= 10    // true   (greater than or equal)
+4 <= 2      // false  (less than or equal)
+7 === 7     // true   (exactly equal)
+7 === "7"   // false  (number 7 is NOT the same as text "7")
+5 !== 3     // true   (not equal)`},
+    {type:'note',kind:'warn',title:'Always use === (three equals)',html:`Use <code class="inline">===</code> to test equality, not <code class="inline">==</code>. The triple version checks value <i>and</i> type and behaves predictably; the double version does surprising automatic conversions (e.g. <code class="inline">0 == ""</code> is <code class="inline">true</code>!). Make <code class="inline">===</code> a firm habit. For "not equal", use <code class="inline">!==</code>.`},
+
+    {type:'h',text:'2. The if statement'},
+    {type:'p',html:`An <code class="inline">if</code> runs a block of code <b>only when</b> its question is true:`},
+    {type:'code',lang:'js',code:`let score = 120;
+
+if (score > 100) {
+  console.log("You beat the high score!");
+}`},
+    {type:'p',html:`Add <code class="inline">else</code> for "otherwise", and <code class="inline">else if</code> to check more cases in order:`},
+    {type:'code',lang:'js',code:`let lives = 0;
+
+if (lives > 1) {
+  console.log("Keep going!");
+} else if (lives === 1) {
+  console.log("Last life — be careful!");
+} else {
+  console.log("Game over.");
+}`},
+    {type:'list',items:[
+      `JavaScript checks each condition from top to bottom and runs the <b>first</b> one that's true.`,
+      `<code class="inline">else</code> is the catch-all that runs if none matched. It's optional.`,
+      `Indent the code inside the braces — it makes the structure readable (and is a professional habit).`
+    ]},
+
+    {type:'h',text:'3. Combining conditions: AND, OR, NOT'},
+    {type:'p',html:`Real decisions often depend on several things at once. Logical operators join conditions:`},
+    {type:'list',items:[
+      `<code class="inline">&&</code> (<b>AND</b>) — true only if <i>both</i> sides are true.`,
+      `<code class="inline">||</code> (<b>OR</b>) — true if <i>at least one</i> side is true.`,
+      `<code class="inline">!</code> (<b>NOT</b>) — flips true to false and back.`
+    ]},
+    {type:'code',lang:'js',code:`let x = 50;
+let canvasWidth = 400;
+
+// Is x inside the canvas? It must be past the left AND before the right.
+if (x > 0 && x < canvasWidth) {
+  console.log("On screen");
+}
+
+let isPaused = false;
+if (!isPaused) {        // "if NOT paused"
+  console.log("The game is running");
+}`},
+    {type:'note',kind:'key',title:'Reading && and ||',html:`Say them out loud: <code class="inline">&&</code> is "and", <code class="inline">||</code> is "or", <code class="inline">!</code> is "not". "If past the left <b>and</b> before the right" maps straight onto <code class="inline">x &gt; 0 && x &lt; width</code>.`},
+
+    {type:'h',text:'4. The most useful game decision: staying in bounds'},
+    {type:'p',html:`Here's a decision you'll use in nearly every game: keeping a ball <i>inside</i> the canvas by checking its edges and bouncing it back. When the ball reaches an edge, we flip its direction. Press <b>Run</b> and watch it bounce — then change the start position or the speed.`},
+    {type:'run',label:'Edge checks make the ball bounce — change speed/position and Run',code:`<!DOCTYPE html>
+<html>
+<head><style>
+  body{margin:0;background:#0d1024;display:flex;justify-content:center;padding:14px}
+  canvas{background:#0b0e24;border:3px solid #6c8cff;border-radius:12px}
+</style></head>
+<body>
+  <canvas id="game" width="360" height="220"></canvas>
+  <script>
+    const ctx = document.getElementById("game").getContext("2d");
+    const W = 360, H = 220, r = 14;
+
+    let x = 60, y = 60;     // ball position
+    let vx = 3, vy = 2.4;   // ball velocity (speed + direction)
+
+    function update() {
+      x += vx;
+      y += vy;
+
+      // DECISIONS: if the ball reaches a horizontal edge, reverse vx
+      if (x - r < 0 || x + r > W) {
+        vx = -vx;
+      }
+      // if it reaches a vertical edge, reverse vy
+      if (y - r < 0 || y + r > H) {
+        vy = -vy;
+      }
+    }
+
+    function draw() {
+      ctx.fillStyle = "#0b0e24";
+      ctx.fillRect(0, 0, W, H);
+      ctx.fillStyle = "#34d399";
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    function loop() {
+      update();
+      draw();
+      requestAnimationFrame(loop);  // we'll explain this fully in Session 8
+    }
+    loop();
+  <\/script>
+</body>
+</html>`},
+    {type:'p',html:`The two <code class="inline">if</code> statements are the whole trick: "<i>if</i> the ball has gone past an edge, flip its direction." Notice the OR (<code class="inline">||</code>) — we bounce whether it hit the <i>left</i> edge or the <i>right</i> edge. You're seeing a tiny preview of the game loop too; we'll build that properly in Session 8.`},
+
+    {type:'h',text:'5. Booleans as switches'},
+    {type:'p',html:`A boolean variable makes a perfect on/off switch. To pause a game, keep an <code class="inline">isPaused</code> flag and only update the world when it's <code class="inline">false</code>:`},
+    {type:'code',lang:'js',code:`let isPaused = false;
+
+function togglePause() {
+  isPaused = !isPaused;   // flip it: false→true, true→false
+}
+
+function update() {
+  if (isPaused) {
+    return;   // do nothing this frame
+  }
+  // ...normal game updates happen here...
+}`},
+
+    {type:'exercise',title:'Practice the logic',html:`<ol>
+      <li>In the bouncing demo, change <code class="inline">vx</code> and <code class="inline">vy</code> to make the ball move faster, then slower.</li>
+      <li>Add a colour change: inside <code class="inline">update()</code>, if <code class="inline">x &lt; W/2</code> use one colour, <code class="inline">else</code> another. (You'll set <code class="inline">ctx.fillStyle</code> based on a variable.)</li>
+      <li>Write an <code class="inline">if/else if/else</code> that logs "Win", "Draw" or "Lose" based on a <code class="inline">myScore</code> vs <code class="inline">theirScore</code> comparison.</li>
+    </ol>`},
+    {type:'note',kind:'key',title:'Session 6 recap',html:`Comparisons (<code class="inline">===</code>, <code class="inline">&lt;</code>, <code class="inline">&gt;</code>…) ask true/false questions. <code class="inline">if</code> / <code class="inline">else if</code> / <code class="inline">else</code> chooses what runs. <code class="inline">&&</code>, <code class="inline">||</code> and <code class="inline">!</code> combine conditions. Edge checks that flip velocity are the heart of bouncing. Next: handling <i>many</i> things at once with loops and arrays.`}
+  ]
+},
+];
+window.initCourse(SESSIONS_DATA);
+</script>
+
+</body>
+</html>

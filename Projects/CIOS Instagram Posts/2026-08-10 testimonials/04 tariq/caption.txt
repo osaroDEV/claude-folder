@@ -1,0 +1,63 @@
+CIOS INSTAGRAM — POST 4 OF 5 (TESTIMONIAL SERIES)
+Tariq, age 17 · Data Science Intro · 6-slide carousel
+CTA keyword: DATA
+
+────────────────────────────────────────
+CAPTION (paste this)
+────────────────────────────────────────
+
+This one isn't from a parent. It's from the student.
+
+Tariq, 17, loved playing fantasy sports. He had no idea how anyone actually analysed all the numbers behind it.
+
+So he learned.
+
+On our Data Science Intro path he worked with real datasets in Python and built StatTracker: a visual dashboard that analyses and graphs his favourite basketball team's season performance.
+
+In his words:
+
+"I went from knowing nothing about data to predicting game stats on my own dashboard."
+
+And on the project itself: "It's the coolest project I've ever made."
+
+Here's what we'd point out to parents: nobody assigned him basketball. We started from something he already cared about and taught the skills through it. That's why it stuck.
+
+Whatever your teenager is obsessed with right now — sport, music, football tables, anime rankings — there's a data project hiding inside it.
+
+Ages 8 to 18. Live 1-on-1 mentorship, real projects.
+
+Comment "DATA" and we'll send you the Data Science Intro outline plus a free taster session. 📊
+
+#DataScience #CodingForTeens #LearnPython #TechForYouth #STEMKids #CodingSchool #CodeIllustrated
+
+────────────────────────────────────────
+SLIDE ORDER
+────────────────────────────────────────
+
+01  Cover — "I went from knowing nothing about data to predicting game stats on my own dashboard."
+02  Where it started — fantasy sports
+03  The project — StatTracker
+04  The method — We didn't start with Python. We started with basketball.
+05  What's your teenager into? — four project-idea cards
+06  CTA — Comment "DATA"
+
+────────────────────────────────────────
+NOTES
+────────────────────────────────────────
+
+· First alt text (slide 01): Dark navy card reading "I went from knowing nothing about data
+  to predicting game stats on my own dashboard." — a testimonial in the student's own words
+  from Tariq B., age 17.
+
+· This is the only post in the series in the student's own voice. Mark slide 01 visually —
+  a different eyebrow pill colour or a small "STUDENT STORY" badge — so it reads as
+  authentic before anyone reads a word.
+
+· A screenshot of the real StatTracker dashboard is the most persuasive asset in the whole
+  series. Use it large on slide 03. Messy real charts beat a polished fake one.
+
+· Slide 05 is the save-worthy one — keep it clean and uncluttered.
+
+· Reply publicly to every "DATA" comment with something short before you DM.
+
+· Confirm written consent from Tariq's family before posting his name and age.

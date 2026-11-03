@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Game Dev Pro — Course Companion · Sessions 9 &amp; 10 (Beginner)</title>
+<style>
+  :root{
+    --bg:#0f1226; --bg2:#161a36; --panel:#1c2147; --panel2:#232a5c;
+    --ink:#e9ecff; --muted:#a3aad6; --line:#2c3470;
+    --brand:#6c8cff; --brand2:#9a6bff; --accent:#34d399; --warn:#fbbf24; --bad:#fb7185;
+    --code-bg:#0b0e24; --radius:14px; --maxw:1280px;
+    --mono:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;
+    --sans:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{background:linear-gradient(180deg,#0c0f22,#0f1226 40%);color:var(--ink);font-family:var(--sans);line-height:1.6;font-size:16px}
+  a{color:var(--brand)}
+  /* Header */
+  header.topbar{position:sticky;top:0;z-index:30;background:rgba(13,16,38,.85);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .topbar-inner{max-width:var(--maxw);margin:0 auto;display:flex;align-items:center;gap:14px;padding:12px 18px}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.3px}
+  .logo .badge{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--brand),var(--brand2));display:grid;place-items:center;font-size:18px}
+  .logo small{display:block;font-weight:500;color:var(--muted);font-size:11px;letter-spacing:.5px}
+  .topbar .spacer{flex:1}
+  .progresswrap{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)}
+  .pbar{width:160px;height:8px;background:#0c1030;border-radius:99px;overflow:hidden;border:1px solid var(--line)}
+  .pbar > i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--brand));transition:width .4s}
+  .menu-btn{display:none;background:var(--panel);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:8px 11px;cursor:pointer;font-size:18px}
+  /* Layout */
+  .layout{max-width:var(--maxw);margin:0 auto;display:grid;grid-template-columns:320px 1fr;gap:26px;padding:22px 18px 80px}
+  aside.sidebar{position:sticky;top:74px;align-self:start;max-height:calc(100vh - 90px);overflow:auto;padding-right:6px}
+  .search{width:100%;padding:10px 12px;background:var(--panel);border:1px solid var(--line);border-radius:10px;color:var(--ink);margin-bottom:14px;font-size:14px}
+  .search::placeholder{color:var(--muted)}
+  .month-group{margin-bottom:16px}
+  .month-title{font-size:12px;letter-spacing:1.2px;text-transform:uppercase;color:var(--brand);font-weight:800;margin:6px 4px 8px}
+  .month-sub{font-size:11px;color:var(--muted);font-weight:500;text-transform:none;letter-spacing:.2px;margin-top:2px}
+  .navitem{display:flex;align-items:center;gap:10px;padding:9px 11px;border-radius:10px;cursor:pointer;color:var(--muted);border:1px solid transparent;font-size:14px}
+  .navitem:hover{background:var(--panel);color:var(--ink)}
+  .navitem.active{background:linear-gradient(135deg,rgba(108,140,255,.25),rgba(154,107,255,.18));border-color:var(--line);color:var(--ink)}
+  .navitem .num{flex:none;width:26px;height:26px;border-radius:8px;background:#0c1030;border:1px solid var(--line);display:grid;place-items:center;font-size:12px;font-weight:700;color:var(--muted)}
+  .navitem.done .num{background:var(--accent);color:#08130d;border-color:transparent}
+  .navitem .t{flex:1;line-height:1.25}
+  .navitem .wk{font-size:10px;color:var(--muted);display:block}
+  .navitem.locked{opacity:.55}
+  /* Main */
+  main.content{min-width:0}
+  .card{background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);padding:26px 30px;box-shadow:0 10px 40px rgba(0,0,0,.25)}
+  .crumbs{font-size:12.5px;color:var(--muted);letter-spacing:.3px;text-transform:uppercase;margin-bottom:8px}
+  h1.session-title{font-size:30px;line-height:1.15;margin:0 0 6px}
+  .session-meta{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 20px}
+  .chip{font-size:12px;padding:5px 11px;border-radius:99px;background:var(--panel);border:1px solid var(--line);color:var(--muted)}
+  .chip.brand{color:var(--ink);border-color:var(--brand);background:rgba(108,140,255,.12)}
+  .obj{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:0 0 24px}
+  .obj h3{margin:0 0 8px;font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--accent)}
+  .obj ul{margin:0;padding-left:20px}
+  .obj li{margin:4px 0}
+  .content h2{font-size:22px;margin:34px 0 10px;padding-top:6px;border-top:1px solid var(--line);padding-top:22px}
+  .content h2:first-of-type{border-top:none;padding-top:0}
+  .content h3{font-size:17px;margin:22px 0 6px;color:#cfd6ff}
+  .content p{margin:10px 0}
+  .content ul,.content ol{margin:10px 0;padding-left:22px}
+  .content li{margin:6px 0}
+  code.inline{font-family:var(--mono);background:#0c1030;border:1px solid var(--line);padding:1px 6px;border-radius:6px;font-size:13.5px;color:#ffd9a0}
+  kbd{font-family:var(--mono);background:#0c1030;border:1px solid var(--line);border-bottom-width:2px;padding:1px 7px;border-radius:6px;font-size:12.5px}
+  /* callouts */
+  .note{border-radius:12px;padding:14px 16px 14px 16px;margin:18px 0;border:1px solid var(--line);position:relative}
+  .note .nt{font-weight:700;font-size:13px;letter-spacing:.4px;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+  .note.tip{background:rgba(52,211,153,.08);border-color:rgba(52,211,153,.4)}
+  .note.tip .nt{color:var(--accent)}
+  .note.warn{background:rgba(251,191,36,.08);border-color:rgba(251,191,36,.4)}
+  .note.warn .nt{color:var(--warn)}
+  .note.info{background:rgba(108,140,255,.08);border-color:rgba(108,140,255,.4)}
+  .note.info .nt{color:var(--brand)}
+  .note.key{background:rgba(154,107,255,.08);border-color:rgba(154,107,255,.45)}
+  .note.key .nt{color:#c5a8ff}
+  /* static code */
+  .codeblock{position:relative;margin:16px 0}
+  .codeblock pre{margin:0;background:var(--code-bg);border:1px solid var(--line);border-radius:12px;padding:16px 16px;overflow:auto;font-family:var(--mono);font-size:13.5px;line-height:1.55}
+  .codeblock .lang{position:absolute;top:8px;right:54px;font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+  .copybtn{position:absolute;top:7px;right:8px;background:var(--panel);border:1px solid var(--line);color:var(--muted);border-radius:7px;padding:3px 9px;font-size:11px;cursor:pointer}
+  .copybtn:hover{color:var(--ink)}
+  .tok-key{color:#ff9ecd}.tok-str{color:#9be8a0}.tok-num{color:#ffd9a0}.tok-com{color:#6f78b0;font-style:italic}.tok-fn{color:#8fd3ff}
+  /* runnable demo */
+  .runner{margin:18px 0;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--code-bg)}
+  .runner .rhead{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--panel);border-bottom:1px solid var(--line);font-size:12px;color:var(--muted)}
+  .runner .rhead .dot{width:10px;height:10px;border-radius:99px;background:#3a4280}
+  .runner .rhead .label{flex:1;font-weight:600;color:var(--ink)}
+  .runner textarea{width:100%;border:none;background:var(--code-bg);color:#e7ecff;font-family:var(--mono);font-size:13px;line-height:1.5;padding:14px;resize:vertical;min-height:150px;outline:none}
+  .runner .ractions{display:flex;gap:8px;padding:8px 12px;background:var(--panel);border-top:1px solid var(--line)}
+  .btn{background:linear-gradient(135deg,var(--brand),var(--brand2));color:white;border:none;border-radius:9px;padding:8px 16px;font-size:13px;font-weight:600;cursor:pointer}
+  .btn.ghost{background:var(--panel2);color:var(--ink);border:1px solid var(--line)}
+  .btn:hover{filter:brightness(1.08)}
+  .runner .stage{background:#fff;min-height:60px}
+  .runner iframe{width:100%;border:none;display:block;background:#fff;min-height:220px}
+  /* exercise */
+  .exercise{background:linear-gradient(135deg,rgba(154,107,255,.1),rgba(108,140,255,.06));border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:20px 0}
+  .exercise .xh{font-weight:800;color:#c5a8ff;font-size:13px;letter-spacing:.6px;text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+  /* outline (sessions not yet fully written) */
+  .outline-banner{background:rgba(108,140,255,.08);border:1px dashed var(--brand);border-radius:12px;padding:16px 18px;margin:8px 0 22px;color:var(--muted);font-size:14px}
+  .outline-banner b{color:var(--ink)}
+  .footer-nav{display:flex;justify-content:space-between;gap:12px;margin-top:30px}
+  .footer-nav button{flex:1;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;color:var(--ink);cursor:pointer}
+  .footer-nav button:hover{border-color:var(--brand)}
+  .footer-nav button.next{text-align:right}
+  .footer-nav button span{display:block;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+  .footer-nav button.disabled{opacity:.4;pointer-events:none}
+  .complete-row{display:flex;align-items:center;gap:12px;margin-top:24px;padding-top:20px;border-top:1px solid var(--line);flex-wrap:wrap}
+  .checkbtn{display:inline-flex;align-items:center;gap:9px;background:var(--panel);border:1px solid var(--line);border-radius:99px;padding:9px 18px;cursor:pointer;font-weight:600;font-size:14px}
+  .checkbtn.done{background:var(--accent);color:#08130d;border-color:transparent}
+  .home-hero{padding:8px 4px}
+  .home-hero h1{font-size:34px;margin:0 0 8px;background:linear-gradient(90deg,#fff,#b9c4ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .home-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-top:20px}
+  .home-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px}
+  .home-card .big{font-size:26px;font-weight:800}
+  .home-card .lbl{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px}
+  @media (max-width:900px){
+    .layout{grid-template-columns:1fr}
+    aside.sidebar{position:fixed;top:0;left:0;bottom:0;width:300px;max-height:none;background:var(--bg);z-index:40;padding:74px 14px 20px;transform:translateX(-105%);transition:transform .25s;border-right:1px solid var(--line)}
+    aside.sidebar.open{transform:none}
+    .menu-btn{display:block}
+    .scrim{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:35}
+    .scrim.show{display:block}
+    .card{padding:20px 18px}
+  }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <button class="menu-btn" id="menuBtn" aria-label="Menu">☰</button>
+    <div class="logo">
+      <div class="badge">🎮</div>
+      <div>Game Dev Pro<small>BEGINNER COURSE COMPANION</small></div>
+    </div>
+    <div class="spacer"></div>
+    <div class="progresswrap">
+      <span id="progressLabel">0 / 24</span>
+      <div class="pbar"><i id="pbarFill"></i></div>
+    </div>
+  </div>
+</header>
+
+<div class="scrim" id="scrim"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <input class="search" id="search" placeholder="🔍  Search sessions…" />
+    <div id="nav"></div>
+  </aside>
+  <main class="content">
+    <div class="card" id="content"></div>
+  </main>
+</div>
+
+<script>
+/* ============================================================
+   GAME DEV PRO — COURSE COMPANION
+   Engine: rendering, navigation, live code runner, progress.
+   Course content lives in the SESSIONS array further below.
+   ============================================================ */
+
+let SESSIONS = [];
+
+/* ---------- tiny syntax highlighter (HTML/CSS/JS-ish) ----------
+   Single-pass tokenizer. We scan the RAW code once and emit HTML,
+   escaping each plain slice as we go. Because we never re-scan the
+   output, the <span> tags we inject (which contain class="...") can
+   never be corrupted by a later pass. */
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+const HL_KEYWORDS = new Set(['const','let','var','function','return','if','else','for','while','new','class','this','true','false','null','undefined','import','export','of','in','break','continue','switch','case','document','window','console']);
+function highlight(code){
+  // one regex, alternation order matters: comments, strings, numbers, words
+  const re = /(\/\/[^\n]*|<!--[\s\S]*?-->)|("(?:[^"\\\n]|\\.)*"|'(?:[^'\\\n]|\\.)*'|`(?:[^`\\]|\\.)*`)|(\b\d+(?:\.\d+)?\b)|([A-Za-z_$][A-Za-z0-9_$]*)/g;
+  let out = '', last = 0, m;
+  while((m = re.exec(code)) !== null){
+    out += esc(code.slice(last, m.index));   // plain text before the match
+    if(m[1])      out += '<span class="tok-com">' + esc(m[1]) + '</span>';
+    else if(m[2]) out += '<span class="tok-str">' + esc(m[2]) + '</span>';
+    else if(m[3]) out += '<span class="tok-num">' + m[3] + '</span>';
+    else if(m[4]) out += HL_KEYWORDS.has(m[4]) ? '<span class="tok-key">' + m[4] + '</span>' : esc(m[4]);
+    last = re.lastIndex;
+  }
+  out += esc(code.slice(last));              // trailing plain text
+  return out;
+}
+
+/* ---------- block renderers ---------- */
+function rid(){return 'x'+Math.random().toString(36).slice(2,9);}
+
+function renderBlock(b){
+  if(typeof b === 'string') return `<p>${b}</p>`;
+  switch(b.type){
+    case 'h': return `<h2>${b.text}</h2>`;
+    case 'h3': return `<h3>${b.text}</h3>`;
+    case 'p': return `<p>${b.html}</p>`;
+    case 'list': return `<ul>${b.items.map(i=>`<li>${i}</li>`).join('')}</ul>`;
+    case 'olist': return `<ol>${b.items.map(i=>`<li>${i}</li>`).join('')}</ol>`;
+    case 'note': {
+      const k = b.kind||'info';
+      const icon = {tip:'💡',warn:'⚠️',info:'ℹ️',key:'🔑'}[k]||'ℹ️';
+      const title = b.title || ({tip:'Tip',warn:'Watch out',info:'Note',key:'Key idea'}[k]);
+      return `<div class="note ${k}"><div class="nt">${icon} ${title}</div><div>${b.html}</div></div>`;
+    }
+    case 'exercise':
+      return `<div class="exercise"><div class="xh">✏️ ${b.title||'Your turn'}</div><div>${b.html}</div></div>`;
+    case 'code': {
+      const id=rid();
+      return `<div class="codeblock"><span class="lang">${b.lang||'code'}</span>
+        <button class="copybtn" data-copy="${id}">Copy</button>
+        <pre id="${id}"><code>${highlight(b.code)}</code></pre></div>`;
+    }
+    case 'run': {
+      const id=rid();
+      const code = b.code;
+      return `<div class="runner" data-runner>
+        <div class="rhead"><span class="dot"></span><span class="dot" style="background:#4a5290"></span><span class="dot" style="background:#5a63a8"></span>
+        <span class="label">${b.label||'Live editor — try changing the code, then press Run'}</span></div>
+        <textarea spellcheck="false" id="${id}">${esc(code)}</textarea>
+        <div class="ractions">
+          <button class="btn" data-run="${id}">▶ Run</button>
+          <button class="btn ghost" data-reset="${id}">↺ Reset</button>
+        </div>
+        <iframe data-stage="${id}" sandbox="allow-scripts" title="output"></iframe>
+      </div>`;
+    }
+    default: return '';
+  }
+}
+
+/* ---------- wire up interactive bits after render ---------- */
+function wireInteractions(root){
+  // copy buttons
+  root.querySelectorAll('[data-copy]').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const pre=document.getElementById(btn.dataset.copy);
+      const text=pre.innerText;
+      navigator.clipboard?.writeText(text);
+      const old=btn.textContent;btn.textContent='Copied!';setTimeout(()=>btn.textContent=old,1200);
+    });
+  });
+  // runnable demos
+  root.querySelectorAll('[data-runner]').forEach(r=>{
+    const ta=r.querySelector('textarea');
+    const id=ta.id;
+    const stage=r.querySelector(`[data-stage="${id}"]`);
+    const original=ta.value;
+    const run=()=>{ stage.srcdoc = ta.value; };
+    r.querySelector(`[data-run="${id}"]`).addEventListener('click',run);
+    r.querySelector(`[data-reset="${id}"]`).addEventListener('click',()=>{ta.value=original;run();});
+    // auto-run once so students see output immediately
+    run();
+    // grow textarea to fit
+    ta.style.height = Math.min(460, Math.max(150, ta.value.split('\n').length*20+24))+'px';
+  });
+}
+
+/* ---------- progress (saved in this browser) ---------- */
+const STORE='gamedevpro_progress_v1';
+function getDone(){ try{return JSON.parse(localStorage.getItem(STORE))||{};}catch(e){return {};} }
+function setDone(map){ try{localStorage.setItem(STORE,JSON.stringify(map));}catch(e){} }
+function isDone(id){ return !!getDone()[id]; }
+function toggleDone(id){ const m=getDone(); m[id]=!m[id]; setDone(m); }
+function doneCount(){ return Object.values(getDone()).filter(Boolean).length; }
+
+/* ---------- navigation / routing ---------- */
+let current = 'home';
+
+function buildNav(filter){
+  filter=(filter||'').toLowerCase();
+  const nav=document.getElementById('nav');
+  const months=[
+    {n:'Month 1 — Foundations', sub:'Setup, the web, HTML, CSS & JavaScript basics', range:[1,8]},
+    {n:'Month 2 — Core Game Mechanics', sub:'The game loop, input, motion, collisions, first games', range:[9,16]},
+    {n:'Month 3 — Real Projects & Polish', sub:'Breakout, a platformer, sound, scoring & shipping', range:[17,24]},
+  ];
+  let html = `<div class="navitem ${current==='home'?'active':''}" data-go="home"><span class="num">★</span><span class="t">Course Home<span class="wk">Start here</span></span></div>`;
+  months.forEach(m=>{
+    const items = SESSIONS.filter(s=>s.id>=m.range[0]&&s.id<=m.range[1])
+      .filter(s=> !filter || (s.title+s.objectives.join(' ')).toLowerCase().includes(filter));
+    if(!items.length) return;
+    html += `<div class="month-group"><div class="month-title">${m.n}<div class="month-sub">${m.sub}</div></div>`;
+    items.forEach(s=>{
+      const done=isDone(s.id)?'done':'';
+      const active=(current===s.id)?'active':'';
+      html += `<div class="navitem ${done} ${active}" data-go="${s.id}">
+        <span class="num">${isDone(s.id)?'✓':s.id}</span>
+        <span class="t">${s.title}<span class="wk">Week ${s.week} · Session ${s.id}</span></span></div>`;
+    });
+    html += `</div>`;
+  });
+  nav.innerHTML = html;
+  nav.querySelectorAll('[data-go]').forEach(el=>{
+    el.addEventListener('click',()=>{ go(el.dataset.go); closeSidebar(); });
+  });
+}
+
+function updateProgressUI(){
+  const c=doneCount();
+  document.getElementById('progressLabel').textContent = c+' / '+SESSIONS.length;
+  document.getElementById('pbarFill').style.width = (c/SESSIONS.length*100)+'%';
+}
+
+function renderHome(){
+  const total=SESSIONS.length, done=doneCount();
+  const full=SESSIONS.filter(s=>!s.outline).length;
+  return `<div class="home-hero">
+    <div class="crumbs">Welcome</div>
+    <h1>Build Real Games from Zero — with HTML, CSS & JavaScript</h1>
+    <p style="color:var(--muted);max-width:680px">A 3-month, twice-a-week journey designed for complete beginners. No prior coding needed. Every session builds on the last: you'll install your tools, learn the language of the web, and steadily create real playable 2D games — Pong, Snake, Breakout and a platformer — all in your browser.</p>
+    <div class="home-grid">
+      <div class="home-card"><div class="big">24</div><div class="lbl">Sessions</div></div>
+      <div class="home-card"><div class="big">12</div><div class="lbl">Weeks · 2×1hr / week</div></div>
+      <div class="home-card"><div class="big">${done}</div><div class="lbl">Completed by you</div></div>
+      <div class="home-card"><div class="big">4+</div><div class="lbl">Playable games</div></div>
+    </div>
+    <div class="note info" style="margin-top:24px"><div class="nt">ℹ️ This booklet covers Sessions 9 &amp; 10 — the start of Month 2</div><div>
+      This is an extracted companion for <b>Session 9 (Animation &amp; Movement)</b> and <b>Session 10 (Keyboard Input — Controlling the Player)</b>. Read the explanations, then use the <b>Run buttons</b> to edit and run code right here on the page (nothing to install for that). Mark a session <b>complete</b> at the bottom when you finish; your progress is saved in this browser.
+    </div></div>
+    <div class="note tip" style="margin-top:8px"><div class="nt">💡 What you need before starting</div><div>
+      These two sessions assume you already have the <b>game loop</b> from Session 8 — the <code class="inline">update()</code> / <code class="inline">draw()</code> / <code class="inline">loop()</code> skeleton. If you can't write those three functions from memory yet, go back to Session 8 first. Nothing here replaces the engine; it all sits on top of it. Session 10's demo also needs you to <b>click the canvas first</b> so it can hear your keyboard.
+    </div></div>
+    <div class="note key" style="margin-top:8px"><div class="nt">🔑 The golden rule of learning to code</div><div>
+      Don't just read — <b>type the code yourself and break it on purpose</b>. Change a number, delete a line, see what happens, then fix it. That loop is where real understanding comes from.
+    </div></div>
+    <div style="margin-top:22px"><button class="btn" data-go="9">Start Session 9 →</button></div>
+  </div>`;
+}
+
+function renderSession(s){
+  const objectives = `<div class="obj"><h3>By the end of this session you will be able to</h3><ul>${s.objectives.map(o=>`<li>${o}</li>`).join('')}</ul></div>`;
+  let body='';
+  if(s.outline){
+    body = `<div class="outline-banner">📋 <b>Full session plan below.</b> This session's complete written walkthrough and live demos are being prepared. Everything you'll cover, in order, is listed here so you can see exactly where the course is heading.</div>`;
+    body += (s.blocks||[]).map(renderBlock).join('');
+  } else {
+    body = (s.blocks||[]).map(renderBlock).join('');
+  }
+  const prev=SESSIONS.find(x=>x.id===s.id-1);
+  const next=SESSIONS.find(x=>x.id===s.id+1);
+  const nav=`<div class="footer-nav">
+    <button class="${prev?'':'disabled'}" data-go="${prev?prev.id:'home'}"><span>Previous</span>${prev?('← '+prev.title):'← Home'}</button>
+    <button class="next ${next?'':'disabled'}" data-go="${next?next.id:'home'}"><span>Next</span>${next?(next.title+' →'):'Home →'}</button>
+  </div>`;
+  const complete=`<div class="complete-row">
+    <button class="checkbtn ${isDone(s.id)?'done':''}" id="completeBtn">${isDone(s.id)?'✓ Completed':'Mark this session complete'}</button>
+    <span style="color:var(--muted);font-size:13px">Week ${s.week} · ${s.duration||'≈ 60 min'} · Session ${s.id} of 24</span>
+  </div>`;
+  return `<div class="crumbs">Game Dev Pro · Week ${s.week} · Session ${s.id}</div>
+    <h1 class="session-title">${s.title}</h1>
+    <div class="session-meta">
+      <span class="chip brand">⏱ ${s.duration||'≈ 60 minutes'}</span>
+      <span class="chip">📅 Week ${s.week}</span>
+      <span class="chip">🧩 ${s.outline?'Planned':'Full lesson'}</span>
+    </div>
+    ${objectives}
+    <div class="content">${body}</div>
+    ${complete}
+    ${nav}`;
+}
+
+function go(target){
+  current = (target==='home')?'home':parseInt(target,10);
+  const c=document.getElementById('content');
+  if(current==='home'){
+    c.innerHTML=renderHome();
+  } else {
+    const s=SESSIONS.find(x=>x.id===current);
+    c.innerHTML=renderSession(s);
+    const cb=document.getElementById('completeBtn');
+    if(cb) cb.addEventListener('click',()=>{ toggleDone(s.id); go(s.id); updateProgressUI(); buildNav(document.getElementById('search').value); });
+  }
+  c.querySelectorAll('[data-go]').forEach(el=>el.addEventListener('click',()=>go(el.dataset.go)));
+  wireInteractions(c);
+  buildNav(document.getElementById('search').value);
+  window.scrollTo({top:0,behavior:'smooth'});
+  location.hash = current==='home'?'':('s'+current);
+}
+
+/* sidebar mobile */
+function openSidebar(){document.getElementById('sidebar').classList.add('open');document.getElementById('scrim').classList.add('show');}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('scrim').classList.remove('show');}
+
+/* boot */
+function boot(){
+  buildNav();
+  updateProgressUI();
+  const h=location.hash.replace('#','');
+  if(h.startsWith('s')) go(parseInt(h.slice(1),10)); else go('home');
+  document.getElementById('search').addEventListener('input',e=>buildNav(e.target.value));
+  document.getElementById('menuBtn').addEventListener('click',openSidebar);
+  document.getElementById('scrim').addEventListener('click',closeSidebar);
+}
+
+/* ============================================================
+   COURSE CONTENT is provided by the content script below, which
+   calls window.initCourse(data) once the SESSIONS array is ready.
+   ============================================================ */
+window.initCourse = function(data){ SESSIONS = data; boot(); };
+</script>
+
+<!-- Course content -->
+<script id="course-data">
+const SESSIONS_DATA = [
+{
+  id:9, week:5, duration:'≈ 60 minutes',
+  title:'Animation & Movement',
+  objectives:[
+    'Move objects smoothly by changing position each frame',
+    'Understand velocity as speed plus direction',
+    'Make objects bounce off all four canvas edges',
+    'Understand why we keep velocity in variables'
+  ],
+  blocks:[
+    {type:'p',html:`Your game loop runs; now let's make things move with purpose. Movement is simple at heart — change an object's position a little each frame — but doing it with <b>velocity</b> variables unlocks bouncing, gravity, and physics later on. This session turns the loop from Session 8 into believable motion.`},
+    {type:'note',kind:'info',html:`Open <code class="inline">session-09</code>. We build directly on the game loop (S8) and the edge-checks (S6).`},
+
+    {type:'h',text:'1. Position and velocity'},
+    {type:'p',html:`Every moving object needs two ideas:`},
+    {type:'list',items:[
+      `<b>Position</b> — where it is right now: <code class="inline">x</code> and <code class="inline">y</code>.`,
+      `<b>Velocity</b> — how it's moving: <code class="inline">vx</code> (horizontal) and <code class="inline">vy</code> (vertical). We use the short names <code class="inline">vx</code>/<code class="inline">vy</code> by convention.`
+    ]},
+    {type:'p',html:`Each frame, you add velocity to position. That's it — that's motion:`},
+    {type:'code',lang:'js',code:`x += vx;   // move horizontally by vx pixels this frame
+y += vy;   // move vertically by vy pixels this frame`},
+    {type:'note',kind:'key',title:'Velocity = speed + direction',html:`A positive <code class="inline">vx</code> moves right, negative moves left. A positive <code class="inline">vy</code> moves <i>down</i> (remember y grows downward!), negative moves up. The <i>size</i> of the number is the speed: <code class="inline">vx = 5</code> is faster than <code class="inline">vx = 1</code>.`},
+
+    {type:'h',text:'2. Bouncing: flip the velocity'},
+    {type:'p',html:`To bounce off a wall, you don't teleport the object — you <b>reverse its direction</b> by flipping the sign of its velocity. A ball moving right (<code class="inline">vx = 4</code>) that hits the right wall starts moving left (<code class="inline">vx = -4</code>). The trick is one line:`},
+    {type:'code',lang:'js',code:`vx = -vx;   // reverse horizontal direction (bounce off a side wall)
+vy = -vy;   // reverse vertical direction (bounce off top/bottom)`},
+    {type:'p',html:`We only flip <i>when</i> the object reaches an edge — using the <code class="inline">if</code> checks you learned in Session 6. For a circle of radius <code class="inline">r</code>, its left edge is at <code class="inline">x - r</code> and its right edge at <code class="inline">x + r</code>.`},
+
+    {type:'h',text:'3. The bouncing ball (full demo)'},
+    {type:'p',html:`Here is the classic bouncing ball — the foundation of Pong, Breakout and countless games. Notice the clean structure: an object holding position and velocity, an <code class="inline">update()</code> that moves and bounces, a <code class="inline">draw()</code> that paints. Press <b>Run</b>, then experiment with the velocity numbers and the radius.`},
+    {type:'run',label:'A bouncing ball — change vx, vy, radius and Run',code:`<!DOCTYPE html>
+<html>
+<head><style>
+  body{margin:0;background:#0d1024;display:flex;justify-content:center;padding:14px}
+  canvas{background:#0b0e24;border:3px solid #6c8cff;border-radius:12px}
+</style></head>
+<body>
+  <canvas id="game" width="380" height="240"></canvas>
+  <script>
+    const canvas = document.getElementById("game");
+    const ctx = canvas.getContext("2d");
+    const W = canvas.width, H = canvas.height;
+
+    // The ball: position (x,y), velocity (vx,vy), and size (r)
+    let ball = { x: 60, y: 50, vx: 3.5, vy: 2.6, r: 16 };
+
+    function update() {
+      // 1. move by the velocity
+      ball.x += ball.vx;
+      ball.y += ball.vy;
+
+      // 2. bounce off left/right walls
+      if (ball.x - ball.r < 0 || ball.x + ball.r > W) {
+        ball.vx = -ball.vx;
+      }
+      // 3. bounce off top/bottom walls
+      if (ball.y - ball.r < 0 || ball.y + ball.r > H) {
+        ball.vy = -ball.vy;
+      }
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = "#fbbf24";
+      ctx.beginPath();
+      ctx.arc(ball.x, ball.y, ball.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    function loop() {
+      update();
+      draw();
+      requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+  <\/script>
+</body>
+</html>`},
+    {type:'note',kind:'warn',title:'Keeping the ball from "sticking"',html:`If you set the velocity too high, a ball can move <i>past</i> the wall in one frame, fail the edge check on the next frame, and jitter or escape. For now keep speeds modest (a few pixels per frame). In Pong we'll also nudge the ball back inside the wall when it bounces, which fully prevents sticking.`},
+
+    {type:'h',text:'4. A word on frame rate and speed'},
+    {type:'p',html:`Because we move by a fixed amount each frame, the speed depends on how many frames per second the device runs. On most screens that's a steady 60 FPS, so our games feel consistent. Professional engines multiply movement by a "delta time" so speed is identical on every device. That's an advanced refinement — we'll mention it again later, but fixed-per-frame movement is perfect while you learn.`},
+
+    {type:'exercise',title:'Experiment with motion',html:`<ol>
+      <li>Give the ball a much larger <code class="inline">vx</code> and a tiny <code class="inline">vy</code>. How does its path change?</li>
+      <li>Add a fading trail: instead of <code class="inline">clearRect</code>, fill the canvas each frame with a semi-transparent black <code class="inline">ctx.fillStyle = "rgba(11,14,36,0.2)"; ctx.fillRect(0,0,W,H);</code>.</li>
+      <li>Add a second ball with different speed and colour. Two objects, two updates — easy now that you have the pattern.</li>
+    </ol>`},
+    {type:'note',kind:'key',title:'Session 9 recap',html:`Motion = add <b>velocity</b> (<code class="inline">vx</code>, <code class="inline">vy</code>) to <b>position</b> (<code class="inline">x</code>, <code class="inline">y</code>) each frame. <b>Bounce</b> by flipping a velocity's sign when an edge is reached. This bouncing ball becomes Pong's ball very soon. Next: letting the <i>player</i> take control with the keyboard.`}
+  ]
+},
+{
+  id:10, week:5, duration:'≈ 60 minutes',
+  title:'Keyboard Input — Controlling the Player',
+  objectives:[
+    'Listen for keyboard events with addEventListener',
+    'Track which keys are currently held down',
+    'Move a player smoothly with the arrow keys',
+    'Keep the player clamped inside the play area'
+  ],
+  blocks:[
+    {type:'p',html:`A loop with motion is an animation. Add <b>input</b> and it becomes a <i>game</i> — something the player controls. Today you'll capture keyboard presses and steer an object around the canvas. This is the same control code we'll reuse for Pong's paddle and Snake's direction.`},
+    {type:'note',kind:'info',html:`Open <code class="inline">session-10</code>. Click the demo canvas first so it has "focus", then use your arrow keys.`},
+
+    {type:'h',text:'1. Events: the browser tells you things happened'},
+    {type:'p',html:`The browser constantly notices things — a key pressed, the mouse moved, a button clicked. These are <b>events</b>. You ask to be notified of an event with <code class="inline">addEventListener</code>, handing it a function to run when the event fires:`},
+    {type:'code',lang:'js',code:`document.addEventListener("keydown", function (event) {
+  console.log("You pressed: " + event.key);
+});`},
+    {type:'list',items:[
+      `<code class="inline">"keydown"</code> fires the moment a key goes down; <code class="inline">"keyup"</code> fires when it's released.`,
+      `The function receives an <code class="inline">event</code> object with details. <code class="inline">event.key</code> tells you which key — e.g. <code class="inline">"ArrowLeft"</code>, <code class="inline">"a"</code>, <code class="inline">" "</code> (the spacebar).`
+    ]},
+
+    {type:'h',text:'2. The "keys held down" pattern'},
+    {type:'p',html:`A beginner's first instinct is to move the player directly inside <code class="inline">keydown</code>. That feels jerky, because the operating system repeats a held key with a stutter. The professional approach: just <b>record</b> which keys are currently down in an object, and let the <i>game loop</i> read that object every frame. Smooth, continuous movement results.`},
+    {type:'code',lang:'js',code:`const keys = {};   // remembers which keys are held
+
+document.addEventListener("keydown", function (e) {
+  keys[e.key] = true;    // mark this key as down
+});
+document.addEventListener("keyup", function (e) {
+  keys[e.key] = false;   // mark it as up again
+});
+
+// Later, inside update(), we simply ask: is this key down?
+if (keys["ArrowLeft"]) { /* move left */ }`},
+    {type:'note',kind:'key',title:'Why separate input from movement',html:`Events only tell you <i>when</i> a key changes. The game loop decides <i>how far</i> to move each frame. Keeping a <code class="inline">keys</code> record bridges the two: events update the record, the loop reads it 60 times a second. This pattern scales to any control scheme.`},
+
+    {type:'h',text:'3. Moving and clamping the player'},
+    {type:'p',html:`Inside <code class="inline">update()</code> we check the keys and change position. We also <b>clamp</b> the player so it can't leave the canvas — using <code class="inline">if</code> checks, or the handy <code class="inline">Math.max</code>/<code class="inline">Math.min</code> pair:`},
+    {type:'code',lang:'js',code:`if (keys["ArrowLeft"])  player.x -= player.speed;
+if (keys["ArrowRight"]) player.x += player.speed;
+
+// keep player.x between 0 and (W - player.size)
+player.x = Math.max(0, Math.min(W - player.size, player.x));`},
+
+    {type:'h',text:'4. Full demo: drive the square'},
+    {type:'p',html:`Click the canvas, then use the <kbd>←</kbd> <kbd>↑</kbd> <kbd>→</kbd> <kbd>↓</kbd> arrow keys. The square moves smoothly while a key is held and stops at the edges. Read how <code class="inline">keys</code> is filled by the events and read by <code class="inline">update()</code>.`},
+    {type:'run',label:'Click the canvas, then use arrow keys',code:`<!DOCTYPE html>
+<html>
+<head><style>
+  body{margin:0;background:#0d1024;display:flex;flex-direction:column;align-items:center;padding:12px;
+       font-family:system-ui;color:#a3aad6}
+  canvas{background:#0b0e24;border:3px solid #6c8cff;border-radius:12px;outline:none}
+  p{margin:8px 0 0;font-size:13px}
+</style></head>
+<body>
+  <canvas id="game" width="380" height="240" tabindex="0"></canvas>
+  <p>Click the box first, then press the arrow keys.</p>
+  <script>
+    const canvas = document.getElementById("game");
+    const ctx = canvas.getContext("2d");
+    const W = canvas.width, H = canvas.height;
+    canvas.focus();
+
+    let player = { x: 170, y: 100, size: 36, speed: 4 };
+    const keys = {};
+
+    // record key state (we listen on the canvas so arrows don't scroll the page)
+    canvas.addEventListener("keydown", function (e) { keys[e.key] = true;  e.preventDefault(); });
+    canvas.addEventListener("keyup",   function (e) { keys[e.key] = false; });
+
+    function update() {
+      if (keys["ArrowLeft"])  player.x -= player.speed;
+      if (keys["ArrowRight"]) player.x += player.speed;
+      if (keys["ArrowUp"])    player.y -= player.speed;
+      if (keys["ArrowDown"])  player.y += player.speed;
+
+      // clamp inside the canvas
+      player.x = Math.max(0, Math.min(W - player.size, player.x));
+      player.y = Math.max(0, Math.min(H - player.size, player.y));
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = "#34d399";
+      ctx.fillRect(player.x, player.y, player.size, player.size);
+    }
+
+    function loop() { update(); draw(); requestAnimationFrame(loop); }
+    requestAnimationFrame(loop);
+  <\/script>
+</body>
+</html>`},
+    {type:'note',kind:'warn',title:'Two common gotchas',html:`(1) Arrow keys can scroll the page — call <code class="inline">e.preventDefault()</code> in <code class="inline">keydown</code> to stop that. (2) The element must have <b>focus</b> to receive key events; that's why the canvas has <code class="inline">tabindex="0"</code> and we click it. In a full-page game you'd listen on <code class="inline">document</code> instead.`},
+
+    {type:'exercise',title:'Take control',html:`<ol>
+      <li>Increase <code class="inline">player.speed</code> and feel the difference.</li>
+      <li>Add <b>WASD</b> support: also check <code class="inline">keys["w"]</code>, <code class="inline">keys["a"]</code>, etc., alongside the arrows.</li>
+      <li>Make the spacebar change the player's colour. (Use a <code class="inline">keydown</code> check for <code class="inline">e.key === " "</code>.)</li>
+    </ol>`},
+    {type:'note',kind:'key',title:'Session 10 recap',html:`<b>Events</b> (<code class="inline">keydown</code>/<code class="inline">keyup</code> via <code class="inline">addEventListener</code>) tell you when keys change. Store them in a <code class="inline">keys</code> object and read it in <code class="inline">update()</code> for smooth control. <b>Clamp</b> with <code class="inline">Math.max</code>/<code class="inline">Math.min</code>. Next: mouse and touch input.`}
+  ]
+},
+];
+window.initCourse(SESSIONS_DATA);
+</script>
+
+</body>
+</html>

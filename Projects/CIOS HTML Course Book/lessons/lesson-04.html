@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lesson 4: Text Formatting — Code Your World: HTML</title>
+<link rel="stylesheet" href="../assets/style.css" />
+</head>
+<body>
+
+<div class="top-progress"><div class="top-progress__fill" style="width:0%"></div></div>
+<button class="sidebar-toggle" aria-label="Toggle menu">☰ Menu</button>
+<div class="sidebar-scrim"></div>
+
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand"><div class="brand__mark">&lt;/&gt;</div><div class="brand__text"><div class="kicker">CIOS Course Book</div><div class="name">Code Your World: HTML</div></div></div>
+    <div class="sidebar-progress">
+      <div class="sidebar-progress__label"><span>Your progress</span><strong class="sidebar-progress__count">0 / 16</strong></div>
+      <div class="sidebar-progress__track"><div class="sidebar-progress__fill" style="width:0%"></div></div>
+    </div>
+    <div class="nav-group__title">Start Here</div>
+    <ul class="nav-list">
+      <li><a href="../index.html">🏠 <span>Course Home</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 1 · Getting Started</div>
+    <ul class="nav-list">
+      <li><a href="lesson-01.html" data-lesson-id="l01"><span class="num">1</span><span>Welcome to the Web</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-02.html" data-lesson-id="l02"><span class="num">2</span><span>Your First Web Page</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 2 · Text Foundations</div>
+    <ul class="nav-list">
+      <li><a href="lesson-03.html" data-lesson-id="l03"><span class="num">3</span><span>Headings &amp; Paragraphs</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-04.html" class="active" data-lesson-id="l04"><span class="num">4</span><span>Text Formatting</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 3 · Organizing Content</div>
+    <ul class="nav-list">
+      <li><a href="lesson-05.html" data-lesson-id="l05"><span class="num">5</span><span>Lists</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-06.html" data-lesson-id="l06"><span class="num">6</span><span>Links</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 4 · Media &amp; Data</div>
+    <ul class="nav-list">
+      <li><a href="lesson-07.html" data-lesson-id="l07"><span class="num">7</span><span>Images</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-08.html" data-lesson-id="l08"><span class="num">8</span><span>Tables</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 5 · Forms</div>
+    <ul class="nav-list">
+      <li><a href="lesson-09.html" data-lesson-id="l09"><span class="num">9</span><span>Forms Part 1</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-10.html" data-lesson-id="l10"><span class="num">10</span><span>Forms Part 2</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 6 · Structure &amp; Media</div>
+    <ul class="nav-list">
+      <li><a href="lesson-11.html" data-lesson-id="l11"><span class="num">11</span><span>Div, Span &amp; Semantics</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-12.html" data-lesson-id="l12"><span class="num">12</span><span>Audio, Video &amp; Embeds</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 7 · Real-World Skills</div>
+    <ul class="nav-list">
+      <li><a href="lesson-13.html" data-lesson-id="l13"><span class="num">13</span><span>Attributes &amp; Accessibility</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-14.html" data-lesson-id="l14"><span class="num">14</span><span>Mini Project: Plan</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 8 · Project &amp; Beyond</div>
+    <ul class="nav-list">
+      <li><a href="lesson-15.html" data-lesson-id="l15"><span class="num">15</span><span>Mini Project: Build</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-16.html" data-lesson-id="l16"><span class="num">16</span><span>Publishing &amp; Next Steps</span><span class="check">✓</span></a></li>
+    </ul>
+  </aside>
+
+  <main class="main">
+    <div class="content">
+
+      <div class="lesson-kicker"><span class="pill">Lesson 4 of 16</span><span class="pill week">Week 2</span><span class="pill time">⏱ 60 minutes</span></div>
+      <h1 class="lesson-title">Text Formatting, Entities &amp; Comments</h1>
+      <p class="lesson-sub">Learn how to emphasize important words, insert special characters, and leave yourself helpful notes inside your code.</p>
+
+      <div class="box objectives">
+        <div class="box-title">🎯 Learning Objectives</div>
+        <ul>
+          <li>Use &lt;strong&gt; and &lt;em&gt; to add semantic emphasis</li>
+          <li>Insert line breaks and horizontal rules appropriately</li>
+          <li>Use HTML entities to display special characters</li>
+          <li>Write comments that browsers ignore but humans can read</li>
+        </ul>
+      </div>
+
+      <h2><span class="num-chip">1</span>Bold and Italic — the Right Way</h2>
+      <p>HTML actually gives you two ways to make text bold, and two ways to make it italic. They look the same by default, but they mean different things:</p>
+      <ul>
+        <li><code class="inline">&lt;strong&gt;</code> — marks text as <strong>important</strong> (semantic meaning). Screen readers may say it with extra emphasis.</li>
+        <li><code class="inline">&lt;b&gt;</code> — just makes text bold visually, with no special meaning.</li>
+        <li><code class="inline">&lt;em&gt;</code> — marks text as <em>emphasized</em>, like you'd stress a word when speaking (semantic meaning).</li>
+        <li><code class="inline">&lt;i&gt;</code> — just makes text italic visually, with no special meaning (often used for terms or titles).</li>
+      </ul>
+      <div class="box tip">
+        <div class="box-title">💡 Which Should I Use?</div>
+        <p>Default to <code class="inline">&lt;strong&gt;</code> and <code class="inline">&lt;em&gt;</code> — they carry meaning for accessibility tools, not just looks. Save &lt;b&gt; and &lt;i&gt; for cases where you truly just want a visual style with no added importance, like a book title.</p>
+      </div>
+
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">formatting.html</span></div>
+        <pre><code><span class="tag">&lt;p&gt;</span><span class="txt">Never share your </span><span class="tag">&lt;strong&gt;</span><span class="txt">password</span><span class="tag">&lt;/strong&gt;</span><span class="txt"> with anyone.</span><span class="tag">&lt;/p&gt;</span>
+<span class="tag">&lt;p&gt;</span><span class="txt">I </span><span class="tag">&lt;em&gt;</span><span class="txt">really</span><span class="tag">&lt;/em&gt;</span><span class="txt"> loved that movie.</span><span class="tag">&lt;/p&gt;</span></code></pre>
+      </div>
+      <div class="preview-window">
+        <div class="preview-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="url">🔒 formatting.html</span></div>
+        <div class="preview-window__body">
+          <p style="margin:0 0 12px;">Never share your <strong>password</strong> with anyone.</p>
+          <p style="margin:0;">I <em>really</em> loved that movie.</p>
+        </div>
+      </div>
+
+      <h2><span class="num-chip">2</span>Line Breaks &amp; Horizontal Rules</h2>
+      <p>Sometimes you need a line break <em>within</em> a paragraph (not a whole new paragraph). Use <code class="inline">&lt;br&gt;</code> for that. To draw a horizontal divider line between sections, use <code class="inline">&lt;hr&gt;</code>. Both are <strong>self-closing</strong> — they have no separate closing tag because they don't wrap any content.</p>
+
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">address.html</span></div>
+        <pre><code><span class="tag">&lt;p&gt;</span><span class="txt">123 Maple Street</span><span class="tag">&lt;br&gt;</span>
+<span class="txt">Springfield, IL 62704</span><span class="tag">&lt;/p&gt;</span>
+<span class="tag">&lt;hr&gt;</span></code></pre>
+      </div>
+      <div class="box warning">
+        <div class="box-title">⚠️ Don't Overuse &lt;br&gt;</div>
+        <p>New learners often use several &lt;br&gt; tags in a row to create empty space. Don't — that's a job for CSS spacing later. Use &lt;br&gt; only when a genuine line break belongs inside one piece of content, like an address.</p>
+      </div>
+
+      <h2><span class="num-chip">3</span>HTML Entities: Typing Special Characters</h2>
+      <p>Some characters have a special meaning in HTML — like <code class="inline">&lt;</code> and <code class="inline">&gt;</code>, which the browser normally reads as the start/end of a tag. To display these characters as plain text, you use an <strong>entity</strong>: a short code starting with <code class="inline">&amp;</code> and ending with <code class="inline">;</code>.</p>
+
+      <table class="grid-table">
+        <thead><tr><th>You want to show</th><th>Entity code</th></tr></thead>
+        <tbody>
+          <tr><td>&lt; (less than)</td><td><code class="inline">&amp;lt;</code></td></tr>
+          <tr><td>&gt; (greater than)</td><td><code class="inline">&amp;gt;</code></td></tr>
+          <tr><td>&amp; (ampersand)</td><td><code class="inline">&amp;amp;</code></td></tr>
+          <tr><td>© (copyright)</td><td><code class="inline">&amp;copy;</code></td></tr>
+          <tr><td>A non-breaking space</td><td><code class="inline">&amp;nbsp;</code></td></tr>
+          <tr><td>" (quote mark)</td><td><code class="inline">&amp;quot;</code></td></tr>
+        </tbody>
+      </table>
+
+      <h2><span class="num-chip">4</span>Comments: Notes the Browser Ignores</h2>
+      <p>You can leave notes for yourself (or teammates) directly in your code using comments. Browsers skip over anything inside <code class="inline">&lt;!-- --&gt;</code> completely — visitors never see it.</p>
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">comments.html</span></div>
+        <pre><code><span class="cmt">&lt;!-- TODO: add a photo here later --&gt;</span>
+<span class="tag">&lt;p&gt;</span><span class="txt">This page is still under construction.</span><span class="tag">&lt;/p&gt;</span>
+<span class="cmt">&lt;!-- End of intro section --&gt;</span></code></pre>
+      </div>
+
+      <div class="box vocab">
+        <div class="box-title">📚 Key Vocabulary</div>
+        <dl class="vocab-grid">
+          <div class="vocab-item"><dt>Semantic</dt><dd>Carrying meaning, not just visual style</dd></div>
+          <div class="vocab-item"><dt>Entity</dt><dd>A code like &amp;copy; used to display a special character</dd></div>
+          <div class="vocab-item"><dt>Self-closing tag</dt><dd>A tag with no separate closing pair, like &lt;br&gt; or &lt;hr&gt;</dd></div>
+          <div class="vocab-item"><dt>Comment</dt><dd>A note in code, wrapped in &lt;!-- --&gt;, invisible to visitors</dd></div>
+        </dl>
+      </div>
+
+      <div class="box challenge">
+        <div class="box-title">🚀 Challenge</div>
+        <p>In your <code class="inline">hobby.html</code> file from last lesson, add: one sentence using &lt;strong&gt;, one sentence using &lt;em&gt;, a copyright line at the bottom using the &amp;copy; entity (e.g. "&amp;copy; 2026 Your Name"), and a comment marking where your favorite section begins.</p>
+      </div>
+
+      <div class="box recap">
+        <div class="box-title">✅ Recap</div>
+        <p>Use &lt;strong&gt; and &lt;em&gt; for meaningful emphasis, &lt;br&gt; and &lt;hr&gt; sparingly for breaks and dividers, entities for special characters, and comments to leave notes browsers won't display. Next lesson: organizing content into lists.</p>
+      </div>
+
+      <div class="mark-complete"><button data-lesson-id="l04">Mark Lesson as Complete</button></div>
+
+      <div class="lesson-pager">
+        <a class="pager-btn" href="lesson-03.html"><div class="dir">← Previous</div><div class="title">Lesson 3: Headings &amp; Paragraphs</div></a>
+        <a class="pager-btn next" href="lesson-05.html"><div class="dir">Next →</div><div class="title">Lesson 5: Lists</div></a>
+      </div>
+
+    </div>
+    <footer class="site-footer">CIOS HTML Course Book · Lesson 4 of 16</footer>
+  </main>
+</div>
+
+<script src="../assets/script.js"></script>
+</body>
+</html>

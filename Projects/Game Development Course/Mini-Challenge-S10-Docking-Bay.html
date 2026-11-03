@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mini Challenge — Docking Bay · Session 10</title>
+<style>
+  :root{
+    --bg:#0f1226; --bg2:#161a36; --panel:#1c2147; --panel2:#232a5c;
+    --ink:#e9ecff; --muted:#a3aad6; --line:#2c3470;
+    --brand:#6c8cff; --brand2:#9a6bff; --accent:#34d399; --warn:#fbbf24; --bad:#fb7185;
+    --code-bg:#0b0e24; --radius:14px; --maxw:940px;
+    --mono:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;
+    --sans:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{background:linear-gradient(180deg,#0c0f22,#0f1226 40%);color:var(--ink);font-family:var(--sans);line-height:1.6;font-size:16px}
+  header.topbar{position:sticky;top:0;z-index:30;background:rgba(13,16,38,.93);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .topbar-inner{max-width:var(--maxw);margin:0 auto;display:flex;align-items:center;gap:14px;padding:12px 18px}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.3px}
+  .logo .badge{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--brand),var(--brand2));display:grid;place-items:center;font-size:18px}
+  .logo small{display:block;font-weight:500;color:var(--muted);font-size:11px;letter-spacing:.5px}
+  .spacer{flex:1}
+  .stamp{font-size:11.5px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);padding:5px 12px;border-radius:99px}
+  .stamp.tut{color:#08130d;background:var(--warn);border-color:transparent;font-weight:800}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:26px 18px 90px}
+  .card{background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);padding:24px 28px;box-shadow:0 10px 40px rgba(0,0,0,.25);margin-bottom:22px}
+  .crumbs{font-size:12.5px;color:var(--muted);letter-spacing:.3px;text-transform:uppercase;margin-bottom:8px}
+  h1.t{font-size:30px;line-height:1.14;margin:0 0 6px}
+  .sub{color:var(--muted);font-size:15px;margin:0}
+  .meta{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 0}
+  .chip{font-size:12px;padding:5px 11px;border-radius:99px;background:var(--panel);border:1px solid var(--line);color:var(--muted)}
+  .chip.brand{color:var(--ink);border-color:var(--brand);background:rgba(108,140,255,.12)}
+  .chip.acc{color:#bff5df;border-color:rgba(52,211,153,.5);background:rgba(52,211,153,.10)}
+  h2{font-size:21px;margin:0 0 6px}
+  h3{font-size:16.5px;margin:24px 0 6px;color:#cfd6ff}
+  h4{font-size:13px;margin:20px 0 4px;color:var(--accent);letter-spacing:.9px;text-transform:uppercase}
+  p{margin:10px 0}
+  ul,ol{margin:10px 0;padding-left:22px}
+  li{margin:6px 0}
+  code.inline{font-family:var(--mono);background:#0c1030;border:1px solid var(--line);padding:1px 6px;border-radius:6px;font-size:13.5px;color:#ffd9a0}
+  kbd{font-family:var(--mono);background:#0c1030;border:1px solid var(--line);border-bottom-width:2px;padding:1px 7px;border-radius:6px;font-size:12.5px}
+  .note{border-radius:12px;padding:14px 16px;margin:18px 0;border:1px solid var(--line)}
+  .note .nt{font-weight:700;font-size:13px;letter-spacing:.4px;margin-bottom:4px}
+  .note.tip{background:rgba(52,211,153,.08);border-color:rgba(52,211,153,.4)} .note.tip .nt{color:var(--accent)}
+  .note.warn{background:rgba(251,191,36,.08);border-color:rgba(251,191,36,.4)} .note.warn .nt{color:var(--warn)}
+  .note.info{background:rgba(108,140,255,.08);border-color:rgba(108,140,255,.4)} .note.info .nt{color:var(--brand)}
+  .note.key{background:rgba(154,107,255,.08);border-color:rgba(154,107,255,.45)} .note.key .nt{color:#c5a8ff}
+  .note.bad{background:rgba(251,113,133,.08);border-color:rgba(251,113,133,.45)} .note.bad .nt{color:var(--bad)}
+  .goal{background:var(--panel);border-left:3px solid var(--brand);border-radius:0 10px 10px 0;padding:12px 16px;margin:14px 0;font-size:15px}
+  .done-when{background:rgba(52,211,153,.07);border:1px solid rgba(52,211,153,.35);border-radius:11px;padding:12px 16px;margin:18px 0 0}
+  .done-when b{color:var(--accent);display:block;font-size:12.5px;letter-spacing:.8px;text-transform:uppercase;margin-bottom:4px}
+  .steps{counter-reset:st;list-style:none;padding-left:0;margin:12px 0}
+  .steps li{position:relative;padding-left:32px;margin:10px 0}
+  .steps li::before{counter-increment:st;content:counter(st);position:absolute;left:0;top:1px;width:22px;height:22px;border-radius:7px;background:#0c1030;border:1px solid var(--line);color:var(--brand);font-size:12px;font-weight:700;display:grid;place-items:center}
+  details{margin:12px 0;border:1px solid var(--line);border-radius:11px;background:var(--panel);overflow:hidden}
+  details > summary{cursor:pointer;padding:10px 15px;font-size:13.5px;font-weight:700;list-style:none;display:flex;align-items:center;gap:8px;color:var(--muted)}
+  details > summary::-webkit-details-marker{display:none}
+  details > summary::before{content:'\25B8';font-size:12px;color:var(--brand)}
+  details[open] > summary::before{content:'\25BE'}
+  details .dbody{padding:4px 16px 14px;font-size:14.5px;border-top:1px solid var(--line)}
+  pre{margin:12px 0;background:var(--code-bg);border:1px solid var(--line);border-radius:11px;padding:14px 16px;overflow:auto;font-family:var(--mono);font-size:12.9px;line-height:1.6;color:#e7ecff;tab-size:2}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px}
+  th,td{border:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top}
+  th{background:var(--panel);color:#cfd6ff;font-size:12.5px;text-transform:uppercase;letter-spacing:.6px}
+  .ok{color:var(--accent);font-weight:700}
+  .runner{margin:18px 0 0;border:1px solid var(--line);border-radius:13px;overflow:hidden;background:var(--code-bg)}
+  .runner .rhead{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--panel);border-bottom:1px solid var(--line);font-size:12px;color:var(--muted)}
+  .runner .rhead .dot{width:10px;height:10px;border-radius:99px;background:#3a4280}
+  .runner .rhead .label{flex:1;font-weight:600;color:var(--ink)}
+  .runner textarea{width:100%;border:none;background:var(--code-bg);color:#e7ecff;font-family:var(--mono);font-size:12.6px;line-height:1.55;padding:14px;resize:vertical;min-height:340px;outline:none;display:block;tab-size:2}
+  .runner .ractions{display:flex;gap:8px;padding:8px 12px;background:var(--panel);border-top:1px solid var(--line);flex-wrap:wrap;align-items:center}
+  .btn{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;border:none;border-radius:9px;padding:8px 16px;font-size:13px;font-weight:600;cursor:pointer}
+  .btn.ghost{background:var(--panel2);color:var(--ink);border:1px solid var(--line)}
+  .btn:hover{filter:brightness(1.1)}
+  .hintline{font-size:12px;color:var(--muted);margin-left:auto}
+  .runner iframe{width:100%;border:none;display:block;background:#0b0e24;min-height:350px}
+  @media print{ body{background:#fff;color:#111} details[open] .dbody{display:block} pre{white-space:pre-wrap} .runner textarea{height:auto} }
+  @media (max-width:640px){ .card{padding-left:16px;padding-right:16px} h1.t{font-size:24px} }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="logo"><span class="badge">🛰️</span><span>Game Dev Pro<small>Mini Challenge</small></span></div>
+    <div class="spacer"></div>
+    <span class="stamp ">Student copy</span>
+  </div>
+</header>
+<div class="wrap">
+
+<div class="card">
+  <div class="crumbs">Mini Challenge · Session 10 · Keyboard Input</div>
+  <h1 class="t">DOCKING BAY</h1>
+  <p class="sub">Flying is easy. Parking is hard. Bring the shuttle to rest <i>completely</i> inside the docking bay.</p>
+  <div class="meta">
+    <span class="chip brand">Session 10</span><span class="chip">≈ 20 minutes</span>
+    <span class="chip acc">Held keys &amp; clamping</span><span class="chip">In-class challenge</span>
+  </div>
+</div>
+
+<div class="card">
+  <h2>🛰️ The situation</h2>
+  <p>Every game with a controller has two kinds of movement: the fast one for getting around, and the slow one for being precise. Sniper scopes, crouch-walking, parking a vehicle. Today you build both, on one shuttle.</p>
+  <p>The drawing is already written for you. What's missing is the entire input system and the docking test.</p>
+
+  <div class="goal"><b>Your job:</b> fly the shuttle with the arrow keys, hold <kbd>Shift</kbd> to slow down for precision, and light the bay up green when the shuttle is <b>fully</b> inside it.</div>
+
+  <h4>Requirements</h4>
+  <ol class="steps">
+    <li>Arrow keys move the shuttle in all four directions, smoothly, with no stutter — and diagonals must work.</li>
+    <li>The shuttle can never leave the canvas.</li>
+    <li>While <kbd>Shift</kbd> is held, it moves at <code class="inline">PRECISION_SPEED</code> instead of <code class="inline">NORMAL_SPEED</code>.</li>
+    <li><code class="inline">isDocked()</code> returns <code class="inline">true</code> only when the <b>whole shuttle</b> is inside the bay. One corner poking out is not docked.</li>
+  </ol>
+
+  <div class="note key">
+    <div class="nt">🔑 "Fully inside" is not the same as "touching"</div>
+    In Session 12 you'll learn the test for two rectangles <i>overlapping</i>. This is a different question: is one rectangle completely <b>within</b> another? Draw both rectangles on paper, label the four edges of each, and write down the four things that must all be true at once. Then join them with AND.
+  </div>
+
+  <div class="note warn">
+    <div class="nt">⚠️ Two reminders from last session</div>
+    Don't move the shuttle inside the <code class="inline">keydown</code> handler — you know what that does to the feel. And key names are spelled exactly: if a key does nothing, print <code class="inline">event.key</code> to the console and read what the browser actually calls it.
+  </div>
+
+  <h4>Build it here</h4>
+  <p>Click inside the black box before pressing keys — the canvas needs focus.</p>
+  
+<div class="runner">
+  <div class="rhead"><span class="dot"></span><span class="label">session-10-docking-bay.html</span></div>
+  <textarea spellcheck="false">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;style&gt;
+  body{margin:0;background:#0d1024;display:flex;flex-direction:column;align-items:center;
+       padding:12px;font-family:system-ui;color:#a3aad6}
+  canvas{background:#0b0e24;border:3px solid #6c8cff;border-radius:12px;outline:none}
+  p{font-size:13px;margin:8px 0 0}
+&lt;/style&gt;&lt;/head&gt;
+&lt;body&gt;
+  &lt;canvas id=&quot;game&quot; width=&quot;420&quot; height=&quot;260&quot; tabindex=&quot;0&quot;&gt;&lt;/canvas&gt;
+  &lt;p&gt;Click the box first &amp;middot; Arrows to fly &amp;middot; Hold Shift for precision thrusters&lt;/p&gt;
+  &lt;script&gt;
+    const canvas = document.getElementById(&quot;game&quot;);
+    const ctx = canvas.getContext(&quot;2d&quot;);
+    const W = canvas.width, H = canvas.height;
+    canvas.focus();
+
+    const NORMAL_SPEED = 4;
+    const PRECISION_SPEED = 1.5;
+
+    const shuttle = { x: 30, y: 30, w: 34, h: 22 };
+    const bay = { x: 290, y: 160, w: 96, h: 72 };
+    let docked = false;
+
+    const keys = {};   // your notepad — which keys are held right now
+
+    // ============ YOUR CODE GOES HERE ============
+    // 1. a &quot;keydown&quot; listener that writes true into keys (and stops the page scrolling)
+    // 2. a &quot;keyup&quot; listener that writes false
+    // 3. isDocked() — returns true only if the shuttle is COMPLETELY inside the bay
+    // 4. update() — move with the arrows, use PRECISION_SPEED while Shift is held,
+    //    clamp to the canvas, then set docked = isDocked();
+    // =============================================
+
+    function isDocked() {
+      return false;      // &lt;-- replace this
+    }
+
+    function update() {
+      // &lt;-- and this
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+
+      if (docked === true) { ctx.strokeStyle = &quot;#34d399&quot;; } else { ctx.strokeStyle = &quot;#6c8cff&quot;; }
+      ctx.lineWidth = 3;
+      ctx.strokeRect(bay.x, bay.y, bay.w, bay.h);
+
+      if (docked === true) { ctx.fillStyle = &quot;#34d399&quot;; } else { ctx.fillStyle = &quot;#e9ecff&quot;; }
+      ctx.fillRect(shuttle.x, shuttle.y, shuttle.w, shuttle.h);
+
+      ctx.font = &quot;15px system-ui&quot;;
+      if (docked === true) {
+        ctx.fillStyle = &quot;#34d399&quot;;
+        ctx.fillText(&quot;DOCKED&quot;, 12, 26);
+      } else {
+        ctx.fillStyle = &quot;#a3aad6&quot;;
+        ctx.fillText(&quot;Fly fully inside the bay&quot;, 12, 26);
+      }
+      if (keys[&quot;Shift&quot;]) {
+        ctx.fillStyle = &quot;#fbbf24&quot;;
+        ctx.fillText(&quot;precision&quot;, W - 88, 26);
+      }
+    }
+
+    function loop() { update(); draw(); requestAnimationFrame(loop); }
+    requestAnimationFrame(loop);
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+  <div class="ractions">
+    <button class="btn" data-run>&#9654; Run</button>
+    <button class="btn ghost" data-reset>&#8634; Reset to starter</button>
+    <span class="hintline">Click the canvas first, then use the arrows</span>
+  </div>
+  <iframe></iframe>
+</div>
+
+  <div class="done-when"><b>Done when</b> you can fly diagonally, hold Shift to creep, park the shuttle fully inside the bay so it turns green, then nudge it one pixel out and watch the green switch off.</div>
+</div>
+
+<div class="card">
+  <h2>🚀 If you finish early</h2>
+  <ol>
+    <li><b>Score it.</b> When the shuttle docks, move the bay to a random new spot and add 1 to a score shown at the top. Keep the shuttle where it is — no teleporting the player.</li>
+    <li><b>Ramp it up.</b> Make the bay a little smaller with each successful dock. How small before it becomes impossible? Is that a bug or a difficulty curve?</li>
+    <li><b>The stuck key.</b> Hold an arrow, click outside the canvas while still holding, then release. Watch the shuttle keep flying. Then fix it in three lines — you saw the fix in Session 10.</li>
+  </ol>
+  <div class="note info">
+    <div class="nt">🤔 Think about this one before you leave</div>
+    Holding Shift is read from your <code class="inline">keys</code> object, exactly like an arrow. So what's actually the difference between a "movement key" and a "modifier key"? Is there any difference in the code at all?
+  </div>
+</div>
+
+</div>
+<script>
+(function(){
+  document.querySelectorAll('.runner').forEach(function(runner){
+    var ta = runner.querySelector('textarea');
+    var frame = runner.querySelector('iframe');
+    var original = ta.value;
+    function run(){ frame.srcdoc = ta.value; }
+    runner.querySelector('[data-run]').addEventListener('click', run);
+    runner.querySelector('[data-reset]').addEventListener('click', function(){ ta.value = original; run(); });
+    ta.addEventListener('keydown', function(e){
+      if(e.key === 'Tab'){
+        e.preventDefault();
+        var s = ta.selectionStart, en = ta.selectionEnd;
+        ta.value = ta.value.slice(0, s) + '  ' + ta.value.slice(en);
+        ta.selectionStart = ta.selectionEnd = s + 2;
+      }
+    });
+    run();
+  });
+})();
+</script>
+</body>
+</html>

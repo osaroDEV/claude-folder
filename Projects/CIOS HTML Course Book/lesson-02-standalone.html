@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lesson 2: Your First Web Page — Code Your World: HTML</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap');
+
+  :root {
+    --navy-950: #0b1023;
+    --indigo-600: #5b5bf0;
+    --indigo-500: #6f6ff5;
+    --indigo-400: #8d8dfb;
+    --violet-500: #9c5bf0;
+    --teal-400: #2fd9c4;
+    --amber-500: #ff9d1f;
+    --ink-900: #151833;
+    --ink-700: #3a3f66;
+    --ink-500: #6b6f96;
+    --ink-300: #a4a8c9;
+    --paper-0: #ffffff;
+    --paper-50: #f7f8fd;
+    --paper-100: #eef0fb;
+    --paper-200: #e2e5f7;
+    --success-500: #22c58b;
+    --radius-md: 14px;
+    --radius-sm: 9px;
+    --shadow-card: 0 4px 18px -6px rgba(20, 24, 60, 0.12);
+    --font-head: 'Poppins', 'Segoe UI', sans-serif;
+    --font-body: 'Inter', 'Segoe UI', sans-serif;
+    --font-code: 'Fira Code', 'Consolas', monospace;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: var(--font-body);
+    color: var(--ink-900);
+    background: var(--paper-50);
+    -webkit-font-smoothing: antialiased;
+  }
+  img { max-width: 100%; display: block; }
+
+  .main { padding: 44px clamp(20px, 5vw, 64px) 90px; }
+  .content { max-width: 860px; margin: 0 auto; }
+
+  .lesson-kicker { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+  .pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 12px; border-radius: 100px;
+    font-size: 12px; font-weight: 700; letter-spacing: 0.03em;
+    background: var(--paper-100); color: var(--indigo-600);
+  }
+  .pill.week { background: #fff4e0; color: var(--amber-500); }
+  .pill.time { background: #e6faf5; color: #0e9a83; }
+
+  h1.lesson-title {
+    font-family: var(--font-head);
+    font-size: clamp(28px, 4vw, 38px);
+    font-weight: 800; margin: 0 0 10px; line-height: 1.15; color: var(--ink-900);
+  }
+  .lesson-sub { font-size: 16.5px; color: var(--ink-500); margin: 0 0 30px; max-width: 640px; }
+
+  h2 {
+    font-family: var(--font-head); font-size: 22px; font-weight: 700; color: var(--ink-900);
+    margin: 44px 0 16px; padding-top: 6px; display: flex; align-items: center; gap: 10px;
+  }
+  h2 .num-chip {
+    width: 30px; height: 30px; border-radius: 9px;
+    background: linear-gradient(135deg, var(--indigo-500), var(--violet-500));
+    color: #fff; font-size: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+
+  p { line-height: 1.75; font-size: 15.5px; color: var(--ink-700); margin: 0 0 16px; }
+  ul, ol { line-height: 1.75; font-size: 15.5px; color: var(--ink-700); padding-left: 22px; margin: 0 0 16px; }
+  li { margin-bottom: 6px; }
+  strong { color: var(--ink-900); }
+  code.inline {
+    font-family: var(--font-code); background: var(--paper-100); color: #8033d1;
+    padding: 2px 7px; border-radius: 6px; font-size: 0.88em;
+  }
+
+  .box { border-radius: var(--radius-md); padding: 20px 22px; margin: 22px 0; box-shadow: var(--shadow-card); }
+  .box p:last-child { margin-bottom: 0; }
+  .box-title {
+    display: flex; align-items: center; gap: 8px;
+    font-family: var(--font-head); font-weight: 700; font-size: 14px;
+    text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 10px;
+  }
+  .box.objectives { background: #f2f1ff; border-left: 4px solid var(--indigo-500); }
+  .box.objectives .box-title { color: var(--indigo-600); }
+  .box.objectives ul { margin-bottom: 0; }
+  .box.vocab { background: var(--paper-0); border: 1px solid var(--paper-200); }
+  .box.vocab .box-title { color: var(--ink-700); }
+  .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; margin-top: 4px; }
+  .vocab-item { background: var(--paper-50); border-radius: var(--radius-sm); padding: 12px 14px; }
+  .vocab-item dt { font-family: var(--font-code); font-weight: 600; color: var(--indigo-600); font-size: 13.5px; margin-bottom: 4px; }
+  .vocab-item dd { margin: 0; font-size: 13.5px; color: var(--ink-700); line-height: 1.5; }
+  .box.tip { background: #eafaf5; border-left: 4px solid var(--success-500); }
+  .box.tip .box-title { color: #0e9a6e; }
+  .box.challenge { background: linear-gradient(135deg, #1b1f4d, #2a1f5e); color: #fff; border-left: none; }
+  .box.challenge .box-title { color: var(--teal-400); }
+  .box.challenge p, .box.challenge li { color: #dfe1f7; }
+  .box.challenge strong { color: #fff; }
+  .box.recap { background: var(--paper-0); border: 1.5px dashed var(--indigo-400); }
+  .box.recap .box-title { color: var(--indigo-600); }
+
+  .code-window { border-radius: var(--radius-md); overflow: hidden; margin: 18px 0 22px; box-shadow: var(--shadow-card); background: #171b34; }
+  .code-window__bar { display: flex; align-items: center; gap: 8px; padding: 10px 14px; background: #12152b; }
+  .code-window__bar span.dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot.red { background: #ff5f56; } .dot.yellow { background: #ffbd2e; } .dot.green { background: #27c93f; }
+  .code-window__label { margin-left: 8px; font-family: var(--font-code); font-size: 12px; color: #8b8fb8; }
+  .code-window pre { margin: 0; padding: 18px 20px; overflow-x: auto; font-family: var(--font-code); font-size: 13.5px; line-height: 1.65; color: #e6e8fb; }
+  .code-window code { font-family: var(--font-code); }
+  .tag { color: #8d8dfb; } .attr { color: #2fd9c4; } .str { color: #ffb648; } .cmt { color: #6b6f96; font-style: italic; } .txt { color: #e6e8fb; }
+
+  .preview-window { border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--paper-200); margin: 0 0 22px; box-shadow: var(--shadow-card); }
+  .preview-window__bar { display: flex; align-items: center; gap: 8px; padding: 9px 14px; background: var(--paper-100); border-bottom: 1px solid var(--paper-200); }
+  .preview-window__bar .url { margin-left: 6px; background: #fff; border-radius: 100px; padding: 3px 12px; font-size: 11.5px; color: var(--ink-500); font-family: var(--font-code); }
+  .preview-window__body { padding: 20px 22px; background: #fff; font-family: var(--font-body); color: #222; }
+
+  footer.site-footer { text-align: center; padding: 30px 20px; color: var(--ink-500); font-size: 13px; }
+</style>
+</head>
+<body>
+
+  <main class="main">
+    <div class="content">
+
+      <div class="lesson-kicker"><span class="pill">Lesson 2 of 16</span><span class="pill week">Week 1</span><span class="pill time">⏱ 60 minutes</span></div>
+      <h1 class="lesson-title">Your First Web Page</h1>
+      <p class="lesson-sub">Every HTML page — from the simplest to the most complex website in the world — starts with the exact same skeleton. Today you'll learn it by heart.</p>
+
+      <div class="box objectives">
+        <div class="box-title">🎯 Learning Objectives</div>
+        <ul>
+          <li>Write the doctype declaration and explain what it does</li>
+          <li>Build the required &lt;html&gt;, &lt;head&gt;, and &lt;body&gt; structure</li>
+          <li>Add a page title that appears in the browser tab</li>
+          <li>Save and correctly name an HTML file</li>
+        </ul>
+      </div>
+
+      <h2><span class="num-chip">1</span>The Anatomy of a Web Page</h2>
+      <p>Every single HTML document follows the same required pattern. Once you memorize this, you'll type it at the top of every page you ever build:</p>
+
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">index.html</span></div>
+        <pre><code><span class="cmt">&lt;!-- This line must always be first --&gt;</span>
+<span class="tag">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;html</span> <span class="attr">lang</span>=<span class="str">"en"</span><span class="tag">&gt;</span>
+
+<span class="tag">&lt;head&gt;</span>
+  <span class="tag">&lt;title&gt;</span><span class="txt">My First Page</span><span class="tag">&lt;/title&gt;</span>
+<span class="tag">&lt;/head&gt;</span>
+
+<span class="tag">&lt;body&gt;</span>
+  <span class="tag">&lt;h1&gt;</span><span class="txt">Hello, World!</span><span class="tag">&lt;/h1&gt;</span>
+  <span class="tag">&lt;p&gt;</span><span class="txt">This is my very first complete web page.</span><span class="tag">&lt;/p&gt;</span>
+<span class="tag">&lt;/body&gt;</span>
+
+<span class="tag">&lt;/html&gt;</span></code></pre>
+      </div>
+
+      <p>Let's go through each part, because every piece has an important job:</p>
+      <ul>
+        <li><code class="inline">&lt;!DOCTYPE html&gt;</code> — tells the browser "this is a modern HTML5 document." It's not a tag with a closing pair; it's a one-time declaration at the very top.</li>
+        <li><code class="inline">&lt;html&gt;</code> — the <strong>root element</strong>. Every other tag lives inside this one. The <code class="inline">lang="en"</code> part tells the browser (and screen readers) the page is in English.</li>
+        <li><code class="inline">&lt;head&gt;</code> — holds information <em>about</em> the page that isn't shown directly on the page itself (like its title).</li>
+        <li><code class="inline">&lt;body&gt;</code> — holds everything visitors actually see: text, images, buttons, links.</li>
+      </ul>
+
+      <h2><span class="num-chip">2</span>The &lt;head&gt;: Behind-the-Scenes Info</h2>
+      <p>Think of the <code class="inline">&lt;head&gt;</code> like the label on a food package — it's information about the page, not the page's content itself. The most important tag inside it is <code class="inline">&lt;title&gt;</code>, which sets the text shown in the browser tab.</p>
+
+      <div class="preview-window">
+        <div class="preview-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="url">🔒 my-first-page.html</span></div>
+        <div class="preview-window__body">
+          <h1 style="margin:0 0 10px;font-family:Poppins,sans-serif;">Hello, World!</h1>
+          <p style="margin:0;">This is my very first complete web page.</p>
+        </div>
+      </div>
+      <p>Notice that "My First Page" (the title) doesn't appear inside the page body — it only shows in the browser's tab or window title. That's the difference between the &lt;head&gt; and the &lt;body&gt;.</p>
+
+      <div class="box tip">
+        <div class="box-title">💡 Another Common &lt;head&gt; Tag</div>
+        <p>You'll also often see <code class="inline">&lt;meta charset="UTF-8"&gt;</code> in the head. This simply tells the browser which set of characters to use, so things like emoji, accents (é, ñ), and symbols display correctly. We'll include it in every page from now on.</p>
+      </div>
+
+      <h2><span class="num-chip">3</span>Saving Your File Correctly</h2>
+      <p>A few strict rules make sure your file works properly:</p>
+      <ul>
+        <li>The file must end in <code class="inline">.html</code> — for example, <code class="inline">about-me.html</code></li>
+        <li>Avoid spaces in file names — use hyphens instead: <code class="inline">my-page.html</code>, not <code class="inline">my page.html</code></li>
+        <li>Use lowercase letters — <code class="inline">profile.html</code>, not <code class="inline">Profile.HTML</code></li>
+        <li>A file named exactly <code class="inline">index.html</code> is special: it's the default page a website shows when someone visits a folder or domain without a specific file name</li>
+      </ul>
+
+      <div class="box vocab">
+        <div class="box-title">📚 Key Vocabulary</div>
+        <dl class="vocab-grid">
+          <div class="vocab-item"><dt>Doctype</dt><dd>The declaration at the top of a file that tells the browser it's HTML5</dd></div>
+          <div class="vocab-item"><dt>Root element</dt><dd>The outermost element that contains all others — &lt;html&gt;</dd></div>
+          <div class="vocab-item"><dt>Head</dt><dd>Section holding page metadata like the title, not shown directly on the page</dd></div>
+          <div class="vocab-item"><dt>Body</dt><dd>Section holding all visible page content</dd></div>
+          <div class="vocab-item"><dt>Metadata</dt><dd>Data about the page itself, such as its title or character encoding</dd></div>
+          <div class="vocab-item"><dt>File extension</dt><dd>The suffix (like .html) that tells the computer what type of file it is</dd></div>
+        </dl>
+      </div>
+
+      <div class="box challenge">
+        <div class="box-title">🚀 Challenge</div>
+        <p>Build a complete HTML page called <code class="inline">about-me.html</code> that includes:</p>
+        <ul>
+          <li>A proper doctype, html, head, and body structure</li>
+          <li>A page title (in the &lt;head&gt;) with your name in it</li>
+          <li>One heading and one paragraph (in the &lt;body&gt;) introducing yourself</li>
+        </ul>
+        <p>Open it in your browser and check that your name appears in the browser tab!</p>
+      </div>
+
+      <div class="box recap">
+        <div class="box-title">✅ Recap</div>
+        <p>Every HTML page starts with a doctype, then an &lt;html&gt; root element containing a &lt;head&gt; (page info) and a &lt;body&gt; (visible content). The &lt;title&gt; tag sets the browser tab text. Files must be saved with a lowercase, hyphenated <code class="inline">.html</code> name. Next lesson, we'll fill the body with properly structured text.</p>
+      </div>
+
+    </div>
+    <footer class="site-footer">CIOS HTML Course Book · Lesson 2 of 16</footer>
+  </main>
+
+</body>
+</html>

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Checkpoint Quiz — Sessions 1-4 | Game Dev Pro</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, Segoe UI, sans-serif;
+    background: linear-gradient(160deg, #1b1f3b, #0d1024);
+    color: #e9ecff;
+    padding: 32px 16px 80px;
+    line-height: 1.55;
+  }
+  .sheet {
+    max-width: 780px;
+    margin: 0 auto;
+    background: #0b0e24;
+    border: 2px solid #6c8cff;
+    border-radius: 14px;
+    padding: 32px 36px;
+    box-shadow: 0 12px 40px rgba(0,0,0,.5);
+  }
+  h1 { margin: 0 0 4px; font-size: 26px; letter-spacing: .5px; }
+  .subtitle { color: #a3aad6; margin: 0 0 20px; font-size: 14px; }
+  .meta {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    margin-bottom: 24px;
+  }
+  .meta span {
+    background: #1b1f3b; border: 1px solid #383e6e;
+    padding: 5px 12px; border-radius: 20px; font-size: 12.5px; color: #c7cbf5;
+  }
+  h2 {
+    font-size: 18px; color: #9db4ff; border-bottom: 1px solid #2a2f5c;
+    padding-bottom: 6px; margin-top: 36px;
+  }
+  .part-time { float: right; font-size: 13px; color: #7d84b8; font-weight: normal; }
+  ol.questions { padding-left: 22px; }
+  ol.questions li { margin-bottom: 16px; }
+  .answer-space {
+    border-bottom: 1px dashed #383e6e; height: 22px; margin-top: 4px;
+  }
+  code {
+    background: #1b1f3b; border: 1px solid #2a2f5c; border-radius: 4px;
+    padding: 1px 6px; font-size: 13.5px; color: #ffd08a;
+  }
+  pre {
+    background: #10132b; border: 1px solid #2a2f5c; border-radius: 8px;
+    padding: 14px 16px; overflow-x: auto; font-size: 13.5px; margin: 10px 0;
+  }
+  pre code { background: none; border: none; padding: 0; color: #d7dcff; }
+  .task {
+    background: #12163a; border-left: 4px solid #6c8cff; border-radius: 6px;
+    padding: 12px 16px; margin: 12px 0;
+  }
+  .stretch {
+    background: #1a1230; border-left: 4px solid #b98cff; border-radius: 6px;
+    padding: 12px 16px; margin: 12px 0;
+  }
+  details {
+    margin-top: 8px; background: #101430; border: 1px dashed #383e6e;
+    border-radius: 6px; padding: 8px 14px;
+  }
+  summary { cursor: pointer; color: #85e0a3; font-size: 13px; }
+  details p, details pre { margin-top: 8px; }
+  .footer-note {
+    margin-top: 32px; padding-top: 16px; border-top: 1px solid #2a2f5c;
+    font-size: 12.5px; color: #7d84b8;
+  }
+  @media print {
+    body { background: #fff; color: #111; padding: 0; }
+    .sheet { border: none; box-shadow: none; padding: 10px; background: #fff; }
+    .subtitle, .meta span, .footer-note { color: #444; }
+    code, pre { background: #f4f4f4; color: #111; border-color: #ccc; }
+    pre code { color: #111; }
+    details { border: 1px solid #ccc; }
+    summary { color: #555; }
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <h1>Checkpoint Quiz — Sessions 1–4</h1>
+  <p class="subtitle">Game Dev Pro — Course Companion</p>
+  <div class="meta">
+    <span>⏱ 60 minutes</span>
+    <span>📋 Covers: Setup · HTML · CSS · JS Fundamentals</span>
+    <span>✏️ Open book — notes and past sessions allowed</span>
+  </div>
+
+  <p>Today we're checking what stuck from the first four sessions before moving on. Work through the parts in order — each one builds on skills from a specific session. Don't worry about getting everything perfect; this tells us what to revisit, not a pass/fail test.</p>
+
+  <h2>Part A — Concept Recap <span class="part-time">≈ 10 min</span></h2>
+  <p>Answer each in one or two sentences, in your own words.</p>
+  <ol class="questions">
+    <li>What job does each of HTML, CSS, and JavaScript do in a web page? (Session 1)
+      <div class="answer-space"></div>
+      <details><summary>Show answer</summary><p>HTML = structure (the elements on the page). CSS = style (colours, spacing, layout). JavaScript = behaviour (what moves, responds, and changes). Mental picture: HTML is the noun, CSS the adjective, JavaScript the verb.</p></details>
+    </li>
+    <li>What is the <code>&lt;canvas&gt;</code> element, and which two values must always be set as HTML attributes rather than only in CSS? (Session 2)
+      <div class="answer-space"></div>
+      <details><summary>Show answer</summary><p>Canvas is a blank rectangle JavaScript can draw on. Its <code>width</code> and <code>height</code> must be set as attributes — setting size only via CSS stretches and blurs the drawing.</p></details>
+    </li>
+    <li>On a canvas, which direction does <code>y</code> grow — and why does this trip up beginners? (Session 2)
+      <div class="answer-space"></div>
+      <details><summary>Show answer</summary><p>y grows downward (0 is the top-left corner), the opposite of school-maths graphs where y grows upward. Beginners expect increasing y to move things up, but it moves them down.</p></details>
+    </li>
+    <li>What's the difference between <code>padding</code> and <code>margin</code>? (Session 3)
+      <div class="answer-space"></div>
+      <details><summary>Show answer</summary><p>Padding is space inside an element, between its content and its own border. Margin is space outside an element, pushing other elements away.</p></details>
+    </li>
+    <li>Name the three ways to add CSS to a page, and which one this course uses by default while learning. (Session 3)
+      <div class="answer-space"></div>
+      <details><summary>Show answer</summary><p>Inline (style attribute), internal (a &lt;style&gt; block in &lt;head&gt;), and external (a linked .css file). The course defaults to internal &lt;style&gt; blocks early on for simplicity.</p></details>
+    </li>
+    <li>When should you use <code>let</code> versus <code>const</code> in JavaScript? (Session 4)
+      <div class="answer-space"></div>
+      <details><summary>Show answer</summary><p>Use const by default for values that shouldn't change; switch to let only when the value needs to change later (like a score or position).</p></details>
+    </li>
+    <li>What does <code>+=</code> do? Write one example. (Session 4)
+      <div class="answer-space"></div>
+      <details><summary>Show answer</summary><p>It adds to the existing value and reassigns it — shorthand for <code>x = x + value</code>. Example: <code>score += 10</code> adds 10 to score.</p></details>
+    </li>
+    <li>What does <code>"2" + "2"</code> evaluate to in JavaScript, and why is it different from <code>2 + 2</code>? (Session 4)
+      <div class="answer-space"></div>
+      <details><summary>Show answer</summary><p>"2" + "2" gives "22" because both are strings, so + joins (concatenates) text instead of adding numbers. 2 + 2 gives 4 because both are numbers.</p></details>
+    </li>
+  </ol>
+
+  <h2>Part B — Read the Code <span class="part-time">≈ 15 min</span></h2>
+  <p>For each snippet, say what happens when it runs — or spot the mistake.</p>
+
+  <p><b>1.</b> What's wrong with this HTML?</p>
+  <pre><code>&lt;body&gt;
+  &lt;h1&gt;My Game
+  &lt;p&gt;Get ready to play.&lt;/p&gt;
+&lt;/body&gt;</code></pre>
+  <div class="answer-space"></div>
+  <details><summary>Show answer</summary><p>The <code>&lt;h1&gt;</code> tag is never closed with <code>&lt;/h1&gt;</code>. Tags come in pairs — forgetting the closing tag is one of the most common beginner mistakes.</p></details>
+
+  <p><b>2.</b> Where on a 300×200 canvas will this rectangle appear — near which corner?</p>
+  <pre><code>ctx.fillStyle = "tomato";
+ctx.fillRect(200, 10, 60, 40);</code></pre>
+  <div class="answer-space"></div>
+  <details><summary>Show answer</summary><p>Near the top-right. x=200 is far to the right (out of 300 wide), y=10 is near the top (y grows downward), sized 60 wide × 40 tall.</p></details>
+
+  <p><b>3.</b> Given this CSS, which element(s) turn blue?</p>
+  <pre><code>#score { color: blue; }
+.label { color: green; }</code></pre>
+  <pre><code>&lt;p id="score" class="label"&gt;Score: 0&lt;/p&gt;
+&lt;p class="label"&gt;Lives: 3&lt;/p&gt;</code></pre>
+  <div class="answer-space"></div>
+  <details><summary>Show answer</summary><p>Only the first paragraph turns blue — an id selector (#score) targets just that one element. The second paragraph has no id match, so it stays green from the .label class rule.</p></details>
+
+  <p><b>4.</b> What does each line print to the console?</p>
+  <pre><code>let lives = 3;
+console.log("Lives: " + lives);
+console.log(lives + 1);
+console.log("Lives: " + lives + 1);</code></pre>
+  <div class="answer-space"></div>
+  <details><summary>Show answer</summary><p>"Lives: 3" (number joined to text) — then 4 (number maths) — then "Lives: 31" (once a string is involved, + reads left to right and joins each following value as text: "Lives: 3" + 1 = "Lives: 31").</p></details>
+
+  <h2>Part C — Hands-On Build <span class="part-time">≈ 25 min</span></h2>
+  <p>Open a new <code>session-checkpoint</code> folder in VS Code and build a single <code>index.html</code> that does the following. Use Live Server to check your work as you go.</p>
+
+  <div class="task">
+    <b>Step 1 — Frame (Sessions 1 &amp; 3):</b> Build a page with a dark background, a heading with your game's working title, and a <code>&lt;canvas&gt;</code> sized 360×240 centred on the page using flexbox.
+  </div>
+  <div class="task">
+    <b>Step 2 — Drawing (Session 2):</b> On the canvas, draw at least two different shapes (rectangle, circle, or both) in two different colours, plus one piece of text using <code>fillText</code>.
+  </div>
+  <div class="task">
+    <b>Step 3 — Variables (Session 4):</b> Add a <code>let score = 0;</code> variable and a button below the canvas labelled <b>+15 points</b>. Each click should add 15 to <code>score</code> and redraw the canvas so the text shows <code>"Score: " + score</code>.
+  </div>
+
+  <details><summary>Show one possible solution</summary>
+  <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;style&gt;
+  body { margin:0; min-height:100vh; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; gap:14px;
+    background:#0d1024; color:#e9ecff; font-family:system-ui,sans-serif; }
+  #game { background:#0b0e24; border:3px solid #6c8cff; border-radius:12px; }
+  button { padding:10px 18px; border:none; border-radius:8px;
+    background:#6c8cff; color:#fff; font-size:15px; cursor:pointer; }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Star Catcher&lt;/h1&gt;
+  &lt;canvas id="game" width="360" height="240"&gt;&lt;/canvas&gt;
+  &lt;button id="add"&gt;+15 points&lt;/button&gt;
+  &lt;script&gt;
+    const ctx = document.getElementById("game").getContext("2d");
+    let score = 0;
+
+    function draw() {
+      ctx.fillStyle = "#0b0e24";
+      ctx.fillRect(0, 0, 360, 240);
+      ctx.fillStyle = "tomato";
+      ctx.fillRect(30, 30, 80, 60);
+      ctx.fillStyle = "dodgerblue";
+      ctx.beginPath();
+      ctx.arc(250, 60, 40, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = "#e9ecff";
+      ctx.font = "22px sans-serif";
+      ctx.fillText("Score: " + score, 100, 180);
+    }
+
+    document.getElementById("add").onclick = function () {
+      score += 15;
+      draw();
+    };
+    draw();
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+  </details>
+
+  <h2>Part D — Stretch Challenge <span class="part-time">optional, ≈ 10 min</span></h2>
+  <div class="stretch">
+    Add a second variable <code>let level = 1;</code>. Draw it on a second line of text below the score. Then add a second button, <b>Next Level</b>, that adds 1 to <code>level</code> and redraws. Bonus: give the two buttons different background colours in CSS.
+  </div>
+
+  <p class="footer-note">Bring whatever you didn't finish to next session — we'll pick up right where you left off before starting Session 5 (functions and <code>if</code> decisions). Answers are hidden under "Show answer" — try each question yourself first.</p>
+
+</div>
+</body>
+</html>

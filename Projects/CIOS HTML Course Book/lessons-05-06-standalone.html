@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lessons 5 &amp; 6: Organizing Content — Code Your World: HTML</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap');
+
+  :root {
+    --navy-950: #0b1023;
+    --indigo-600: #5b5bf0;
+    --indigo-500: #6f6ff5;
+    --indigo-400: #8d8dfb;
+    --violet-500: #9c5bf0;
+    --teal-400: #2fd9c4;
+    --amber-500: #ff9d1f;
+    --ink-900: #151833;
+    --ink-700: #3a3f66;
+    --ink-500: #6b6f96;
+    --ink-300: #a4a8c9;
+    --paper-0: #ffffff;
+    --paper-50: #f7f8fd;
+    --paper-100: #eef0fb;
+    --paper-200: #e2e5f7;
+    --success-500: #22c58b;
+    --radius-md: 14px;
+    --radius-sm: 9px;
+    --shadow-card: 0 4px 18px -6px rgba(20, 24, 60, 0.12);
+    --font-head: 'Poppins', 'Segoe UI', sans-serif;
+    --font-body: 'Inter', 'Segoe UI', sans-serif;
+    --font-code: 'Fira Code', 'Consolas', monospace;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: var(--font-body);
+    color: var(--ink-900);
+    background: var(--paper-50);
+    -webkit-font-smoothing: antialiased;
+  }
+  img { max-width: 100%; display: block; }
+
+  .main { padding: 44px clamp(20px, 5vw, 64px) 90px; }
+  .content { max-width: 860px; margin: 0 auto; }
+
+  .doc-header { max-width: 860px; margin: 0 auto 10px; }
+  .doc-title {
+    font-family: var(--font-head); font-weight: 800; font-size: clamp(22px, 3.4vw, 30px);
+    color: var(--ink-900); margin: 0 0 6px;
+  }
+  .doc-sub { color: var(--ink-500); font-size: 14.5px; margin: 0; }
+
+  .lesson-divider {
+    max-width: 860px; margin: 56px auto 0; padding-top: 26px;
+    border-top: 2px dashed var(--paper-200);
+  }
+
+  .lesson-kicker { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+  .pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 12px; border-radius: 100px;
+    font-size: 12px; font-weight: 700; letter-spacing: 0.03em;
+    background: var(--paper-100); color: var(--indigo-600);
+  }
+  .pill.week { background: #fff4e0; color: var(--amber-500); }
+  .pill.time { background: #e6faf5; color: #0e9a83; }
+
+  h1.lesson-title {
+    font-family: var(--font-head);
+    font-size: clamp(28px, 4vw, 38px);
+    font-weight: 800; margin: 0 0 10px; line-height: 1.15; color: var(--ink-900);
+  }
+  .lesson-sub { font-size: 16.5px; color: var(--ink-500); margin: 0 0 30px; max-width: 640px; }
+
+  h2 {
+    font-family: var(--font-head); font-size: 22px; font-weight: 700; color: var(--ink-900);
+    margin: 44px 0 16px; padding-top: 6px; display: flex; align-items: center; gap: 10px;
+  }
+  h2 .num-chip {
+    width: 30px; height: 30px; border-radius: 9px;
+    background: linear-gradient(135deg, var(--indigo-500), var(--violet-500));
+    color: #fff; font-size: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+
+  p { line-height: 1.75; font-size: 15.5px; color: var(--ink-700); margin: 0 0 16px; }
+  ul, ol { line-height: 1.75; font-size: 15.5px; color: var(--ink-700); padding-left: 22px; margin: 0 0 16px; }
+  li { margin-bottom: 6px; }
+  strong { color: var(--ink-900); }
+  code.inline {
+    font-family: var(--font-code); background: var(--paper-100); color: #8033d1;
+    padding: 2px 7px; border-radius: 6px; font-size: 0.88em;
+  }
+
+  .box { border-radius: var(--radius-md); padding: 20px 22px; margin: 22px 0; box-shadow: var(--shadow-card); }
+  .box p:last-child { margin-bottom: 0; }
+  .box-title {
+    display: flex; align-items: center; gap: 8px;
+    font-family: var(--font-head); font-weight: 700; font-size: 14px;
+    text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 10px;
+  }
+  .box.objectives { background: #f2f1ff; border-left: 4px solid var(--indigo-500); }
+  .box.objectives .box-title { color: var(--indigo-600); }
+  .box.objectives ul { margin-bottom: 0; }
+  .box.vocab { background: var(--paper-0); border: 1px solid var(--paper-200); }
+  .box.vocab .box-title { color: var(--ink-700); }
+  .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; margin-top: 4px; }
+  .vocab-item { background: var(--paper-50); border-radius: var(--radius-sm); padding: 12px 14px; }
+  .vocab-item dt { font-family: var(--font-code); font-weight: 600; color: var(--indigo-600); font-size: 13.5px; margin-bottom: 4px; }
+  .vocab-item dd { margin: 0; font-size: 13.5px; color: var(--ink-700); line-height: 1.5; }
+  .box.tip { background: #eafaf5; border-left: 4px solid var(--success-500); }
+  .box.tip .box-title { color: #0e9a6e; }
+  .box.warning { background: #fff4e6; border-left: 4px solid var(--amber-500); }
+  .box.warning .box-title { color: #b5691a; }
+  .box.challenge { background: linear-gradient(135deg, #1b1f4d, #2a1f5e); color: #fff; border-left: none; }
+  .box.challenge .box-title { color: var(--teal-400); }
+  .box.challenge p, .box.challenge li { color: #dfe1f7; }
+  .box.challenge strong { color: #fff; }
+  .box.recap { background: var(--paper-0); border: 1.5px dashed var(--indigo-400); }
+  .box.recap .box-title { color: var(--indigo-600); }
+
+  .code-window { border-radius: var(--radius-md); overflow: hidden; margin: 18px 0 22px; box-shadow: var(--shadow-card); background: #171b34; }
+  .code-window__bar { display: flex; align-items: center; gap: 8px; padding: 10px 14px; background: #12152b; }
+  .code-window__bar span.dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot.red { background: #ff5f56; } .dot.yellow { background: #ffbd2e; } .dot.green { background: #27c93f; }
+  .code-window__label { margin-left: 8px; font-family: var(--font-code); font-size: 12px; color: #8b8fb8; }
+  .code-window pre { margin: 0; padding: 18px 20px; overflow-x: auto; font-family: var(--font-code); font-size: 13.5px; line-height: 1.65; color: #e6e8fb; }
+  .code-window code { font-family: var(--font-code); }
+  .tag { color: #8d8dfb; } .attr { color: #2fd9c4; } .str { color: #ffb648; } .cmt { color: #6b6f96; font-style: italic; } .txt { color: #e6e8fb; }
+
+  .preview-window { border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--paper-200); margin: 0 0 22px; box-shadow: var(--shadow-card); }
+  .preview-window__bar { display: flex; align-items: center; gap: 8px; padding: 9px 14px; background: var(--paper-100); border-bottom: 1px solid var(--paper-200); }
+  .preview-window__bar .url { margin-left: 6px; background: #fff; border-radius: 100px; padding: 3px 12px; font-size: 11.5px; color: var(--ink-500); font-family: var(--font-code); }
+  .preview-window__body { padding: 20px 22px; background: #fff; font-family: var(--font-body); color: #222; }
+
+  table.grid-table { width: 100%; border-collapse: collapse; margin: 18px 0 26px; font-size: 14px; }
+  table.grid-table th, table.grid-table td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--paper-200); }
+  table.grid-table th { font-family: var(--font-head); font-size: 12.5px; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-500); }
+
+  footer.site-footer { text-align: center; padding: 30px 20px; color: var(--ink-500); font-size: 13px; }
+</style>
+</head>
+<body>
+
+  <main class="main">
+    <div class="doc-header">
+      <p class="doc-title">Organizing Content: Lessons 5 &amp; 6</p>
+      <p class="doc-sub">Standalone excerpt from Code Your World: HTML · Week 3</p>
+    </div>
+
+    <div class="content">
+
+      <div class="lesson-kicker"><span class="pill">Lesson 5 of 16</span><span class="pill week">Week 3</span><span class="pill time">⏱ 60 minutes</span></div>
+      <h1 class="lesson-title">Lists: Ordered, Unordered &amp; Nested</h1>
+      <p class="lesson-sub">Lists are everywhere on the web — menus, steps, ingredients, rankings. Today you'll learn all three list types HTML offers.</p>
+
+      <div class="box objectives">
+        <div class="box-title">🎯 Learning Objectives</div>
+        <ul>
+          <li>Build unordered (bulleted) lists with &lt;ul&gt; and &lt;li&gt;</li>
+          <li>Build ordered (numbered) lists with &lt;ol&gt; and &lt;li&gt;</li>
+          <li>Nest lists inside other lists</li>
+          <li>Choose the right list type for the content</li>
+        </ul>
+      </div>
+
+      <h2><span class="num-chip">1</span>Unordered Lists (Bullets)</h2>
+      <p>Use <code class="inline">&lt;ul&gt;</code> (unordered list) when the order of items doesn't matter — like a list of favorite foods. Each item inside goes in its own <code class="inline">&lt;li&gt;</code> (list item) tag.</p>
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">bullets.html</span></div>
+        <pre><code><span class="tag">&lt;ul&gt;</span>
+  <span class="tag">&lt;li&gt;</span><span class="txt">Pizza</span><span class="tag">&lt;/li&gt;</span>
+  <span class="tag">&lt;li&gt;</span><span class="txt">Tacos</span><span class="tag">&lt;/li&gt;</span>
+  <span class="tag">&lt;li&gt;</span><span class="txt">Sushi</span><span class="tag">&lt;/li&gt;</span>
+<span class="tag">&lt;/ul&gt;</span></code></pre>
+      </div>
+      <div class="preview-window">
+        <div class="preview-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="url">🔒 bullets.html</span></div>
+        <div class="preview-window__body"><ul style="margin:0;padding-left:20px;"><li>Pizza</li><li>Tacos</li><li>Sushi</li></ul></div>
+      </div>
+
+      <h2><span class="num-chip">2</span>Ordered Lists (Numbers)</h2>
+      <p>Use <code class="inline">&lt;ol&gt;</code> (ordered list) when order matters — like steps in a recipe. The browser numbers items automatically, so you never type the numbers yourself.</p>
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">steps.html</span></div>
+        <pre><code><span class="tag">&lt;ol&gt;</span>
+  <span class="tag">&lt;li&gt;</span><span class="txt">Preheat the oven to 200°C</span><span class="tag">&lt;/li&gt;</span>
+  <span class="tag">&lt;li&gt;</span><span class="txt">Mix the dry ingredients</span><span class="tag">&lt;/li&gt;</span>
+  <span class="tag">&lt;li&gt;</span><span class="txt">Bake for 25 minutes</span><span class="tag">&lt;/li&gt;</span>
+<span class="tag">&lt;/ol&gt;</span></code></pre>
+      </div>
+      <div class="preview-window">
+        <div class="preview-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="url">🔒 steps.html</span></div>
+        <div class="preview-window__body"><ol style="margin:0;padding-left:20px;"><li>Preheat the oven to 200°C</li><li>Mix the dry ingredients</li><li>Bake for 25 minutes</li></ol></div>
+      </div>
+      <p>You can change where numbering starts with the <code class="inline">start</code> attribute (e.g. <code class="inline">&lt;ol start="4"&gt;</code>), or switch the numbering style with <code class="inline">type</code> (e.g. <code class="inline">type="A"</code> for A, B, C or <code class="inline">type="i"</code> for i, ii, iii).</p>
+
+      <h2><span class="num-chip">3</span>Nesting Lists</h2>
+      <p>You can put a whole list inside a single &lt;li&gt; to create sub-items — this is called <strong>nesting</strong>. It's perfect for things like packing lists with categories.</p>
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">packing.html</span></div>
+        <pre><code><span class="tag">&lt;ul&gt;</span>
+  <span class="tag">&lt;li&gt;</span><span class="txt">Clothes</span>
+    <span class="tag">&lt;ul&gt;</span>
+      <span class="tag">&lt;li&gt;</span><span class="txt">T-shirts</span><span class="tag">&lt;/li&gt;</span>
+      <span class="tag">&lt;li&gt;</span><span class="txt">Jacket</span><span class="tag">&lt;/li&gt;</span>
+    <span class="tag">&lt;/ul&gt;</span>
+  <span class="tag">&lt;/li&gt;</span>
+  <span class="tag">&lt;li&gt;</span><span class="txt">Toiletries</span><span class="tag">&lt;/li&gt;</span>
+<span class="tag">&lt;/ul&gt;</span></code></pre>
+      </div>
+      <div class="preview-window">
+        <div class="preview-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="url">🔒 packing.html</span></div>
+        <div class="preview-window__body">
+          <ul style="margin:0;padding-left:20px;">
+            <li>Clothes
+              <ul style="padding-left:20px;"><li>T-shirts</li><li>Jacket</li></ul>
+            </li>
+            <li>Toiletries</li>
+          </ul>
+        </div>
+      </div>
+      <div class="box warning">
+        <div class="box-title">⚠️ Watch the Nesting</div>
+        <p>The nested &lt;ul&gt; must go <em>inside</em> the &lt;li&gt; of its parent item, not after it closes. Getting this indentation right in your editor makes mistakes much easier to spot.</p>
+      </div>
+
+      <h2><span class="num-chip">4</span>Bonus: Description Lists</h2>
+      <p>A third, less common list type is the <strong>description list</strong>, used for term/definition pairs like a glossary: <code class="inline">&lt;dl&gt;</code> wraps it, <code class="inline">&lt;dt&gt;</code> holds the term, and <code class="inline">&lt;dd&gt;</code> holds its description.</p>
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">glossary.html</span></div>
+        <pre><code><span class="tag">&lt;dl&gt;</span>
+  <span class="tag">&lt;dt&gt;</span><span class="txt">HTML</span><span class="tag">&lt;/dt&gt;</span>
+  <span class="tag">&lt;dd&gt;</span><span class="txt">The language used to structure web pages</span><span class="tag">&lt;/dd&gt;</span>
+<span class="tag">&lt;/dl&gt;</span></code></pre>
+      </div>
+      <div class="preview-window">
+        <div class="preview-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="url">🔒 glossary.html</span></div>
+        <div class="preview-window__body">
+          <dl style="margin:0;"><dt style="font-weight:700;">HTML</dt><dd style="margin:2px 0 0 26px;">The language used to structure web pages</dd></dl>
+        </div>
+      </div>
+
+      <div class="box vocab">
+        <div class="box-title">📚 Key Vocabulary</div>
+        <dl class="vocab-grid">
+          <div class="vocab-item"><dt>Unordered list</dt><dd>A bulleted list where order doesn't matter — &lt;ul&gt;</dd></div>
+          <div class="vocab-item"><dt>Ordered list</dt><dd>A numbered list where order matters — &lt;ol&gt;</dd></div>
+          <div class="vocab-item"><dt>List item</dt><dd>A single entry in a list — &lt;li&gt;</dd></div>
+          <div class="vocab-item"><dt>Nesting</dt><dd>Placing one list (or element) inside another</dd></div>
+          <div class="vocab-item"><dt>Description list</dt><dd>A term/definition list using &lt;dl&gt;, &lt;dt&gt;, &lt;dd&gt;</dd></div>
+        </dl>
+      </div>
+
+      <div class="box challenge">
+        <div class="box-title">🚀 Challenge</div>
+        <p>Create <code class="inline">my-week.html</code>. Include an &lt;ol&gt; listing the steps of your morning routine (at least 4 steps), and a &lt;ul&gt; of your favorite subjects at school, with at least one item containing a nested &lt;ul&gt; of reasons why you like it.</p>
+      </div>
+
+      <div class="box recap">
+        <div class="box-title">✅ Recap</div>
+        <p>Use &lt;ul&gt; for unordered content, &lt;ol&gt; for ordered/step-based content, and nest lists by placing a new list inside an &lt;li&gt;. Description lists (&lt;dl&gt;) handle term/definition pairs. Next lesson: connecting pages with links.</p>
+      </div>
+
+    </div>
+
+    <div class="lesson-divider"></div>
+
+    <div class="content">
+
+      <div class="lesson-kicker"><span class="pill">Lesson 6 of 16</span><span class="pill week">Week 3</span><span class="pill time">⏱ 60 minutes</span></div>
+      <h1 class="lesson-title">Links &amp; Navigating the Web</h1>
+      <p class="lesson-sub">Links are what turn separate pages into a "web." Today you'll connect your pages to each other — and to the rest of the internet.</p>
+
+      <div class="box objectives">
+        <div class="box-title">🎯 Learning Objectives</div>
+        <ul>
+          <li>Create links using the &lt;a&gt; tag and href attribute</li>
+          <li>Explain the difference between absolute and relative links</li>
+          <li>Open links safely in a new browser tab</li>
+          <li>Build jump links that scroll to a section within the same page</li>
+        </ul>
+      </div>
+
+      <h2><span class="num-chip">1</span>The Anchor Tag</h2>
+      <p>Links are created with the <strong>anchor tag</strong>, <code class="inline">&lt;a&gt;</code>. The destination goes in the <code class="inline">href</code> attribute (short for "hypertext reference"), and the clickable text goes between the opening and closing tags.</p>
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">links.html</span></div>
+        <pre><code><span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="str">"https://www.wikipedia.org"</span><span class="tag">&gt;</span><span class="txt">Visit Wikipedia</span><span class="tag">&lt;/a&gt;</span></code></pre>
+      </div>
+      <div class="preview-window">
+        <div class="preview-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="url">🔒 links.html</span></div>
+        <div class="preview-window__body"><a href="#" onclick="return false;" style="color:#5b5bf0;text-decoration:underline;">Visit Wikipedia</a></div>
+      </div>
+
+      <h2><span class="num-chip">2</span>Absolute vs. Relative Links</h2>
+      <p>There are two kinds of link destinations:</p>
+      <ul>
+        <li><strong>Absolute links</strong> — the full web address, including <code class="inline">https://</code>, used for linking to <em>other</em> websites.</li>
+        <li><strong>Relative links</strong> — just the file name or path, used for linking between pages <em>within your own project</em>. These are shorter and keep working even if your whole site moves to a new address.</li>
+      </ul>
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">nav-example.html</span></div>
+        <pre><code><span class="cmt">&lt;!-- Absolute: points to an entirely different site --&gt;</span>
+<span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="str">"https://www.nasa.gov"</span><span class="tag">&gt;</span><span class="txt">NASA</span><span class="tag">&lt;/a&gt;</span>
+
+<span class="cmt">&lt;!-- Relative: points to a file in the same project --&gt;</span>
+<span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="str">"about-me.html"</span><span class="tag">&gt;</span><span class="txt">About Me</span><span class="tag">&lt;/a&gt;</span>
+<span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="str">"hobby.html"</span><span class="tag">&gt;</span><span class="txt">My Hobby</span><span class="tag">&lt;/a&gt;</span></code></pre>
+      </div>
+
+      <table class="grid-table">
+        <thead><tr><th>Link type</th><th>Looks like</th><th>Use it for</th></tr></thead>
+        <tbody>
+          <tr><td>Absolute</td><td><code class="inline">https://www.nasa.gov</code></td><td>Other people's websites</td></tr>
+          <tr><td>Relative (same folder)</td><td><code class="inline">hobby.html</code></td><td>Another page of your own site</td></tr>
+          <tr><td>Relative (sub-folder)</td><td><code class="inline">pages/hobby.html</code></td><td>A page inside a folder</td></tr>
+          <tr><td>Relative (up a folder)</td><td><code class="inline">../index.html</code></td><td>Going back out of a folder</td></tr>
+        </tbody>
+      </table>
+
+      <h2><span class="num-chip">3</span>Opening Links in a New Tab</h2>
+      <p>Add <code class="inline">target="_blank"</code> to open a link in a new tab instead of navigating away from your page — useful for external links so visitors don't lose their place. When you do this, it's good practice to also add <code class="inline">rel="noopener"</code>, which is a small security measure that stops the new tab from being able to control your original page.</p>
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">new-tab.html</span></div>
+        <pre><code><span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="str">"https://www.nasa.gov"</span> <span class="attr">target</span>=<span class="str">"_blank"</span> <span class="attr">rel</span>=<span class="str">"noopener"</span><span class="tag">&gt;</span><span class="txt">NASA (opens in new tab)</span><span class="tag">&lt;/a&gt;</span></code></pre>
+      </div>
+      <div class="box tip">
+        <div class="box-title">💡 Write Link Text That Means Something</div>
+        <p>Avoid links that just say "click here." Screen reader users often skim a list of every link on a page, and a page full of "click here" tells them nothing. Write the destination into the text itself — <strong>"Read the NASA mission page"</strong> beats <strong>"click here"</strong> every time.</p>
+      </div>
+
+      <h2><span class="num-chip">4</span>Jump Links Within a Page</h2>
+      <p>You can also link to a specific spot on the <em>same</em> page. Give the target element an <code class="inline">id</code>, then link to it using a <code class="inline">#</code> followed by that id.</p>
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">jump-link.html</span></div>
+        <pre><code><span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="str">"#hobbies-section"</span><span class="tag">&gt;</span><span class="txt">Jump to Hobbies</span><span class="tag">&lt;/a&gt;</span>
+
+<span class="cmt">&lt;!-- further down the page --&gt;</span>
+<span class="tag">&lt;h2</span> <span class="attr">id</span>=<span class="str">"hobbies-section"</span><span class="tag">&gt;</span><span class="txt">My Hobbies</span><span class="tag">&lt;/h2&gt;</span></code></pre>
+      </div>
+      <p>This is exactly how the "back to top" links and table-of-contents links you see on long web pages and Wikipedia articles work.</p>
+
+      <div class="box vocab">
+        <div class="box-title">📚 Key Vocabulary</div>
+        <dl class="vocab-grid">
+          <div class="vocab-item"><dt>Hyperlink</dt><dd>Clickable text or content that navigates to another location</dd></div>
+          <div class="vocab-item"><dt>href</dt><dd>The attribute on &lt;a&gt; that sets the link's destination</dd></div>
+          <div class="vocab-item"><dt>Absolute URL</dt><dd>A full web address including https://, for external sites</dd></div>
+          <div class="vocab-item"><dt>Relative URL</dt><dd>A short path to a file within your own project</dd></div>
+          <div class="vocab-item"><dt>target="_blank"</dt><dd>Opens the linked page in a new browser tab</dd></div>
+        </dl>
+      </div>
+
+      <div class="box challenge">
+        <div class="box-title">🚀 Challenge</div>
+        <p>Add a small navigation menu of links to the top of <code class="inline">about-me.html</code>, <code class="inline">hobby.html</code>, and <code class="inline">my-week.html</code> so you can click between all three pages you've built so far. On one page, add an id to a heading further down and create a jump link to it.</p>
+      </div>
+
+      <div class="box recap">
+        <div class="box-title">✅ Recap</div>
+        <p>The &lt;a href&gt; tag creates links — absolute URLs for other sites, relative URLs for your own pages. target="_blank" opens links in a new tab, and id + # creates jump links within a page. Next lesson: adding images.</p>
+      </div>
+
+    </div>
+
+    <footer class="site-footer">CIOS HTML Course Book · Lessons 5 &amp; 6 of 16 · Standalone excerpt</footer>
+  </main>
+
+</body>
+</html>

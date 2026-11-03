@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lesson 11: Div, Span &amp; Semantics — Code Your World: HTML</title>
+<link rel="stylesheet" href="../assets/style.css" />
+</head>
+<body>
+
+<div class="top-progress"><div class="top-progress__fill" style="width:0%"></div></div>
+<button class="sidebar-toggle" aria-label="Toggle menu">☰ Menu</button>
+<div class="sidebar-scrim"></div>
+
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand"><div class="brand__mark">&lt;/&gt;</div><div class="brand__text"><div class="kicker">CIOS Course Book</div><div class="name">Code Your World: HTML</div></div></div>
+    <div class="sidebar-progress">
+      <div class="sidebar-progress__label"><span>Your progress</span><strong class="sidebar-progress__count">0 / 16</strong></div>
+      <div class="sidebar-progress__track"><div class="sidebar-progress__fill" style="width:0%"></div></div>
+    </div>
+    <div class="nav-group__title">Start Here</div>
+    <ul class="nav-list">
+      <li><a href="../index.html">🏠 <span>Course Home</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 1 · Getting Started</div>
+    <ul class="nav-list">
+      <li><a href="lesson-01.html" data-lesson-id="l01"><span class="num">1</span><span>Welcome to the Web</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-02.html" data-lesson-id="l02"><span class="num">2</span><span>Your First Web Page</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 2 · Text Foundations</div>
+    <ul class="nav-list">
+      <li><a href="lesson-03.html" data-lesson-id="l03"><span class="num">3</span><span>Headings &amp; Paragraphs</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-04.html" data-lesson-id="l04"><span class="num">4</span><span>Text Formatting</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 3 · Organizing Content</div>
+    <ul class="nav-list">
+      <li><a href="lesson-05.html" data-lesson-id="l05"><span class="num">5</span><span>Lists</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-06.html" data-lesson-id="l06"><span class="num">6</span><span>Links</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 4 · Media &amp; Data</div>
+    <ul class="nav-list">
+      <li><a href="lesson-07.html" data-lesson-id="l07"><span class="num">7</span><span>Images</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-08.html" data-lesson-id="l08"><span class="num">8</span><span>Tables</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 5 · Forms</div>
+    <ul class="nav-list">
+      <li><a href="lesson-09.html" data-lesson-id="l09"><span class="num">9</span><span>Forms Part 1</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-10.html" data-lesson-id="l10"><span class="num">10</span><span>Forms Part 2</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 6 · Structure &amp; Media</div>
+    <ul class="nav-list">
+      <li><a href="lesson-11.html" class="active" data-lesson-id="l11"><span class="num">11</span><span>Div, Span &amp; Semantics</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-12.html" data-lesson-id="l12"><span class="num">12</span><span>Audio, Video &amp; Embeds</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 7 · Real-World Skills</div>
+    <ul class="nav-list">
+      <li><a href="lesson-13.html" data-lesson-id="l13"><span class="num">13</span><span>Attributes &amp; Accessibility</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-14.html" data-lesson-id="l14"><span class="num">14</span><span>Mini Project: Plan</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 8 · Project &amp; Beyond</div>
+    <ul class="nav-list">
+      <li><a href="lesson-15.html" data-lesson-id="l15"><span class="num">15</span><span>Mini Project: Build</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-16.html" data-lesson-id="l16"><span class="num">16</span><span>Publishing &amp; Next Steps</span><span class="check">✓</span></a></li>
+    </ul>
+  </aside>
+
+  <main class="main">
+    <div class="content">
+
+      <div class="lesson-kicker"><span class="pill">Lesson 11 of 16</span><span class="pill week">Week 6</span><span class="pill time">⏱ 60 minutes</span></div>
+      <h1 class="lesson-title">Div, Span &amp; Semantic Layout</h1>
+      <p class="lesson-sub">Today you'll learn how professional developers group and organize content — including a set of tags that describe the actual meaning of each section.</p>
+
+      <div class="box objectives">
+        <div class="box-title">🎯 Learning Objectives</div>
+        <ul>
+          <li>Use &lt;div&gt; to group block-level content</li>
+          <li>Use &lt;span&gt; to wrap small pieces of inline content</li>
+          <li>Explain the difference between block-level and inline elements</li>
+          <li>Use semantic HTML5 elements to structure a full page</li>
+        </ul>
+      </div>
+
+      <h2><span class="num-chip">1</span>&lt;div&gt;: The Generic Block Container</h2>
+      <p>A <code class="inline">&lt;div&gt;</code> (division) is a generic box with no meaning of its own — it exists purely to group other elements together, usually so they can be styled or positioned as one unit later with CSS. It's <strong>block-level</strong>, meaning it always starts on a new line and takes up the full width available.</p>
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">div-example.html</span></div>
+        <pre><code><span class="tag">&lt;div&gt;</span>
+  <span class="tag">&lt;h2&gt;</span><span class="txt">Contact Card</span><span class="tag">&lt;/h2&gt;</span>
+  <span class="tag">&lt;p&gt;</span><span class="txt">Email: student@example.com</span><span class="tag">&lt;/p&gt;</span>
+<span class="tag">&lt;/div&gt;</span></code></pre>
+      </div>
+
+      <h2><span class="num-chip">2</span>&lt;span&gt;: The Generic Inline Container</h2>
+      <p>A <code class="inline">&lt;span&gt;</code> does the same grouping job as a div, but it's <strong>inline</strong> — it doesn't force a new line, and only wraps as much space as its content needs. Use it to target a small piece of text inside a sentence.</p>
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">span-example.html</span></div>
+        <pre><code><span class="tag">&lt;p&gt;</span><span class="txt">Your order total is </span><span class="tag">&lt;span&gt;</span><span class="txt">$24.99</span><span class="tag">&lt;/span&gt;</span><span class="txt">.</span><span class="tag">&lt;/p&gt;</span></code></pre>
+      </div>
+      <p>By itself, a &lt;span&gt; changes nothing visually — its power comes later when you attach CSS classes to style just that word or phrase differently from the rest of the sentence.</p>
+
+      <h2><span class="num-chip">3</span>Semantic HTML5 Elements</h2>
+      <p>Div and span are useful, but they say nothing about <em>what</em> content actually is. HTML5 introduced <strong>semantic elements</strong> — tags that describe their purpose, so both browsers and developers instantly understand a page's structure.</p>
+      <table class="grid-table">
+        <thead><tr><th>Element</th><th>Represents</th></tr></thead>
+        <tbody>
+          <tr><td><code class="inline">&lt;header&gt;</code></td><td>Introductory content — usually a logo, title, or intro area</td></tr>
+          <tr><td><code class="inline">&lt;nav&gt;</code></td><td>A block of navigation links</td></tr>
+          <tr><td><code class="inline">&lt;main&gt;</code></td><td>The primary, unique content of the page (only one per page)</td></tr>
+          <tr><td><code class="inline">&lt;section&gt;</code></td><td>A distinct, themed group of content, often with its own heading</td></tr>
+          <tr><td><code class="inline">&lt;article&gt;</code></td><td>Self-contained content that could stand alone, like a blog post</td></tr>
+          <tr><td><code class="inline">&lt;aside&gt;</code></td><td>Content related to, but separate from, the main content (like a sidebar)</td></tr>
+          <tr><td><code class="inline">&lt;footer&gt;</code></td><td>Closing content — copyright, contact info, links</td></tr>
+        </tbody>
+      </table>
+
+      <h2><span class="num-chip">4</span>Structuring a Full Page</h2>
+      <p>Here's how these elements typically combine into a real page layout:</p>
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">layout.html</span></div>
+        <pre><code><span class="tag">&lt;body&gt;</span>
+  <span class="tag">&lt;header&gt;</span>
+    <span class="tag">&lt;h1&gt;</span><span class="txt">My Website</span><span class="tag">&lt;/h1&gt;</span>
+    <span class="tag">&lt;nav&gt;</span><span class="txt">...links...</span><span class="tag">&lt;/nav&gt;</span>
+  <span class="tag">&lt;/header&gt;</span>
+
+  <span class="tag">&lt;main&gt;</span>
+    <span class="tag">&lt;section&gt;</span>
+      <span class="tag">&lt;h2&gt;</span><span class="txt">About Me</span><span class="tag">&lt;/h2&gt;</span>
+      <span class="tag">&lt;p&gt;</span><span class="txt">...</span><span class="tag">&lt;/p&gt;</span>
+    <span class="tag">&lt;/section&gt;</span>
+  <span class="tag">&lt;/main&gt;</span>
+
+  <span class="tag">&lt;footer&gt;</span>
+    <span class="tag">&lt;p&gt;</span><span class="txt">&amp;copy; 2026</span><span class="tag">&lt;/p&gt;</span>
+  <span class="tag">&lt;/footer&gt;</span>
+<span class="tag">&lt;/body&gt;</span></code></pre>
+      </div>
+
+      <div class="box tip">
+        <div class="box-title">💡 Rule of Thumb</div>
+        <p>Reach for a semantic tag first — it exists for almost every common section of a page. Only fall back to a plain &lt;div&gt; or &lt;span&gt; when nothing semantic truly fits.</p>
+      </div>
+
+      <div class="box vocab">
+        <div class="box-title">📚 Key Vocabulary</div>
+        <dl class="vocab-grid">
+          <div class="vocab-item"><dt>Block-level</dt><dd>Starts on a new line and fills the available width</dd></div>
+          <div class="vocab-item"><dt>Inline</dt><dd>Flows within a line of text, taking only needed space</dd></div>
+          <div class="vocab-item"><dt>Semantic element</dt><dd>A tag that describes the meaning of its content</dd></div>
+          <div class="vocab-item"><dt>div / span</dt><dd>Generic block/inline containers with no inherent meaning</dd></div>
+        </dl>
+      </div>
+
+      <div class="box challenge">
+        <div class="box-title">🚀 Challenges</div>
+        <p class="challenge-intro">Three challenges, each a little tougher than the last. Challenge 1 is the must-do; Challenges 2 and 3 are where you level up.</p>
+        <div class="challenge-item">
+          <div class="challenge-item__head"><span class="challenge-item__num">Challenge 1</span><span class="challenge-level core">Core</span><span class="challenge-item__name">Rebuild Your About Me Page</span></div>
+          <p>Take your <code class="inline">about-me.html</code> page and rebuild its structure using &lt;header&gt;, &lt;main&gt;, at least two &lt;section&gt; elements, and a &lt;footer&gt;. Use one &lt;span&gt; somewhere to wrap a single important word or number.</p>
+        </div>
+        <div class="challenge-item">
+          <div class="challenge-item__head"><span class="challenge-item__num">Challenge 2</span><span class="challenge-level levelup">Level Up</span><span class="challenge-item__name">The Block vs. Inline Experiment</span></div>
+          <p>Create <code class="inline">experiment.html</code>. Inside the &lt;body&gt;, write three &lt;div&gt;s with one word each (Red, Green, Blue), then three &lt;span&gt;s with one word each (Cat, Dog, Fish). Open it in your browser.</p>
+        <div class="code-window">
+          <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">experiment.html</span></div>
+          <pre><code><span class="tag">&lt;div</span><span class="tag">&gt;</span>Red<span class="tag">&lt;/div</span><span class="tag">&gt;</span>
+<span class="tag">&lt;div</span><span class="tag">&gt;</span>Green<span class="tag">&lt;/div</span><span class="tag">&gt;</span>
+<span class="tag">&lt;div</span><span class="tag">&gt;</span>Blue<span class="tag">&lt;/div</span><span class="tag">&gt;</span>
+
+<span class="tag">&lt;span</span><span class="tag">&gt;</span>Cat<span class="tag">&lt;/span</span><span class="tag">&gt;</span>
+<span class="tag">&lt;span</span><span class="tag">&gt;</span>Dog<span class="tag">&lt;/span</span><span class="tag">&gt;</span>
+<span class="tag">&lt;span</span><span class="tag">&gt;</span>Fish<span class="tag">&lt;/span</span><span class="tag">&gt;</span></code></pre>
+        </div>
+        <p>What happened to each group? Write your answer as an HTML comment at the bottom of the file. Then add a table with two columns — <strong>Block-level</strong> and <strong>Inline</strong> — and sort these tags into it: &lt;p&gt;, &lt;h2&gt;, &lt;a&gt;, &lt;strong&gt;, &lt;em&gt;, &lt;ul&gt;, &lt;section&gt;, &lt;span&gt;. Not sure about one? Test it in your experiment file!</p>
+        </div>
+        <div class="challenge-item">
+          <div class="challenge-item__head"><span class="challenge-item__num">Challenge 3</span><span class="challenge-level boss">Boss Level</span><span class="challenge-item__name">School Newspaper Front Page</span></div>
+          <p>Build <code class="inline">news.html</code> — the front page of your own school newspaper (give it a name, like <em>The Classroom Times</em>). It must have:</p>
+        <ul>
+          <li>A &lt;header&gt; with an &lt;h1&gt; and a &lt;nav&gt; of three links (use <code class="inline">href="#"</code> for now)</li>
+          <li>A &lt;main&gt; containing two &lt;article&gt;s — each with its own &lt;h2&gt;, a short paragraph, and the date wrapped in a &lt;span&gt;</li>
+          <li>An &lt;aside&gt; with a "Did You Know?" fun fact</li>
+          <li>A &lt;footer&gt; with <code class="inline">&amp;copy;</code> and the year</li>
+        </ul>
+        <p><strong>The rule:</strong> no plain &lt;div&gt;s allowed. If you really think you need one, write a comment explaining why no semantic tag fits.</p>
+        </div>
+      </div>
+
+      <div class="box recap">
+        <div class="box-title">✅ Recap</div>
+        <p>&lt;div&gt; and &lt;span&gt; are generic containers (block and inline) used for grouping. Semantic elements like header, nav, main, section, article, aside, and footer describe actual meaning and should be preferred whenever they fit. Next lesson: embedding audio, video, and other content.</p>
+      </div>
+
+      <div class="mark-complete"><button data-lesson-id="l11">Mark Lesson as Complete</button></div>
+
+      <div class="lesson-pager">
+        <a class="pager-btn" href="lesson-10.html"><div class="dir">← Previous</div><div class="title">Lesson 10: Forms Part 2</div></a>
+        <a class="pager-btn next" href="lesson-12.html"><div class="dir">Next →</div><div class="title">Lesson 12: Audio, Video &amp; Embeds</div></a>
+      </div>
+
+    </div>
+    <footer class="site-footer">CIOS HTML Course Book · Lesson 11 of 16</footer>
+  </main>
+</div>
+
+<script src="../assets/script.js"></script>
+</body>
+</html>

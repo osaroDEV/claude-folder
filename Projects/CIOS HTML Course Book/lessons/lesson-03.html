@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lesson 3: Headings &amp; Paragraphs — Code Your World: HTML</title>
+<link rel="stylesheet" href="../assets/style.css" />
+</head>
+<body>
+
+<div class="top-progress"><div class="top-progress__fill" style="width:0%"></div></div>
+<button class="sidebar-toggle" aria-label="Toggle menu">☰ Menu</button>
+<div class="sidebar-scrim"></div>
+
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand"><div class="brand__mark">&lt;/&gt;</div><div class="brand__text"><div class="kicker">CIOS Course Book</div><div class="name">Code Your World: HTML</div></div></div>
+    <div class="sidebar-progress">
+      <div class="sidebar-progress__label"><span>Your progress</span><strong class="sidebar-progress__count">0 / 16</strong></div>
+      <div class="sidebar-progress__track"><div class="sidebar-progress__fill" style="width:0%"></div></div>
+    </div>
+    <div class="nav-group__title">Start Here</div>
+    <ul class="nav-list">
+      <li><a href="../index.html">🏠 <span>Course Home</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 1 · Getting Started</div>
+    <ul class="nav-list">
+      <li><a href="lesson-01.html" data-lesson-id="l01"><span class="num">1</span><span>Welcome to the Web</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-02.html" data-lesson-id="l02"><span class="num">2</span><span>Your First Web Page</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 2 · Text Foundations</div>
+    <ul class="nav-list">
+      <li><a href="lesson-03.html" class="active" data-lesson-id="l03"><span class="num">3</span><span>Headings &amp; Paragraphs</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-04.html" data-lesson-id="l04"><span class="num">4</span><span>Text Formatting</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 3 · Organizing Content</div>
+    <ul class="nav-list">
+      <li><a href="lesson-05.html" data-lesson-id="l05"><span class="num">5</span><span>Lists</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-06.html" data-lesson-id="l06"><span class="num">6</span><span>Links</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 4 · Media &amp; Data</div>
+    <ul class="nav-list">
+      <li><a href="lesson-07.html" data-lesson-id="l07"><span class="num">7</span><span>Images</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-08.html" data-lesson-id="l08"><span class="num">8</span><span>Tables</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 5 · Forms</div>
+    <ul class="nav-list">
+      <li><a href="lesson-09.html" data-lesson-id="l09"><span class="num">9</span><span>Forms Part 1</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-10.html" data-lesson-id="l10"><span class="num">10</span><span>Forms Part 2</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 6 · Structure &amp; Media</div>
+    <ul class="nav-list">
+      <li><a href="lesson-11.html" data-lesson-id="l11"><span class="num">11</span><span>Div, Span &amp; Semantics</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-12.html" data-lesson-id="l12"><span class="num">12</span><span>Audio, Video &amp; Embeds</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 7 · Real-World Skills</div>
+    <ul class="nav-list">
+      <li><a href="lesson-13.html" data-lesson-id="l13"><span class="num">13</span><span>Attributes &amp; Accessibility</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-14.html" data-lesson-id="l14"><span class="num">14</span><span>Mini Project: Plan</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 8 · Project &amp; Beyond</div>
+    <ul class="nav-list">
+      <li><a href="lesson-15.html" data-lesson-id="l15"><span class="num">15</span><span>Mini Project: Build</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-16.html" data-lesson-id="l16"><span class="num">16</span><span>Publishing &amp; Next Steps</span><span class="check">✓</span></a></li>
+    </ul>
+  </aside>
+
+  <main class="main">
+    <div class="content">
+
+      <div class="lesson-kicker"><span class="pill">Lesson 3 of 16</span><span class="pill week">Week 2</span><span class="pill time">⏱ 60 minutes</span></div>
+      <h1 class="lesson-title">Headings, Paragraphs &amp; Text Structure</h1>
+      <p class="lesson-sub">Text is the heart of most web pages. Today you'll learn how to organize it the way real websites do — with a clear, logical outline.</p>
+
+      <div class="box objectives">
+        <div class="box-title">🎯 Learning Objectives</div>
+        <ul>
+          <li>Use heading tags &lt;h1&gt; through &lt;h6&gt; correctly</li>
+          <li>Explain why heading order and hierarchy matter</li>
+          <li>Write body text using the &lt;p&gt; tag</li>
+          <li>Plan a page's structure like an outline before writing code</li>
+        </ul>
+      </div>
+
+      <h2><span class="num-chip">1</span>Headings: h1 Through h6</h2>
+      <p>HTML gives you six levels of headings, from biggest and most important (<code class="inline">&lt;h1&gt;</code>) to smallest (<code class="inline">&lt;h6&gt;</code>). Think of them exactly like the headings in a school essay or a book's table of contents: a big title, then section titles, then sub-section titles.</p>
+
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">headings.html</span></div>
+        <pre><code><span class="tag">&lt;h1&gt;</span><span class="txt">Volcanoes</span><span class="tag">&lt;/h1&gt;</span>
+<span class="tag">&lt;h2&gt;</span><span class="txt">How Volcanoes Form</span><span class="tag">&lt;/h2&gt;</span>
+<span class="tag">&lt;h3&gt;</span><span class="txt">Tectonic Plates</span><span class="tag">&lt;/h3&gt;</span>
+<span class="tag">&lt;h2&gt;</span><span class="txt">Types of Volcanoes</span><span class="tag">&lt;/h2&gt;</span>
+<span class="tag">&lt;h3&gt;</span><span class="txt">Shield Volcanoes</span><span class="tag">&lt;/h3&gt;</span>
+<span class="tag">&lt;h3&gt;</span><span class="txt">Composite Volcanoes</span><span class="tag">&lt;/h3&gt;</span></code></pre>
+      </div>
+
+      <div class="preview-window">
+        <div class="preview-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="url">🔒 headings.html</span></div>
+        <div class="preview-window__body">
+          <h1 style="margin:0 0 8px;font-family:Poppins,sans-serif;font-size:28px;">Volcanoes</h1>
+          <h2 style="margin:14px 0 6px;font-family:Poppins,sans-serif;font-size:20px;">How Volcanoes Form</h2>
+          <h3 style="margin:10px 0 6px;font-family:Poppins,sans-serif;font-size:16px;">Tectonic Plates</h3>
+          <h2 style="margin:14px 0 6px;font-family:Poppins,sans-serif;font-size:20px;">Types of Volcanoes</h2>
+          <h3 style="margin:10px 0 6px;font-family:Poppins,sans-serif;font-size:16px;">Shield Volcanoes</h3>
+          <h3 style="margin:10px 0 0;font-family:Poppins,sans-serif;font-size:16px;">Composite Volcanoes</h3>
+        </div>
+      </div>
+
+      <div class="box warning">
+        <div class="box-title">⚠️ The One-h1 Rule</div>
+        <p>Use exactly <strong>one &lt;h1&gt;</strong> per page — it should describe what the whole page is about, like a book's title. Never skip a level just to make text look smaller (like using &lt;h4&gt; because you think &lt;h2&gt; looks "too big"). Headings describe <em>structure</em>, not just size — save the look of things for CSS later.</p>
+      </div>
+
+      <h2><span class="num-chip">2</span>Paragraphs: The &lt;p&gt; Tag</h2>
+      <p>Regular text content goes inside <code class="inline">&lt;p&gt;</code> (paragraph) tags. Browsers automatically add spacing above and below each paragraph, and — importantly — they <strong>collapse extra whitespace</strong>. That means pressing enter multiple times or adding extra spaces in your code won't create extra space on the page; only actual HTML tags control layout.</p>
+
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">paragraphs.html</span></div>
+        <pre><code><span class="tag">&lt;p&gt;</span><span class="txt">Volcanoes are openings in the Earth's crust.</span><span class="tag">&lt;/p&gt;</span>
+<span class="tag">&lt;p&gt;</span><span class="txt">They   have      extra spaces
+    and line breaks in this code —
+    but the browser ignores them.</span><span class="tag">&lt;/p&gt;</span></code></pre>
+      </div>
+      <div class="preview-window">
+        <div class="preview-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="url">🔒 paragraphs.html</span></div>
+        <div class="preview-window__body">
+          <p style="margin:0 0 12px;">Volcanoes are openings in the Earth's crust.</p>
+          <p style="margin:0;">They have extra spaces and line breaks in this code — but the browser ignores them.</p>
+        </div>
+      </div>
+
+      <h2><span class="num-chip">3</span>Why Hierarchy Matters</h2>
+      <p>A clear heading structure isn't just neat — it's functional. Search engines like Google scan your headings to understand what a page is about. People using <strong>screen readers</strong> (software that reads pages aloud for blind or low-vision users) can jump directly between headings, the same way you'd skim a table of contents. Skipping levels or using headings randomly makes pages confusing for both machines and humans.</p>
+
+      <h2><span class="num-chip">4</span>Plan Before You Code</h2>
+      <p>Professional developers often sketch a page's outline in plain text before writing any tags. For example, a page about your favorite hobby might look like this:</p>
+      <ul>
+        <li>H1: My Favorite Hobby — Skateboarding</li>
+        <li>H2: How I Got Started</li>
+        <li>H2: My Favorite Tricks
+          <ul><li>H3: The Ollie</li><li>H3: The Kickflip</li></ul>
+        </li>
+        <li>H2: Why I Love It</li>
+      </ul>
+      <p>Once your outline is clear, turning it into HTML is simple — you're just filling in tags around content you've already planned.</p>
+
+      <div class="box vocab">
+        <div class="box-title">📚 Key Vocabulary</div>
+        <dl class="vocab-grid">
+          <div class="vocab-item"><dt>Heading</dt><dd>A title-style tag from &lt;h1&gt; (biggest) to &lt;h6&gt; (smallest)</dd></div>
+          <div class="vocab-item"><dt>Hierarchy</dt><dd>The order of importance shown by heading levels</dd></div>
+          <div class="vocab-item"><dt>Paragraph</dt><dd>A block of regular text, wrapped in &lt;p&gt;</dd></div>
+          <div class="vocab-item"><dt>Whitespace collapsing</dt><dd>Browsers ignore extra spaces/line breaks in your code</dd></div>
+          <div class="vocab-item"><dt>Screen reader</dt><dd>Software that reads a web page aloud for accessibility</dd></div>
+        </dl>
+      </div>
+
+      <div class="box challenge">
+        <div class="box-title">🚀 Challenge</div>
+        <p>Create <code class="inline">hobby.html</code> with a full page structure (doctype, head with title, body). Inside the body, write a page about a hobby or interest of yours using: one &lt;h1&gt;, at least two &lt;h2&gt; sections, one &lt;h3&gt; inside a section, and at least three &lt;p&gt; paragraphs total.</p>
+      </div>
+
+      <div class="box recap">
+        <div class="box-title">✅ Recap</div>
+        <p>Headings &lt;h1&gt;–&lt;h6&gt; create a page's outline — use exactly one &lt;h1&gt; and never skip levels for looks. Paragraphs &lt;p&gt; hold body text, and browsers collapse extra whitespace automatically. A clear hierarchy helps both search engines and screen reader users. Next lesson: formatting text with bold, italics, and special characters.</p>
+      </div>
+
+      <div class="mark-complete"><button data-lesson-id="l03">Mark Lesson as Complete</button></div>
+
+      <div class="lesson-pager">
+        <a class="pager-btn" href="lesson-02.html"><div class="dir">← Previous</div><div class="title">Lesson 2: Your First Web Page</div></a>
+        <a class="pager-btn next" href="lesson-04.html"><div class="dir">Next →</div><div class="title">Lesson 4: Text Formatting</div></a>
+      </div>
+
+    </div>
+    <footer class="site-footer">CIOS HTML Course Book · Lesson 3 of 16</footer>
+  </main>
+</div>
+
+<script src="../assets/script.js"></script>
+</body>
+</html>

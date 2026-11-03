@@ -1,0 +1,1 @@
+I want to build my online school's whatsapp channel. This folder is for adding posts that will help grow the channel. The focus is getting kids and teenagers registered by their parents. Hence give me posts at 8AM (WAT) that I can always post.

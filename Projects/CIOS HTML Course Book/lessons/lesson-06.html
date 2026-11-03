@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lesson 6: Links — Code Your World: HTML</title>
+<link rel="stylesheet" href="../assets/style.css" />
+</head>
+<body>
+
+<div class="top-progress"><div class="top-progress__fill" style="width:0%"></div></div>
+<button class="sidebar-toggle" aria-label="Toggle menu">☰ Menu</button>
+<div class="sidebar-scrim"></div>
+
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand"><div class="brand__mark">&lt;/&gt;</div><div class="brand__text"><div class="kicker">CIOS Course Book</div><div class="name">Code Your World: HTML</div></div></div>
+    <div class="sidebar-progress">
+      <div class="sidebar-progress__label"><span>Your progress</span><strong class="sidebar-progress__count">0 / 16</strong></div>
+      <div class="sidebar-progress__track"><div class="sidebar-progress__fill" style="width:0%"></div></div>
+    </div>
+    <div class="nav-group__title">Start Here</div>
+    <ul class="nav-list">
+      <li><a href="../index.html">🏠 <span>Course Home</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 1 · Getting Started</div>
+    <ul class="nav-list">
+      <li><a href="lesson-01.html" data-lesson-id="l01"><span class="num">1</span><span>Welcome to the Web</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-02.html" data-lesson-id="l02"><span class="num">2</span><span>Your First Web Page</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 2 · Text Foundations</div>
+    <ul class="nav-list">
+      <li><a href="lesson-03.html" data-lesson-id="l03"><span class="num">3</span><span>Headings &amp; Paragraphs</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-04.html" data-lesson-id="l04"><span class="num">4</span><span>Text Formatting</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 3 · Organizing Content</div>
+    <ul class="nav-list">
+      <li><a href="lesson-05.html" data-lesson-id="l05"><span class="num">5</span><span>Lists</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-06.html" class="active" data-lesson-id="l06"><span class="num">6</span><span>Links</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 4 · Media &amp; Data</div>
+    <ul class="nav-list">
+      <li><a href="lesson-07.html" data-lesson-id="l07"><span class="num">7</span><span>Images</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-08.html" data-lesson-id="l08"><span class="num">8</span><span>Tables</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 5 · Forms</div>
+    <ul class="nav-list">
+      <li><a href="lesson-09.html" data-lesson-id="l09"><span class="num">9</span><span>Forms Part 1</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-10.html" data-lesson-id="l10"><span class="num">10</span><span>Forms Part 2</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 6 · Structure &amp; Media</div>
+    <ul class="nav-list">
+      <li><a href="lesson-11.html" data-lesson-id="l11"><span class="num">11</span><span>Div, Span &amp; Semantics</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-12.html" data-lesson-id="l12"><span class="num">12</span><span>Audio, Video &amp; Embeds</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 7 · Real-World Skills</div>
+    <ul class="nav-list">
+      <li><a href="lesson-13.html" data-lesson-id="l13"><span class="num">13</span><span>Attributes &amp; Accessibility</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-14.html" data-lesson-id="l14"><span class="num">14</span><span>Mini Project: Plan</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 8 · Project &amp; Beyond</div>
+    <ul class="nav-list">
+      <li><a href="lesson-15.html" data-lesson-id="l15"><span class="num">15</span><span>Mini Project: Build</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-16.html" data-lesson-id="l16"><span class="num">16</span><span>Publishing &amp; Next Steps</span><span class="check">✓</span></a></li>
+    </ul>
+  </aside>
+
+  <main class="main">
+    <div class="content">
+
+      <div class="lesson-kicker"><span class="pill">Lesson 6 of 16</span><span class="pill week">Week 3</span><span class="pill time">⏱ 60 minutes</span></div>
+      <h1 class="lesson-title">Links &amp; Navigating the Web</h1>
+      <p class="lesson-sub">Links are what turn separate pages into a "web." Today you'll connect your pages to each other — and to the rest of the internet.</p>
+
+      <div class="box objectives">
+        <div class="box-title">🎯 Learning Objectives</div>
+        <ul>
+          <li>Create links using the &lt;a&gt; tag and href attribute</li>
+          <li>Explain the difference between absolute and relative links</li>
+          <li>Open links safely in a new browser tab</li>
+          <li>Build jump links that scroll to a section within the same page</li>
+        </ul>
+      </div>
+
+      <h2><span class="num-chip">1</span>The Anchor Tag</h2>
+      <p>Links are created with the <strong>anchor tag</strong>, <code class="inline">&lt;a&gt;</code>. The destination goes in the <code class="inline">href</code> attribute (short for "hypertext reference"), and the clickable text goes between the opening and closing tags.</p>
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">links.html</span></div>
+        <pre><code><span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="str">"https://www.wikipedia.org"</span><span class="tag">&gt;</span><span class="txt">Visit Wikipedia</span><span class="tag">&lt;/a&gt;</span></code></pre>
+      </div>
+      <div class="preview-window">
+        <div class="preview-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="url">🔒 links.html</span></div>
+        <div class="preview-window__body"><a href="#" onclick="return false;" style="color:#5b5bf0;text-decoration:underline;">Visit Wikipedia</a></div>
+      </div>
+
+      <h2><span class="num-chip">2</span>Absolute vs. Relative Links</h2>
+      <p>There are two kinds of link destinations:</p>
+      <ul>
+        <li><strong>Absolute links</strong> — the full web address, including <code class="inline">https://</code>, used for linking to <em>other</em> websites.</li>
+        <li><strong>Relative links</strong> — just the file name or path, used for linking between pages <em>within your own project</em>. These are shorter and keep working even if your whole site moves to a new address.</li>
+      </ul>
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">nav-example.html</span></div>
+        <pre><code><span class="cmt">&lt;!-- Absolute: points to an entirely different site --&gt;</span>
+<span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="str">"https://www.nasa.gov"</span><span class="tag">&gt;</span><span class="txt">NASA</span><span class="tag">&lt;/a&gt;</span>
+
+<span class="cmt">&lt;!-- Relative: points to a file in the same project --&gt;</span>
+<span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="str">"about-me.html"</span><span class="tag">&gt;</span><span class="txt">About Me</span><span class="tag">&lt;/a&gt;</span>
+<span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="str">"hobby.html"</span><span class="tag">&gt;</span><span class="txt">My Hobby</span><span class="tag">&lt;/a&gt;</span></code></pre>
+      </div>
+
+      <h2><span class="num-chip">3</span>Opening Links in a New Tab</h2>
+      <p>Add <code class="inline">target="_blank"</code> to open a link in a new tab instead of navigating away from your page — useful for external links so visitors don't lose their place. When you do this, it's good practice to also add <code class="inline">rel="noopener"</code>, which is a small security measure that stops the new tab from being able to control your original page.</p>
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">new-tab.html</span></div>
+        <pre><code><span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="str">"https://www.nasa.gov"</span> <span class="attr">target</span>=<span class="str">"_blank"</span> <span class="attr">rel</span>=<span class="str">"noopener"</span><span class="tag">&gt;</span><span class="txt">NASA (opens in new tab)</span><span class="tag">&lt;/a&gt;</span></code></pre>
+      </div>
+
+      <h2><span class="num-chip">4</span>Jump Links Within a Page</h2>
+      <p>You can also link to a specific spot on the <em>same</em> page. Give the target element an <code class="inline">id</code>, then link to it using a <code class="inline">#</code> followed by that id.</p>
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">jump-link.html</span></div>
+        <pre><code><span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="str">"#hobbies-section"</span><span class="tag">&gt;</span><span class="txt">Jump to Hobbies</span><span class="tag">&lt;/a&gt;</span>
+
+<span class="cmt">&lt;!-- further down the page --&gt;</span>
+<span class="tag">&lt;h2</span> <span class="attr">id</span>=<span class="str">"hobbies-section"</span><span class="tag">&gt;</span><span class="txt">My Hobbies</span><span class="tag">&lt;/h2&gt;</span></code></pre>
+      </div>
+      <p>This is exactly how the "back to top" links and table-of-contents links you see on long web pages and Wikipedia articles work.</p>
+
+      <div class="box vocab">
+        <div class="box-title">📚 Key Vocabulary</div>
+        <dl class="vocab-grid">
+          <div class="vocab-item"><dt>Hyperlink</dt><dd>Clickable text or content that navigates to another location</dd></div>
+          <div class="vocab-item"><dt>href</dt><dd>The attribute on &lt;a&gt; that sets the link's destination</dd></div>
+          <div class="vocab-item"><dt>Absolute URL</dt><dd>A full web address including https://, for external sites</dd></div>
+          <div class="vocab-item"><dt>Relative URL</dt><dd>A short path to a file within your own project</dd></div>
+          <div class="vocab-item"><dt>target="_blank"</dt><dd>Opens the linked page in a new browser tab</dd></div>
+        </dl>
+      </div>
+
+      <div class="box challenge">
+        <div class="box-title">🚀 Challenge</div>
+        <p>Add a small navigation menu of links to the top of <code class="inline">about-me.html</code>, <code class="inline">hobby.html</code>, and <code class="inline">my-week.html</code> so you can click between all three pages you've built so far. On one page, add an id to a heading further down and create a jump link to it.</p>
+      </div>
+
+      <div class="box recap">
+        <div class="box-title">✅ Recap</div>
+        <p>The &lt;a href&gt; tag creates links — absolute URLs for other sites, relative URLs for your own pages. target="_blank" opens links in a new tab, and id + # creates jump links within a page. Next lesson: adding images.</p>
+      </div>
+
+      <div class="mark-complete"><button data-lesson-id="l06">Mark Lesson as Complete</button></div>
+
+      <div class="lesson-pager">
+        <a class="pager-btn" href="lesson-05.html"><div class="dir">← Previous</div><div class="title">Lesson 5: Lists</div></a>
+        <a class="pager-btn next" href="lesson-07.html"><div class="dir">Next →</div><div class="title">Lesson 7: Adding Images</div></a>
+      </div>
+
+    </div>
+    <footer class="site-footer">CIOS HTML Course Book · Lesson 6 of 16</footer>
+  </main>
+</div>
+
+<script src="../assets/script.js"></script>
+</body>
+</html>

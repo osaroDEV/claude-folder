@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>TUTOR SOLUTIONS — Mini Challenges S9, S10, S11</title>
+<style>
+  :root{
+    --bg:#0f1226; --bg2:#161a36; --panel:#1c2147; --panel2:#232a5c;
+    --ink:#e9ecff; --muted:#a3aad6; --line:#2c3470;
+    --brand:#6c8cff; --brand2:#9a6bff; --accent:#34d399; --warn:#fbbf24; --bad:#fb7185;
+    --code-bg:#0b0e24; --radius:14px; --maxw:940px;
+    --mono:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;
+    --sans:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{background:linear-gradient(180deg,#0c0f22,#0f1226 40%);color:var(--ink);font-family:var(--sans);line-height:1.6;font-size:16px}
+  header.topbar{position:sticky;top:0;z-index:30;background:rgba(13,16,38,.93);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .topbar-inner{max-width:var(--maxw);margin:0 auto;display:flex;align-items:center;gap:14px;padding:12px 18px}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.3px}
+  .logo .badge{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--brand),var(--brand2));display:grid;place-items:center;font-size:18px}
+  .logo small{display:block;font-weight:500;color:var(--muted);font-size:11px;letter-spacing:.5px}
+  .spacer{flex:1}
+  .stamp{font-size:11.5px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);padding:5px 12px;border-radius:99px}
+  .stamp.tut{color:#08130d;background:var(--warn);border-color:transparent;font-weight:800}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:26px 18px 90px}
+  .card{background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);padding:24px 28px;box-shadow:0 10px 40px rgba(0,0,0,.25);margin-bottom:22px}
+  .crumbs{font-size:12.5px;color:var(--muted);letter-spacing:.3px;text-transform:uppercase;margin-bottom:8px}
+  h1.t{font-size:30px;line-height:1.14;margin:0 0 6px}
+  .sub{color:var(--muted);font-size:15px;margin:0}
+  .meta{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 0}
+  .chip{font-size:12px;padding:5px 11px;border-radius:99px;background:var(--panel);border:1px solid var(--line);color:var(--muted)}
+  .chip.brand{color:var(--ink);border-color:var(--brand);background:rgba(108,140,255,.12)}
+  .chip.acc{color:#bff5df;border-color:rgba(52,211,153,.5);background:rgba(52,211,153,.10)}
+  h2{font-size:21px;margin:0 0 6px}
+  h3{font-size:16.5px;margin:24px 0 6px;color:#cfd6ff}
+  h4{font-size:13px;margin:20px 0 4px;color:var(--accent);letter-spacing:.9px;text-transform:uppercase}
+  p{margin:10px 0}
+  ul,ol{margin:10px 0;padding-left:22px}
+  li{margin:6px 0}
+  code.inline{font-family:var(--mono);background:#0c1030;border:1px solid var(--line);padding:1px 6px;border-radius:6px;font-size:13.5px;color:#ffd9a0}
+  kbd{font-family:var(--mono);background:#0c1030;border:1px solid var(--line);border-bottom-width:2px;padding:1px 7px;border-radius:6px;font-size:12.5px}
+  .note{border-radius:12px;padding:14px 16px;margin:18px 0;border:1px solid var(--line)}
+  .note .nt{font-weight:700;font-size:13px;letter-spacing:.4px;margin-bottom:4px}
+  .note.tip{background:rgba(52,211,153,.08);border-color:rgba(52,211,153,.4)} .note.tip .nt{color:var(--accent)}
+  .note.warn{background:rgba(251,191,36,.08);border-color:rgba(251,191,36,.4)} .note.warn .nt{color:var(--warn)}
+  .note.info{background:rgba(108,140,255,.08);border-color:rgba(108,140,255,.4)} .note.info .nt{color:var(--brand)}
+  .note.key{background:rgba(154,107,255,.08);border-color:rgba(154,107,255,.45)} .note.key .nt{color:#c5a8ff}
+  .note.bad{background:rgba(251,113,133,.08);border-color:rgba(251,113,133,.45)} .note.bad .nt{color:var(--bad)}
+  .goal{background:var(--panel);border-left:3px solid var(--brand);border-radius:0 10px 10px 0;padding:12px 16px;margin:14px 0;font-size:15px}
+  .done-when{background:rgba(52,211,153,.07);border:1px solid rgba(52,211,153,.35);border-radius:11px;padding:12px 16px;margin:18px 0 0}
+  .done-when b{color:var(--accent);display:block;font-size:12.5px;letter-spacing:.8px;text-transform:uppercase;margin-bottom:4px}
+  .steps{counter-reset:st;list-style:none;padding-left:0;margin:12px 0}
+  .steps li{position:relative;padding-left:32px;margin:10px 0}
+  .steps li::before{counter-increment:st;content:counter(st);position:absolute;left:0;top:1px;width:22px;height:22px;border-radius:7px;background:#0c1030;border:1px solid var(--line);color:var(--brand);font-size:12px;font-weight:700;display:grid;place-items:center}
+  details{margin:12px 0;border:1px solid var(--line);border-radius:11px;background:var(--panel);overflow:hidden}
+  details > summary{cursor:pointer;padding:10px 15px;font-size:13.5px;font-weight:700;list-style:none;display:flex;align-items:center;gap:8px;color:var(--muted)}
+  details > summary::-webkit-details-marker{display:none}
+  details > summary::before{content:'\\25B8';font-size:12px;color:var(--brand)}
+  details[open] > summary::before{content:'\\25BE'}
+  details .dbody{padding:4px 16px 14px;font-size:14.5px;border-top:1px solid var(--line)}
+  pre{margin:12px 0;background:var(--code-bg);border:1px solid var(--line);border-radius:11px;padding:14px 16px;overflow:auto;font-family:var(--mono);font-size:12.9px;line-height:1.6;color:#e7ecff;tab-size:2}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px}
+  th,td{border:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top}
+  th{background:var(--panel);color:#cfd6ff;font-size:12.5px;text-transform:uppercase;letter-spacing:.6px}
+  .ok{color:var(--accent);font-weight:700}
+  .runner{margin:18px 0 0;border:1px solid var(--line);border-radius:13px;overflow:hidden;background:var(--code-bg)}
+  .runner .rhead{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--panel);border-bottom:1px solid var(--line);font-size:12px;color:var(--muted)}
+  .runner .rhead .dot{width:10px;height:10px;border-radius:99px;background:#3a4280}
+  .runner .rhead .label{flex:1;font-weight:600;color:var(--ink)}
+  .runner textarea{width:100%;border:none;background:var(--code-bg);color:#e7ecff;font-family:var(--mono);font-size:12.6px;line-height:1.55;padding:14px;resize:vertical;min-height:340px;outline:none;display:block;tab-size:2}
+  .runner .ractions{display:flex;gap:8px;padding:8px 12px;background:var(--panel);border-top:1px solid var(--line);flex-wrap:wrap;align-items:center}
+  .btn{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;border:none;border-radius:9px;padding:8px 16px;font-size:13px;font-weight:600;cursor:pointer}
+  .btn.ghost{background:var(--panel2);color:var(--ink);border:1px solid var(--line)}
+  .btn:hover{filter:brightness(1.1)}
+  .hintline{font-size:12px;color:var(--muted);margin-left:auto}
+  .runner iframe{width:100%;border:none;display:block;background:#0b0e24;min-height:350px}
+  @media print{ body{background:#fff;color:#111} details[open] .dbody{display:block} pre{white-space:pre-wrap} .runner textarea{height:auto} }
+  @media (max-width:640px){ .card{padding-left:16px;padding-right:16px} h1.t{font-size:24px} }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="logo"><span class="badge">🔑</span><span>Game Dev Pro<small>Mini Challenge Solutions · S9–S11</small></span></div>
+    <div class="spacer"></div>
+    <span class="stamp tut">Tutor copy — do not send</span>
+  </div>
+</header>
+<div class="wrap">
+
+<div class="card">
+  <div class="crumbs">Solutions · Mini challenges for Sessions 9, 10 &amp; 11</div>
+  <h1 class="t">Three mini challenges — the answers</h1>
+  <p class="sub">One 20-minute in-class challenge per session, with the working code, the wrong turns to expect, and the question to ask instead of giving the answer away.</p>
+  <div class="meta">
+    <span class="chip brand">Tutor copy</span>
+    <span class="chip">3 challenges</span>
+    <span class="chip acc">All code tested in a real browser</span>
+  </div>
+
+  <div class="note bad">
+    <div class="nt">🔒 Don't send this one</div>
+    The three student files are <code class="inline">Mini-Challenge-S09-Patrol-Drone.html</code>, <code class="inline">-S10-Docking-Bay.html</code> and <code class="inline">-S11-Blackout.html</code>. Each has the starter code built into an editable Run panel, so the student can work inside the page during the lesson or copy it into VS Code.
+  </div>
+
+  <h3>How to run one in class</h3>
+  <table>
+    <tr><th style="width:16%">Minutes</th><th>What happens</th></tr>
+    <tr><td>0–3</td><td>Read the situation together. Press Run so they see the broken starting state — the drone frozen, the shuttle unresponsive, the torch stuck mid-screen. Seeing "not working yet" is part of the setup.</td></tr>
+    <tr><td>3–5</td><td>Ask them to say the plan out loud before typing. <b>This is the highest-value two minutes.</b> A student who can't describe it in English can't write it in JavaScript.</td></tr>
+    <tr><td>5–17</td><td>They type. You stay quiet. Use the coaching questions below, not the answers.</td></tr>
+    <tr><td>17–20</td><td>They demo it and answer the "think about this" question at the bottom of their sheet.</td></tr>
+  </table>
+
+  <div class="note tip">
+    <div class="nt">✅ Verified</div>
+    Every solution below was run headless and asserted: the drone turns at exactly 60 and 360 over 600 frames with no overshoot; the shuttle moves diagonally, clamps to the pixel, and Shift really is slower (45px vs 120px over the same half-second); docking is true only when fully inside and false when one edge pokes out; the torch tracks to within a pixel after the page is scrolled, live wires kill, and a click after ZAP fully restarts.
+  </div>
+</div>
+
+<!-- ============ S09 ============ -->
+<div class="card">
+  <h2>🚁 Challenge 1 — The Patrol Drone <span style="color:var(--muted);font-weight:400;font-size:.72em">· Session 9</span></h2>
+  <p><b>The skill being tested:</b> that a bounce is a <i>rule about a boundary</i>, not something canvases do. They've only ever bounced off the screen edge; here the boundary is two arbitrary posts, so nothing can be copied without understanding.</p>
+
+  <h4>The answer</h4>
+  <pre>    function update() {
+      drone.x += drone.vx;                    // position += velocity
+
+      // The drone&#x27;s RIGHT edge is x + w, not x.
+      if (drone.x + drone.w &gt; RIGHT_POST) {
+        drone.x = RIGHT_POST - drone.w;       // 1. fix the position
+        drone.vx = -drone.vx;                 // 2. then flip the velocity
+      }
+      // The drone&#x27;s LEFT edge is just x.
+      if (drone.x &lt; LEFT_POST) {
+        drone.x = LEFT_POST;
+        drone.vx = -drone.vx;
+      }
+    }
+    </pre>
+
+  <h4>Why each line is there</h4>
+  <ul>
+    <li><b><code class="inline">drone.x + drone.w</code> for the right test, plain <code class="inline">drone.x</code> for the left.</b> The asymmetry is the point. A rectangle is drawn rightwards from its corner, so only one of its two edges is the value you're storing.</li>
+    <li><b>Position fixed <i>before</i> the velocity flips.</b> Flipping alone leaves it past the post on the next frame too. With <code class="inline">vx = 3</code> the overshoot is small enough to look like a rendering wobble; crank the speed to 20 and it becomes obvious.</li>
+    <li><b>Two separate <code class="inline">if</code>s, no <code class="inline">else</code>.</b> Not strictly required here, but if they use <code class="inline">else if</code> it still works — worth asking whether it could ever matter. (It can, if the patrol gap is narrower than one frame of movement.)</li>
+    <li><b><code class="inline">vx</code> is drawn on screen</b> on purpose. The number visibly flips between 3 and −3, which makes "the sign is the direction" concrete rather than abstract.</li>
+  </ul>
+
+  <h4>Wrong turns, and what to ask</h4>
+  <table>
+    <tr><th style="width:30%">What you'll see</th><th style="width:30%">Cause</th><th>Ask them</th></tr>
+    <tr><td>Drone slides past the post, then snaps back</td><td>Velocity flipped, position not corrected</td><td>"Freeze it in your head on the frame it turns. Where is it, exactly?"</td></tr>
+    <tr><td>Overlaps the right post by 40px</td><td>Tested <code class="inline">x</code> instead of <code class="inline">x + w</code></td><td>"Which edge of the drone is <code class="inline">x</code>?"</td></tr>
+    <tr><td>Vibrates in place at a post</td><td>Flipping every frame because it's still past the line</td><td>"How many times is that <code class="inline">if</code> true in a row?"</td></tr>
+    <tr><td>Shoots off screen and never returns</td><td>Used <code class="inline">=</code> instead of <code class="inline">===</code>, or reversed a comparison</td><td>"Log <code class="inline">drone.x</code> and read the numbers as it leaves."</td></tr>
+    <tr><td>Only ever turns once</td><td>Set <code class="inline">vx = -3</code> instead of <code class="inline">vx = -vx</code></td><td>"What happens the second time that line runs?"</td></tr>
+  </table>
+
+  <div class="note key">
+    <div class="nt">🔑 The sentence to make them say</div>
+    "Flip the velocity, then fix the position." They will need it again in Pong, and in Breakout, and every time anything ever bounces. If they leave today's session able to say it and explain it, the challenge did its job.
+  </div>
+
+  <details><summary>Stretch answers</summary><div class="dbody">
+    <p><b>1. Two axes.</b> Add <code class="inline">vy: 2</code>, then <code class="inline">drone.y += drone.vy</code> and the same fix-then-flip against <code class="inline">0</code> and <code class="inline">H - drone.h</code>. Note that the posts only limit x — vertical uses the canvas. Two different kinds of boundary in one object is exactly the insight.</p>
+    <p><b>2. A second drone.</b> They pass straight through each other, because nothing in the code knows the other exists. That's a genuinely useful realisation: <b>collisions do not happen unless you write them.</b> Session 12 is where that gets fixed — flag it.</p>
+    <p><b>3. Speed trap.</b> Once <code class="inline">|vx|</code> exceeds the gap between the posts (300px), one frame carries it clean past both, and the two <code class="inline">if</code>s can fight each other — it jitters, escapes, or freezes. Long before that, at around 40–60px per frame, it visibly teleports rather than moves. The lesson: <i>a collision check only works if things move less than the thing they might hit.</i> Real engines call this tunnelling. Excellent conversation if they get there.</p>
+  </div></details>
+
+  <details><summary>Full working file — session-09-patrol.html</summary><div class="dbody"><pre>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;style&gt;
+  body{margin:0;background:#0d1024;display:flex;flex-direction:column;align-items:center;
+       padding:12px;font-family:system-ui;color:#a3aad6}
+  canvas{background:#0b0e24;border:3px solid #6c8cff;border-radius:12px}
+  p{font-size:13px;margin:8px 0 0}
+&lt;/style&gt;&lt;/head&gt;
+&lt;body&gt;
+  &lt;canvas id=&quot;game&quot; width=&quot;420&quot; height=&quot;220&quot;&gt;&lt;/canvas&gt;
+  &lt;p&gt;The drone patrols between the two posts — and turns around exactly at them.&lt;/p&gt;
+  &lt;script&gt;
+    const canvas = document.getElementById(&quot;game&quot;);
+    const ctx = canvas.getContext(&quot;2d&quot;);
+    const W = canvas.width, H = canvas.height;
+
+    // ---- the patrol route (NOT the canvas edges) ----
+    const LEFT_POST = 60;
+    const RIGHT_POST = 360;
+
+    const drone = { x: 100, y: 88, w: 40, h: 26, vx: 3 };
+
+    // ================= THE ANSWER =================
+    function update() {
+      drone.x += drone.vx;                    // position += velocity
+
+      // The drone&#x27;s RIGHT edge is x + w, not x.
+      if (drone.x + drone.w &gt; RIGHT_POST) {
+        drone.x = RIGHT_POST - drone.w;       // 1. fix the position
+        drone.vx = -drone.vx;                 // 2. then flip the velocity
+      }
+      // The drone&#x27;s LEFT edge is just x.
+      if (drone.x &lt; LEFT_POST) {
+        drone.x = LEFT_POST;
+        drone.vx = -drone.vx;
+      }
+    }
+    // =============================================
+
+    function drawPost(x) {
+      ctx.strokeStyle = &quot;#fbbf24&quot;;
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(x, 40);
+      ctx.lineTo(x, H - 40);
+      ctx.stroke();
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      drawPost(LEFT_POST);
+      drawPost(RIGHT_POST);
+      ctx.fillStyle = &quot;#34d399&quot;;
+      ctx.fillRect(drone.x, drone.y, drone.w, drone.h);
+      ctx.fillStyle = &quot;#e9ecff&quot;;
+      ctx.font = &quot;14px system-ui&quot;;
+      ctx.fillText(&quot;vx: &quot; + drone.vx, 12, 24);
+    }
+
+    function loop() { update(); draw(); requestAnimationFrame(loop); }
+    requestAnimationFrame(loop);
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre></div></details>
+</div>
+
+<!-- ============ S10 ============ -->
+<div class="card">
+  <h2>🛰️ Challenge 2 — Docking Bay <span style="color:var(--muted);font-weight:400;font-size:.72em">· Session 10</span></h2>
+  <p><b>The skill being tested:</b> the held-keys pattern used for something other than plain movement. The Shift modifier proves they understand that <code class="inline">keys</code> is just a record they can ask <i>any</i> question of — and "fully inside" forces them to reason about edges rather than recall a formula.</p>
+
+  <h4>The answer</h4>
+  <pre>    const keys = {};
+
+    canvas.addEventListener(&quot;keydown&quot;, function (e) {
+      keys[e.key] = true;
+      e.preventDefault();          // stop the arrows scrolling the page
+    });
+    canvas.addEventListener(&quot;keyup&quot;, function (e) {
+      keys[e.key] = false;
+    });
+    canvas.addEventListener(&quot;blur&quot;, function () {
+      for (const k in keys) { keys[k] = false; }   // forget everything on focus loss
+    });
+
+    // FULLY inside means all four edges are within the bay&#x27;s four edges.
+    function isDocked() {
+      return shuttle.x &gt;= bay.x &amp;&amp;
+             shuttle.x + shuttle.w &lt;= bay.x + bay.w &amp;&amp;
+             shuttle.y &gt;= bay.y &amp;&amp;
+             shuttle.y + shuttle.h &lt;= bay.y + bay.h;
+    }
+
+    function update() {
+      let speed = NORMAL_SPEED;
+      if (keys[&quot;Shift&quot;]) { speed = PRECISION_SPEED; }   // Shift is just another key
+
+      if (keys[&quot;ArrowLeft&quot;])  { shuttle.x -= speed; }
+      if (keys[&quot;ArrowRight&quot;]) { shuttle.x += speed; }
+      if (keys[&quot;ArrowUp&quot;])    { shuttle.y -= speed; }
+      if (keys[&quot;ArrowDown&quot;])  { shuttle.y += speed; }
+
+      shuttle.x = Math.max(0, Math.min(W - shuttle.w, shuttle.x));
+      shuttle.y = Math.max(0, Math.min(H - shuttle.h, shuttle.y));
+
+      docked = isDocked();
+    }
+    </pre>
+
+  <h4>Why each line is there</h4>
+  <ul>
+    <li><b><code class="inline">let speed = NORMAL_SPEED;</code> then maybe reassign.</b> One variable used by all four directions. Watch for the student who writes eight <code class="inline">if</code>s — four for normal, four for precision. It works; it's also the moment to teach "decide the value first, then use it once".</li>
+    <li><b><code class="inline">keys["Shift"]</code> needs no special handling.</b> A modifier key is an ordinary key in an ordinary notepad. That's the "think about it" question on their sheet, and the answer is: there is no difference in the code at all — the difference is entirely in what you choose to do with it.</li>
+    <li><b><code class="inline">isDocked()</code> returns a boolean and is called once per frame.</b> Watch for the version that sets <code class="inline">docked = true</code> inside a chain of nested <code class="inline">if</code>s and never sets it back to false — the bay latches green forever and never turns off.</li>
+    <li><b>Four <code class="inline">&gt;=</code>/<code class="inline">&lt;=</code> comparisons joined with AND.</b> Contrast with the AABB overlap test coming in Session 12: overlap asks "do they share any space?", containment asks "is all of A inside B?". Same four edges, different question. Say that out loud — it makes Session 12 land faster.</li>
+    <li><b>Clamping before the docking test.</b> If they test first and clamp after, the shuttle can register as docked in a position it is then moved out of. Harmless here, but it's the right habit: settle the world, then ask questions about it.</li>
+  </ul>
+
+  <h4>Wrong turns, and what to ask</h4>
+  <table>
+    <tr><th style="width:30%">What you'll see</th><th style="width:30%">Cause</th><th>Ask them</th></tr>
+    <tr><td>Nothing responds at all</td><td>Didn't click the canvas — no focus</td><td>"Who has focus right now?" (This is #1 by a mile.)</td></tr>
+    <tr><td>Movement stutters</td><td>Moving inside the <code class="inline">keydown</code> handler</td><td>"Where is your movement getting its timing from?"</td></tr>
+    <tr><td>No diagonals</td><td><code class="inline">else if</code> between directions</td><td>"How many of those <code class="inline">if</code>s can run on one frame?"</td></tr>
+    <tr><td>Bay goes green when a corner pokes out</td><td>Used an overlap test, or <code class="inline">&gt;</code> where <code class="inline">&gt;=</code> was needed on the far edge</td><td>"Draw both rectangles. Point at the shuttle's right edge and the bay's right edge."</td></tr>
+    <tr><td>Bay latches green forever</td><td><code class="inline">docked</code> set true but never back to false</td><td>"What sets it back?"</td></tr>
+    <tr><td>Shift does nothing</td><td>Spelled <code class="inline">"shift"</code> lowercase</td><td>"Print <code class="inline">event.key</code> and press it."</td></tr>
+    <tr><td>Page scrolls while flying</td><td>No <code class="inline">preventDefault</code></td><td>"What do arrow keys normally do in a browser?"</td></tr>
+  </table>
+
+  <div class="note warn">
+    <div class="nt">⚠️ One quirk to know before they hit it</div>
+    Holding Shift and pressing a <i>letter</i> gives you the capital — <code class="inline">"W"</code>, not <code class="inline">"w"</code> — which silently breaks WASD controls. Arrow keys are unaffected, so it won't bite in this challenge, but if a student adds WASD as a bonus it will, and it looks like magic. The fix is <code class="inline">e.key.toLowerCase()</code> or using <code class="inline">e.code</code>. It's the same trap set in the Session 10 homework.
+  </div>
+
+  <details><summary>Stretch answers</summary><div class="dbody">
+    <p><b>1. Score it.</b> Inside <code class="inline">update()</code>, after setting <code class="inline">docked</code>: if it just became true and wasn't true last frame, score and move the bay. They'll need a <code class="inline">wasDocked</code> variable to spot the <i>change</i> rather than the state — a small but real idea (edge-triggered vs level-triggered), and the same one behind "why did my score go up 60 times a second?"</p>
+    <p><b>2. Ramp it up.</b> <code class="inline">bay.w -= 8; bay.h -= 6;</code> per dock. It becomes impossible when the bay is smaller than the shuttle — worth asking them to work out the exact dock count where that happens rather than discovering it. And whether the game should stop, or clamp the size, or declare victory.</p>
+    <p><b>3. The stuck key.</b> <code class="inline">canvas.addEventListener("blur", function () { for (const k in keys) { keys[k] = false; } });</code> — already included in the reference above.</p>
+  </div></details>
+
+  <details><summary>Full working file — session-10-docking-bay.html</summary><div class="dbody"><pre>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;style&gt;
+  body{margin:0;background:#0d1024;display:flex;flex-direction:column;align-items:center;
+       padding:12px;font-family:system-ui;color:#a3aad6}
+  canvas{background:#0b0e24;border:3px solid #6c8cff;border-radius:12px;outline:none}
+  p{font-size:13px;margin:8px 0 0}
+&lt;/style&gt;&lt;/head&gt;
+&lt;body&gt;
+  &lt;canvas id=&quot;game&quot; width=&quot;420&quot; height=&quot;260&quot; tabindex=&quot;0&quot;&gt;&lt;/canvas&gt;
+  &lt;p&gt;Click the box first · Arrows to fly · Hold &lt;b&gt;Shift&lt;/b&gt; for precision thrusters&lt;/p&gt;
+  &lt;script&gt;
+    const canvas = document.getElementById(&quot;game&quot;);
+    const ctx = canvas.getContext(&quot;2d&quot;);
+    const W = canvas.width, H = canvas.height;
+    canvas.focus();
+
+    const NORMAL_SPEED = 4;
+    const PRECISION_SPEED = 1.5;
+
+    const shuttle = { x: 30, y: 30, w: 34, h: 22 };
+    const bay = { x: 290, y: 160, w: 96, h: 72 };
+    let docked = false;
+
+    // ================= THE ANSWER =================
+    const keys = {};
+
+    canvas.addEventListener(&quot;keydown&quot;, function (e) {
+      keys[e.key] = true;
+      e.preventDefault();          // stop the arrows scrolling the page
+    });
+    canvas.addEventListener(&quot;keyup&quot;, function (e) {
+      keys[e.key] = false;
+    });
+    canvas.addEventListener(&quot;blur&quot;, function () {
+      for (const k in keys) { keys[k] = false; }   // forget everything on focus loss
+    });
+
+    // FULLY inside means all four edges are within the bay&#x27;s four edges.
+    function isDocked() {
+      return shuttle.x &gt;= bay.x &amp;&amp;
+             shuttle.x + shuttle.w &lt;= bay.x + bay.w &amp;&amp;
+             shuttle.y &gt;= bay.y &amp;&amp;
+             shuttle.y + shuttle.h &lt;= bay.y + bay.h;
+    }
+
+    function update() {
+      let speed = NORMAL_SPEED;
+      if (keys[&quot;Shift&quot;]) { speed = PRECISION_SPEED; }   // Shift is just another key
+
+      if (keys[&quot;ArrowLeft&quot;])  { shuttle.x -= speed; }
+      if (keys[&quot;ArrowRight&quot;]) { shuttle.x += speed; }
+      if (keys[&quot;ArrowUp&quot;])    { shuttle.y -= speed; }
+      if (keys[&quot;ArrowDown&quot;])  { shuttle.y += speed; }
+
+      shuttle.x = Math.max(0, Math.min(W - shuttle.w, shuttle.x));
+      shuttle.y = Math.max(0, Math.min(H - shuttle.h, shuttle.y));
+
+      docked = isDocked();
+    }
+    // =============================================
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+
+      // the bay
+      if (docked === true) { ctx.strokeStyle = &quot;#34d399&quot;; } else { ctx.strokeStyle = &quot;#6c8cff&quot;; }
+      ctx.lineWidth = 3;
+      ctx.strokeRect(bay.x, bay.y, bay.w, bay.h);
+
+      // the shuttle
+      if (docked === true) { ctx.fillStyle = &quot;#34d399&quot;; } else { ctx.fillStyle = &quot;#e9ecff&quot;; }
+      ctx.fillRect(shuttle.x, shuttle.y, shuttle.w, shuttle.h);
+
+      ctx.font = &quot;15px system-ui&quot;;
+      if (docked === true) {
+        ctx.fillStyle = &quot;#34d399&quot;;
+        ctx.fillText(&quot;DOCKED&quot;, 12, 26);
+      } else {
+        ctx.fillStyle = &quot;#a3aad6&quot;;
+        ctx.fillText(&quot;Fly fully inside the bay&quot;, 12, 26);
+      }
+      if (keys[&quot;Shift&quot;]) {
+        ctx.fillStyle = &quot;#fbbf24&quot;;
+        ctx.fillText(&quot;precision&quot;, W - 88, 26);
+      }
+    }
+
+    function loop() { update(); draw(); requestAnimationFrame(loop); }
+    requestAnimationFrame(loop);
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre></div></details>
+</div>
+
+<!-- ============ S11 ============ -->
+<div class="card">
+  <h2>🔦 Challenge 3 — Blackout <span style="color:var(--muted);font-weight:400;font-size:.72em">· Session 11</span></h2>
+  <p><b>The skill being tested:</b> coordinate conversion, and the split between an event that <i>records</i> and a loop that <i>acts</i>. The reveal mechanic makes the pointer position matter continuously, not just at the moment of a click — so a wrong conversion is visible the whole time, not only when they miss.</p>
+
+  <h4>The answer</h4>
+  <pre>    function distance(ax, ay, bx, by) {
+      const dx = ax - bx;
+      const dy = ay - by;
+      return Math.sqrt(dx * dx + dy * dy);
+    }
+
+    // Window coordinates -&gt; canvas coordinates. Never skip this.
+    function getMousePos(event) {
+      const rect = canvas.getBoundingClientRect();
+      return { x: event.clientX - rect.left, y: event.clientY - rect.top };
+    }
+
+    // mousemove fires constantly, so it only RECORDS. draw() does the work.
+    canvas.addEventListener(&quot;mousemove&quot;, function (event) {
+      const pos = getMousePos(event);
+      mouse.x = pos.x;
+      mouse.y = pos.y;
+    });
+
+    canvas.addEventListener(&quot;click&quot;, function (event) {
+      if (dead === true) {          // a click after ZAP just restarts
+        resetGame();
+        return;
+      }
+      const pos = getMousePos(event);
+      for (let i = 0; i &lt; items.length; i++) {
+        const item = items[i];
+        if (item.found === false) {
+          if (distance(pos.x, pos.y, item.x, item.y) &lt; item.r) {   // point in circle
+            if (item.bad === true) {
+              dead = true;                     // touched a live wire
+            } else {
+              item.found = true;
+              score++;
+            }
+          }
+        }
+      }
+    });
+
+    function resetGame() {
+      score = 0;
+      dead = false;
+      for (let i = 0; i &lt; items.length; i++) { items[i].found = false; }
+    }
+    </pre>
+
+  <h4>Why each line is there</h4>
+  <ul>
+    <li><b><code class="inline">mousemove</code> only writes two numbers.</b> It fires dozens of times a second; the drawing happens in <code class="inline">draw()</code>. This is the <code class="inline">keys</code>-object pattern from Session 10 wearing a different hat, and it's worth naming the resemblance explicitly.</li>
+    <li><b><code class="inline">distance()</code> is called for two different jobs.</b> In <code class="inline">draw()</code> it decides visibility (is the item within the beam?). In the click handler it decides a hit (is the pointer on the item?). Different radius, different question, same function. If they only notice one thing today, make it this.</li>
+    <li><b>The dead check comes first in the click handler.</b> An early return, same guard idea as everywhere else. Without it, the restarting click also lands on whatever is underneath and can immediately re-kill them.</li>
+    <li><b><code class="inline">if (item.found === false)</code> wrapping the hit test.</b> Stops a found fuse scoring twice. Cheap, and it teaches that "already handled" is a state worth storing.</li>
+    <li><b><code class="inline">resetGame()</code> loops the array to clear every flag.</b> Watch for the student who resets <code class="inline">score</code> and <code class="inline">dead</code> but forgets the items — the game restarts with the fuses already green.</li>
+  </ul>
+
+  <h4>Wrong turns, and what to ask</h4>
+  <table>
+    <tr><th style="width:30%">What you'll see</th><th style="width:30%">Cause</th><th>Ask them</th></tr>
+    <tr><td>Torch trails the pointer by a fixed offset</td><td>No <code class="inline">getBoundingClientRect</code> subtraction</td><td>"Scroll the page and try again. Did the gap change?"</td></tr>
+    <tr><td>Torch doesn't move at all</td><td>Listener never attached, or attached to <code class="inline">document</code> and the maths done against the canvas</td><td>"Log the position inside the handler. Does it print?"</td></tr>
+    <tr><td>Clicks do nothing</td><td>Compared against <code class="inline">TORCH</code> instead of <code class="inline">item.r</code></td><td>"Which circle is the click supposed to be inside — the beam or the fuse?"</td></tr>
+    <tr><td>Everything gets found in one click</td><td>Missing the distance test, or <code class="inline">||</code> where <code class="inline">&amp;&amp;</code> belonged</td><td>"Read your condition out loud as a sentence."</td></tr>
+    <tr><td>Score climbs while holding still</td><td>Logic put in <code class="inline">mousemove</code> instead of <code class="inline">click</code></td><td>"How many times does mousemove run while you wiggle the mouse?"</td></tr>
+    <tr><td>ZAP screen can't be cleared</td><td>Restart click handled after the item loop, or <code class="inline">dead</code> never set false</td><td>"On the restarting click, what runs first?"</td></tr>
+    <tr><td>Restart leaves fuses green</td><td>Item flags not cleared</td><td>"List everything that changed during a game. Which are in your reset?"</td></tr>
+  </table>
+
+  <div class="note info">
+    <div class="nt">🎯 If a student adds a "is it lit?" check to the click handler</div>
+    Some will guard the click with "and it must be inside the torch beam". It's harmless — but it can never be false, because the torch is centred on the pointer, so anything you can click on is already lit. That's a lovely thing to notice: <b>ask them to try and construct a case where it matters.</b> A student who works out that it's redundant has genuinely understood the geometry. It <i>would</i> matter if the torch lagged behind the pointer or was controlled separately — which is a great stretch idea if they're flying.
+  </div>
+
+  <details><summary>Stretch answers</summary><div class="dbody">
+    <p><b>1. Shrink the beam.</b> <code class="inline">TORCH</code> is a <code class="inline">const</code>, so nothing can change it — that's the real question behind the task. It has to become <code class="inline">let</code>, then something has to count time, which means adding a frame counter and an <code class="inline">update()</code> the file currently doesn't have. Good structural work in five lines.</p>
+    <p><b>2. Hot and cold.</b> Loop every unfound good item, keep the smallest distance in a variable that starts huge (<code class="inline">let best = 99999;</code>), then choose a colour by comparing it to a few thresholds. The "start it at a huge number and shrink it" pattern is worth naming — it's how you find the minimum of anything.</p>
+    <p><b>3. Random every time.</b> Same rejection-sampling idea as the big project: pick a spot, check it against everything already placed, try again if it's too close. Needs a nested loop; a solid stretch for a strong student.</p>
+    <p><b>4. Phone support.</b> <code class="inline">pointerdown</code> works for mouse, touch and pen. But the whole game leans on <b>hovering</b> to sweep the torch, and a finger only exists while it's touching the glass — so on a phone the torch would only move while dragging. The honest answer is that this design needs rethinking for touch (drag to sweep, tap-and-release to grab). That's a real design conversation, not a code fix, and it's the best possible answer to give.</p>
+  </div></details>
+
+  <details><summary>Full working file — session-11-blackout.html</summary><div class="dbody"><pre>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;style&gt;
+  body{margin:0;background:#0d1024;display:flex;flex-direction:column;align-items:center;
+       padding:12px;font-family:system-ui;color:#a3aad6}
+  canvas{background:#05060f;border:3px solid #6c8cff;border-radius:12px;cursor:crosshair}
+  p{font-size:13px;margin:8px 0 0}
+&lt;/style&gt;&lt;/head&gt;
+&lt;body&gt;
+  &lt;canvas id=&quot;game&quot; width=&quot;420&quot; height=&quot;260&quot;&gt;&lt;/canvas&gt;
+  &lt;p&gt;Sweep the torch with your mouse. Click the &lt;b&gt;yellow&lt;/b&gt; fuses. Avoid the &lt;b&gt;red&lt;/b&gt; live wires.&lt;/p&gt;
+  &lt;script&gt;
+    const canvas = document.getElementById(&quot;game&quot;);
+    const ctx = canvas.getContext(&quot;2d&quot;);
+    const W = canvas.width, H = canvas.height;
+
+    const TORCH = 65;                  // how far the torch beam reaches
+    const mouse = { x: W / 2, y: H / 2 };
+    let score = 0;
+    let dead = false;
+
+    // 3 fuses to find, 2 live wires to avoid. bad:true means DON&#x27;T touch.
+    const items = [
+      { x: 70,  y: 70,  r: 14, bad: false, found: false },
+      { x: 330, y: 105, r: 14, bad: false, found: false },
+      { x: 180, y: 210, r: 14, bad: false, found: false },
+      { x: 250, y: 60,  r: 14, bad: true,  found: false },
+      { x: 100, y: 190, r: 14, bad: true,  found: false }
+    ];
+
+    // ================= THE ANSWER =================
+    function distance(ax, ay, bx, by) {
+      const dx = ax - bx;
+      const dy = ay - by;
+      return Math.sqrt(dx * dx + dy * dy);
+    }
+
+    // Window coordinates -&gt; canvas coordinates. Never skip this.
+    function getMousePos(event) {
+      const rect = canvas.getBoundingClientRect();
+      return { x: event.clientX - rect.left, y: event.clientY - rect.top };
+    }
+
+    // mousemove fires constantly, so it only RECORDS. draw() does the work.
+    canvas.addEventListener(&quot;mousemove&quot;, function (event) {
+      const pos = getMousePos(event);
+      mouse.x = pos.x;
+      mouse.y = pos.y;
+    });
+
+    canvas.addEventListener(&quot;click&quot;, function (event) {
+      if (dead === true) {          // a click after ZAP just restarts
+        resetGame();
+        return;
+      }
+      const pos = getMousePos(event);
+      for (let i = 0; i &lt; items.length; i++) {
+        const item = items[i];
+        if (item.found === false) {
+          if (distance(pos.x, pos.y, item.x, item.y) &lt; item.r) {   // point in circle
+            if (item.bad === true) {
+              dead = true;                     // touched a live wire
+            } else {
+              item.found = true;
+              score++;
+            }
+          }
+        }
+      }
+    });
+
+    function resetGame() {
+      score = 0;
+      dead = false;
+      for (let i = 0; i &lt; items.length; i++) { items[i].found = false; }
+    }
+    // =============================================
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+
+      // the torch beam
+      ctx.fillStyle = &quot;rgba(108,140,255,0.13)&quot;;
+      ctx.beginPath();
+      ctx.arc(mouse.x, mouse.y, TORCH, 0, Math.PI * 2);
+      ctx.fill();
+
+      // an item is only drawn if the torch reaches it — or if it&#x27;s already found
+      for (let i = 0; i &lt; items.length; i++) {
+        const item = items[i];
+        const lit = distance(mouse.x, mouse.y, item.x, item.y) &lt; TORCH;
+        if (item.found === true || lit === true) {
+          if (item.found === true)   { ctx.fillStyle = &quot;#34d399&quot;; }
+          else if (item.bad === true) { ctx.fillStyle = &quot;#fb7185&quot;; }
+          else                        { ctx.fillStyle = &quot;#fbbf24&quot;; }
+          ctx.beginPath();
+          ctx.arc(item.x, item.y, item.r, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      ctx.fillStyle = &quot;#e9ecff&quot;;
+      ctx.font = &quot;15px system-ui&quot;;
+      ctx.fillText(&quot;Fuses: &quot; + score + &quot; / 3&quot;, 12, 24);
+
+      ctx.textAlign = &quot;center&quot;;
+      if (dead === true) {
+        ctx.fillStyle = &quot;#fb7185&quot;;
+        ctx.font = &quot;28px system-ui&quot;;
+        ctx.fillText(&quot;ZAP!&quot;, W / 2, H / 2 - 6);
+        ctx.fillStyle = &quot;#a3aad6&quot;;
+        ctx.font = &quot;14px system-ui&quot;;
+        ctx.fillText(&quot;click anywhere to try again&quot;, W / 2, H / 2 + 20);
+      } else if (score === 3) {
+        ctx.fillStyle = &quot;#34d399&quot;;
+        ctx.font = &quot;24px system-ui&quot;;
+        ctx.fillText(&quot;POWER RESTORED&quot;, W / 2, H / 2);
+      }
+      ctx.textAlign = &quot;left&quot;;
+    }
+
+    function loop() { draw(); requestAnimationFrame(loop); }
+    requestAnimationFrame(loop);
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre></div></details>
+</div>
+
+<!-- ============ WRAP ============ -->
+<div class="card">
+  <h2>📋 Quick marking sheet</h2>
+  <p>Tick these while they demo. Anything unticked names the next thing to teach.</p>
+  <table>
+    <tr><th style="width:22%">Challenge</th><th>Must do</th><th style="width:30%">If it fails, the real gap is</th></tr>
+    <tr><td><b>Patrol Drone</b></td><td>Turns exactly at both posts · uses <code class="inline">x + w</code> on the right · fixes position as well as flipping velocity · runs a minute without drifting</td><td>They think a bounce is something the canvas does, not a rule they wrote. Re-do Session 9's bounce with the walls drawn 50px in from the edges.</td></tr>
+    <tr><td><b>Docking Bay</b></td><td>Smooth diagonal flight · clamped on all four edges · Shift genuinely slower · docked only when fully inside · green switches off again</td><td>Either the held-keys pattern (rebuild the notepad with them) or edge reasoning (draw the rectangles on paper — it's almost never the code).</td></tr>
+    <tr><td><b>Blackout</b></td><td>Torch exactly under the pointer, including after scrolling · clicks land on the right item · live wire ends it · restart is genuinely clean</td><td>The coordinate conversion, or the events-record/loop-acts split. Both are Session 11's core, so this is worth a re-teach before Session 12.</td></tr>
+  </table>
+
+  <div class="note key">
+    <div class="nt">🔑 The one question that predicts everything</div>
+    At the end of each challenge, ask: <b>"Talk me through what happens in one frame."</b> A student who can narrate a frame can debug anything you throw at them next. A student who can't will pass these challenges by pattern-matching and then stall on Pong — and the fix is always to go back to the Session 8 skeleton, never to add more features.
+  </div>
+</div>
+
+<div class="card" style="text-align:center">
+  <p style="margin:0;color:var(--muted)">Mini challenges for Sessions 9, 10 &amp; 11 · Game Dev Pro · tutor copy</p>
+</div>
+
+</div>
+</body>
+</html>

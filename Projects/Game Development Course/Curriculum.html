@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Code Illustrated Online School — Game Development Pro Curriculum</title>
+<style>
+  @page { size: A4; margin: 0; }
+  :root{
+    --ink:#16243f;        /* deep navy text */
+    --navy:#1b2c4d;
+    --navy2:#24385f;
+    --gold:#b8924a;
+    --gold-soft:#c9a24b;
+    --gold-tint:#f5efe1;
+    --paper:#ffffff;
+    --cream:#faf7f1;
+    --muted:#5d6779;
+    --line:#e3ddd0;
+    --serif:'Georgia','Times New Roman',serif;
+    --sans:'Helvetica Neue','Segoe UI',Arial,sans-serif;
+  }
+  *{box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  html,body{margin:0;padding:0;background:#525a66;font-family:var(--sans);color:var(--ink);}
+  /* Each .page is exactly one A4 sheet */
+  .page{
+    position:relative;
+    width:210mm;height:297mm;
+    background:var(--paper);
+    margin:0 auto;
+    overflow:hidden;
+    page-break-after:always;
+  }
+  .page:last-child{page-break-after:auto;}
+  .pad{padding:22mm 20mm;height:100%;}
+  /* screen-only spacing between pages */
+  @media screen{ body{padding:18px 0;} .page{margin:0 auto 18px;box-shadow:0 10px 40px rgba(0,0,0,.35);} }
+
+  h1,h2,h3,h4{font-family:var(--serif);font-weight:normal;color:var(--ink);margin:0;}
+  p{margin:0 0 9pt;line-height:1.55;font-size:10.5pt;color:#2b3753;}
+  .muted{color:var(--muted);}
+  .small{font-size:9pt;}
+
+  /* ---------- decorative bits ---------- */
+  .eyebrow{font-family:var(--sans);font-size:8pt;letter-spacing:3.5px;text-transform:uppercase;color:var(--gold);font-weight:700;}
+  .rule{height:2px;background:linear-gradient(90deg,var(--gold),transparent);border:none;margin:10pt 0 14pt;}
+  .rule-c{height:1px;background:var(--line);border:none;margin:12pt 0;}
+  .monogram{
+    width:62px;height:62px;border-radius:50%;border:2px solid var(--gold);
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--serif);font-size:24px;color:var(--gold);letter-spacing:1px;
+  }
+  .monogram.lg{width:96px;height:96px;font-size:38px;border-width:2.5px;}
+
+  /* ======================================================= COVER */
+  .cover{background:
+      radial-gradient(120% 80% at 50% -10%, #28406c 0%, var(--navy) 45%, #141f37 100%);
+    color:#fff;}
+  .cover .pad{display:flex;flex-direction:column;align-items:center;text-align:center;}
+  .cover h1{color:#fff;}
+  .cover-top{margin-top:14mm;display:flex;flex-direction:column;align-items:center;gap:12px;}
+  .cover .school{font-family:var(--serif);font-size:15pt;letter-spacing:.5px;color:#f2e9d6;}
+  .cover .school b{color:#fff;}
+  .cover .crest{border-color:var(--gold-soft);color:#f0d9a8;}
+  .cover-mid{margin-top:auto;margin-bottom:auto;}
+  .cover .kicker{font-family:var(--sans);font-size:9pt;letter-spacing:5px;text-transform:uppercase;color:var(--gold-soft);font-weight:700;margin-bottom:14px;}
+  .cover .title{font-size:46pt;line-height:1.04;color:#fff;letter-spacing:.5px;}
+  .cover .title .thin{display:block;font-size:20pt;color:#cdd8ef;font-style:italic;margin-top:10px;}
+  .cover .sub{margin-top:20px;font-size:12pt;color:#d6def0;max-width:135mm;line-height:1.6;}
+  .gold-line{width:70mm;height:2px;background:linear-gradient(90deg,transparent,var(--gold-soft),transparent);margin:22px 0;}
+  .cover-foot{width:100%;display:flex;justify-content:space-between;align-items:flex-end;color:#b9c4dd;font-size:9pt;letter-spacing:1px;}
+  .badges{display:flex;gap:10px;justify-content:center;margin-top:8px;flex-wrap:wrap;}
+  .badge{border:1px solid rgba(201,162,75,.6);border-radius:40px;padding:7px 16px;font-size:8.5pt;letter-spacing:1.5px;text-transform:uppercase;color:#f0d9a8;}
+
+  /* ======================================================= SECTION HEADERS */
+  .sec-head{display:flex;align-items:center;gap:14px;margin-bottom:4pt;}
+  .sec-head .n{font-family:var(--serif);font-size:30pt;color:var(--gold);line-height:1;}
+  .sec-head h2{font-size:21pt;}
+  .lead{font-size:11pt;color:#36425f;line-height:1.6;}
+
+  /* stats row */
+  .stats{display:flex;gap:0;margin:14pt 0;border:1px solid var(--line);border-radius:6px;overflow:hidden;}
+  .stat{flex:1;text-align:center;padding:12pt 6pt;border-right:1px solid var(--line);background:var(--cream);}
+  .stat:last-child{border-right:none;}
+  .stat .big{font-family:var(--serif);font-size:24pt;color:var(--navy);line-height:1;}
+  .stat .lbl{font-size:7.5pt;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-top:6px;}
+
+  /* welcome letter */
+  .letter p{font-size:10.5pt;line-height:1.7;color:#2b3753;}
+  .sign{font-family:var(--serif);font-style:italic;font-size:13pt;color:var(--navy);margin-top:4pt;}
+
+  /* outcome list */
+  .outcomes{margin-top:6pt;}
+  .out{display:flex;gap:12px;padding:9pt 0;border-bottom:1px solid var(--line);}
+  .out:last-child{border-bottom:none;}
+  .out .tick{flex:none;width:22px;height:22px;border-radius:50%;background:var(--gold-tint);border:1px solid var(--gold);
+    color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;}
+  .out .t b{color:var(--ink);font-size:10.5pt;}
+  .out .t p{margin:2px 0 0;font-size:9.5pt;color:var(--muted);}
+
+  /* skills chips */
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:6pt;}
+  .chip{background:var(--navy);color:#eaeefb;font-size:8.5pt;letter-spacing:.5px;padding:6px 13px;border-radius:30px;}
+
+  /* two-column info cards */
+  .cards{display:flex;gap:12px;margin-top:8pt;}
+  .card{flex:1;border:1px solid var(--line);border-radius:7px;padding:13pt 14pt;background:var(--cream);}
+  .card h4{font-size:12pt;color:var(--navy);margin-bottom:6pt;}
+  .card ul{margin:0;padding-left:15px;}
+  .card li{font-size:9.5pt;line-height:1.6;margin:4pt 0;color:#33405c;}
+
+  /* curriculum table */
+  .month-band{background:var(--navy);color:#fff;border-radius:6px 6px 0 0;padding:10pt 14pt;display:flex;align-items:baseline;gap:12px;}
+  .month-band .mlabel{font-family:var(--sans);font-size:8pt;letter-spacing:3px;text-transform:uppercase;color:var(--gold-soft);font-weight:700;}
+  .month-band h3{color:#fff;font-size:15pt;}
+  .month-band .tag{margin-left:auto;font-size:8.5pt;color:#c4cfe6;letter-spacing:.5px;}
+  .sessions{border:1px solid var(--line);border-top:none;border-radius:0 0 6px 6px;margin-bottom:12pt;overflow:hidden;}
+  .srow{display:flex;gap:12px;padding:8.5pt 14pt;border-bottom:1px solid var(--line);align-items:flex-start;}
+  .srow:last-child{border-bottom:none;}
+  .srow:nth-child(even){background:#fbfaf6;}
+  .srow .sn{flex:none;width:30px;font-family:var(--serif);font-size:12pt;color:var(--gold);text-align:center;}
+  .srow .sc h4{font-size:10.5pt;color:var(--ink);font-family:var(--sans);font-weight:700;}
+  .srow .sc p{margin:2px 0 0;font-size:9pt;color:var(--muted);line-height:1.45;}
+  .srow .wk{flex:none;font-size:7.5pt;color:#9aa3b4;letter-spacing:.5px;padding-top:3px;text-transform:uppercase;}
+  .proj-tag{display:inline-block;background:var(--gold-tint);color:#8a6a28;font-size:7pt;letter-spacing:1px;text-transform:uppercase;
+    padding:2px 7px;border-radius:20px;margin-left:7px;border:1px solid #e6d6b3;vertical-align:middle;}
+
+  /* projects portfolio */
+  .proj-grid{display:flex;flex-wrap:wrap;gap:12px;margin-top:8pt;}
+  .proj{width:calc(50% - 6px);border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#fff;}
+  .proj .top{height:70px;display:flex;align-items:center;justify-content:center;font-size:30px;}
+  .proj .body{padding:10pt 12pt;}
+  .proj h4{font-size:12pt;color:var(--navy);}
+  .proj p{font-size:9pt;color:var(--muted);margin:5px 0 0;line-height:1.5;}
+
+  /* faq */
+  .faq{margin-top:6pt;}
+  .qa{padding:9pt 0;border-bottom:1px solid var(--line);}
+  .qa:last-child{border-bottom:none;}
+  .qa .q{font-family:var(--serif);font-size:11pt;color:var(--navy);margin-bottom:4px;}
+  .qa .a{font-size:9.5pt;color:#36425f;line-height:1.6;margin:0;}
+
+  /* enrollment / contact */
+  .enroll{background:linear-gradient(135deg,var(--navy),#16243f);color:#fff;border-radius:10px;padding:20pt 22pt;margin-top:6pt;}
+  .enroll h3{color:#fff;font-size:16pt;}
+  .enroll .price{display:flex;gap:14px;margin:12pt 0;}
+  .tier{flex:1;border:1px solid rgba(201,162,75,.4);border-radius:8px;padding:12pt;background:rgba(255,255,255,.04);}
+  .tier .name{font-size:8pt;letter-spacing:2px;text-transform:uppercase;color:var(--gold-soft);}
+  .tier .amt{font-family:var(--serif);font-size:22pt;color:#fff;margin:5px 0;}
+  .tier .amt small{font-size:9pt;color:#c4cfe6;}
+  .tier .note{font-size:8.5pt;color:#c4cfe6;}
+  .contact{display:flex;gap:10px;margin-top:14pt;flex-wrap:wrap;}
+  .contact .ci{flex:1;min-width:46%;border:1px solid var(--line);border-radius:7px;padding:11pt 13pt;background:var(--cream);}
+  .contact .ci .lbl{font-size:7.5pt;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:700;}
+  .contact .ci .v{font-size:10.5pt;color:var(--ink);margin-top:3px;}
+
+  /* running footer */
+  .foot{position:absolute;left:20mm;right:20mm;bottom:12mm;display:flex;justify-content:space-between;
+    align-items:center;font-size:7.5pt;letter-spacing:1px;color:#9aa3b4;border-top:1px solid var(--line);padding-top:7px;}
+  .foot .b{color:var(--gold);font-weight:700;letter-spacing:2px;text-transform:uppercase;}
+
+  .toast{background:#fff8e6;border:1px solid #e8d9a8;color:#6b551f;border-radius:7px;padding:9pt 12pt;font-size:9pt;margin:0 auto 14px;max-width:210mm;text-align:center;}
+  @media print{ .toast{display:none;} }
+</style>
+</head>
+<body>
+
+<div class="toast">To save as PDF: press <b>Ctrl/Cmd&nbsp;+&nbsp;P</b> → Destination <b>“Save as PDF”</b> → set margins to <b>None/Default</b> → Save. (This banner won’t appear in the PDF.)</div>
+
+<!-- ============================================ PAGE 1 — COVER -->
+<section class="page cover">
+  <div class="pad">
+    <div class="cover-top">
+      <div class="monogram lg crest">CI</div>
+      <div class="school"><b>Code Illustrated</b> Online School</div>
+    </div>
+
+    <div class="cover-mid">
+      <div class="kicker">Beginner Course Curriculum</div>
+      <div class="title">Game Development<span class="thin">Pro</span></div>
+      <div class="gold-line"></div>
+      <div class="sub">A guided 12-week journey that takes a complete beginner from their first line of code to four real, published video games — built with HTML, CSS &amp; JavaScript.</div>
+      <div class="badges">
+        <span class="badge">12 Weeks</span>
+        <span class="badge">24 Live Sessions</span>
+        <span class="badge">4 Real Games</span>
+        <span class="badge">No Experience Needed</span>
+      </div>
+    </div>
+
+    <div class="cover-foot">
+      <div>PARENT &amp; STUDENT GUIDE</div>
+      <div>codeillustrated.school</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ PAGE 2 — WELCOME -->
+<section class="page">
+  <div class="pad">
+    <div class="eyebrow">A Note to Parents</div>
+    <h2 style="font-size:22pt;margin-top:8px;">Where curiosity becomes real skill</h2>
+    <hr class="rule" />
+
+    <div class="letter">
+      <p>Thank you for considering <b>Game Development Pro</b> for your child. This program was designed around a simple belief: young people learn best when they are <i>building something they are proud of</i>. Instead of abstract exercises, every lesson moves your child closer to a real, playable game they can share with friends and family.</p>
+      <p>Over three months, students learn the same three technologies that power the entire web — <b>HTML, CSS and JavaScript</b> — and use them to create classics like Pong, Snake and Breakout, finishing with their own platform game. Along the way they pick up something far more valuable than any single language: the ability to break a big problem into small steps, to stay calm when something doesn’t work, and to keep going until it does.</p>
+      <p>The course assumes <b>no prior experience whatsoever</b>. We begin by helping each student install professional tools, and every session is carefully paced so that it builds gently on the one before. By the final week, your child will have published a real game to the internet with a link they can proudly send to you.</p>
+      <p class="sign">— The Team at Code Illustrated Online School</p>
+    </div>
+
+    <hr class="rule-c" />
+    <div class="eyebrow">The Program at a Glance</div>
+    <div class="stats">
+      <div class="stat"><div class="big">24</div><div class="lbl">Live Sessions</div></div>
+      <div class="stat"><div class="big">12</div><div class="lbl">Weeks</div></div>
+      <div class="stat"><div class="big">2×1hr</div><div class="lbl">Per Week</div></div>
+      <div class="stat"><div class="big">4</div><div class="lbl">Games Built</div></div>
+      <div class="stat"><div class="big">1</div><div class="lbl">Published Online</div></div>
+    </div>
+    <p class="small muted">A structured pathway for motivated beginners — ideal for teens and dedicated younger learners. Suitable for any student with a computer, an internet connection, and curiosity.</p>
+
+    <div class="foot"><span class="b">Code Illustrated</span><span>Game Development Pro — Curriculum</span><span>2</span></div>
+  </div>
+</section>
+
+<!-- ============================================ PAGE 3 — OUTCOMES -->
+<section class="page">
+  <div class="pad">
+    <div class="sec-head"><span class="n">01</span><h2>What Your Child Will Achieve</h2></div>
+    <hr class="rule" />
+    <p class="lead">Clear, real-world results. By the end of the program, your child will be able to:</p>
+
+    <div class="outcomes">
+      <div class="out"><div class="tick">✓</div><div class="t"><b>Write real code in three professional languages</b><p>HTML, CSS and JavaScript — the foundation of every website and web app in the world.</p></div></div>
+      <div class="out"><div class="tick">✓</div><div class="t"><b>Build and publish four complete video games</b><p>Pong, Snake, Breakout and a platformer — designed and coded from a blank screen.</p></div></div>
+      <div class="out"><div class="tick">✓</div><div class="t"><b>Think like a programmer</b><p>Break problems into steps, find and fix mistakes (“debugging”), and persevere to a working result.</p></div></div>
+      <div class="out"><div class="tick">✓</div><div class="t"><b>Understand core computer-science concepts</b><p>Variables, loops, functions, logic, coordinates, collision detection and game state — explained from scratch.</p></div></div>
+      <div class="out"><div class="tick">✓</div><div class="t"><b>Use the same tools as the industry</b><p>A professional code editor (VS Code), browser developer tools, and GitHub for publishing.</p></div></div>
+      <div class="out"><div class="tick">✓</div><div class="t"><b>Own a shareable online portfolio</b><p>A real game live on the internet — and the confidence and foundations to keep creating.</p></div></div>
+    </div>
+
+    <hr class="rule-c" />
+    <div class="eyebrow">Skills Developed Beyond Coding</div>
+    <div class="chips">
+      <span class="chip">Logical Thinking</span>
+      <span class="chip">Problem Solving</span>
+      <span class="chip">Creativity &amp; Design</span>
+      <span class="chip">Attention to Detail</span>
+      <span class="chip">Persistence &amp; Patience</span>
+      <span class="chip">Digital Literacy</span>
+      <span class="chip">Independent Learning</span>
+    </div>
+
+    <div class="foot"><span class="b">Code Illustrated</span><span>Game Development Pro — Curriculum</span><span>3</span></div>
+  </div>
+</section>
+
+<!-- ============================================ PAGE 4 — HOW IT WORKS -->
+<section class="page">
+  <div class="pad">
+    <div class="sec-head"><span class="n">02</span><h2>How the Program Works</h2></div>
+    <hr class="rule" />
+    <p class="lead">A calm, predictable rhythm designed so beginners never feel left behind. Every session is a direct follow-up to the last.</p>
+
+    <div class="cards">
+      <div class="card">
+        <h4>Schedule &amp; Format</h4>
+        <ul>
+          <li><b>12 weeks</b> in total, organised into three monthly stages.</li>
+          <li><b>Two live 1-hour sessions</b> each week (24 sessions).</li>
+          <li>Each session blends clear teaching with hands-on building.</li>
+          <li>Short, optional practice challenges reinforce each lesson.</li>
+          <li>Written notes and runnable examples for easy review or catch-up.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>What You’ll Need</h4>
+        <ul>
+          <li>A computer — Windows, Mac or Linux all work.</li>
+          <li>A reliable internet connection.</li>
+          <li>A free code editor &amp; web browser — we install these together in Session 1.</li>
+          <li><b>No paid software</b> and <b>no prior coding experience</b> required.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="cards" style="margin-top:12px;">
+      <div class="card">
+        <h4>The Three Stages</h4>
+        <ul>
+          <li><b>Month 1 — Foundations:</b> tools, the web, and the building blocks of code.</li>
+          <li><b>Month 2 — Core Mechanics:</b> movement, controls, collisions &amp; first games.</li>
+          <li><b>Month 3 — Real Projects:</b> bigger games, polish &amp; publishing.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Our Teaching Approach</h4>
+        <ul>
+          <li>Learn by <b>building</b> — a real result in every single session.</li>
+          <li>Concepts explained in plain language, then practised immediately.</li>
+          <li>Mistakes treated as part of learning, never something to fear.</li>
+          <li>Steady pacing — each idea rests on the one before it.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="enroll" style="margin-top:14px;padding:14pt 18pt;">
+      <h3 style="font-size:13pt;">A typical session</h3>
+      <p style="color:#d7deee;font-size:9.5pt;margin-top:6px;margin-bottom:0;">A short recap of last time → a new concept explained simply → guided building on screen → a small challenge to try → a clear summary of what was learned and what comes next. Students always leave with something that <i>works</i>.</p>
+    </div>
+
+    <div class="foot"><span class="b">Code Illustrated</span><span>Game Development Pro — Curriculum</span><span>4</span></div>
+  </div>
+</section>
+
+<!-- ============================================ PAGE 5 — MONTH 1 -->
+<section class="page">
+  <div class="pad">
+    <div class="sec-head"><span class="n">03</span><h2>The Full Curriculum</h2></div>
+    <hr class="rule" />
+    <p class="lead" style="margin-bottom:14pt;">Twenty-four carefully sequenced sessions. Each title below is a one-hour live lesson.</p>
+
+    <div class="month-band">
+      <span class="mlabel">Month One</span><h3>Foundations</h3>
+      <span class="tag">Weeks 1–4 · Sessions 1–8</span>
+    </div>
+    <div class="sessions">
+      <div class="srow"><div class="sn">1</div><div class="sc"><h4>Setting Up the Studio</h4><p>Installs the professional tools developers use and builds a first working web page.</p></div><div class="wk">Wk 1</div></div>
+      <div class="srow"><div class="sn">2</div><div class="sc"><h4>Structure with HTML &amp; the Game Canvas</h4><p>Learns the building blocks of the web and draws their very first graphics on screen.</p></div><div class="wk">Wk 1</div></div>
+      <div class="srow"><div class="sn">3</div><div class="sc"><h4>Styling with CSS</h4><p>Makes their work look clean, colourful and professional.</p></div><div class="wk">Wk 2</div></div>
+      <div class="srow"><div class="sn">4</div><div class="sc"><h4>JavaScript Fundamentals</h4><p>Meets the language that brings games to life; learns to store and use information.</p></div><div class="wk">Wk 2</div></div>
+      <div class="srow"><div class="sn">5</div><div class="sc"><h4>Functions: Reusable Code</h4><p>Writes tidy, reusable instructions — a habit that underpins all good programming.</p></div><div class="wk">Wk 3</div></div>
+      <div class="srow"><div class="sn">6</div><div class="sc"><h4>Logic &amp; Decisions</h4><p>Teaches the program to make decisions — the basis of every game rule.</p></div><div class="wk">Wk 3</div></div>
+      <div class="srow"><div class="sn">7</div><div class="sc"><h4>Loops &amp; Lists</h4><p>Handles many objects at once, efficiently — stars, bricks, enemies and more.</p></div><div class="wk">Wk 4</div></div>
+      <div class="srow"><div class="sn">8</div><div class="sc"><h4>The Game Loop <span class="proj-tag">Milestone</span></h4><p>Builds the “engine” that powers every game — the heartbeat behind all motion.</p></div><div class="wk">Wk 4</div></div>
+    </div>
+
+    <div class="month-band">
+      <span class="mlabel">Month Two</span><h3>Core Game Mechanics</h3>
+      <span class="tag">Weeks 5–8 · Sessions 9–16</span>
+    </div>
+    <div class="sessions">
+      <div class="srow"><div class="sn">9</div><div class="sc"><h4>Animation &amp; Movement</h4><p>Brings objects to life with smooth, believable motion.</p></div><div class="wk">Wk 5</div></div>
+      <div class="srow"><div class="sn">10</div><div class="sc"><h4>Keyboard Controls</h4><p>Puts the player in control with responsive keyboard input.</p></div><div class="wk">Wk 5</div></div>
+      <div class="srow"><div class="sn">11</div><div class="sc"><h4>Mouse &amp; Touch Controls</h4><p>Adds clicking, aiming and tap support for phones and tablets.</p></div><div class="wk">Wk 6</div></div>
+      <div class="srow"><div class="sn">12</div><div class="sc"><h4>Collision Detection</h4><p>Teaches the game when things touch — the key to scoring, bouncing and winning.</p></div><div class="wk">Wk 6</div></div>
+      <div class="srow"><div class="sn">13</div><div class="sc"><h4>Project: Pong — Part 1 <span class="proj-tag">Game</span></h4><p>Plans and builds the paddles, ball and controls of a timeless classic.</p></div><div class="wk">Wk 7</div></div>
+      <div class="srow"><div class="sn">14</div><div class="sc"><h4>Project: Pong — Part 2 <span class="proj-tag">Game</span></h4><p>Adds an opponent, scoring and a win condition to finish a complete game.</p></div><div class="wk">Wk 7</div></div>
+      <div class="srow"><div class="sn">15</div><div class="sc"><h4>Project: Snake — Part 1 <span class="proj-tag">Game</span></h4><p>Introduces grid-based games and builds a steerable, growing snake.</p></div><div class="wk">Wk 8</div></div>
+      <div class="srow"><div class="sn">16</div><div class="sc"><h4>Project: Snake — Part 2 <span class="proj-tag">Game</span></h4><p>Adds food, growth, game-over and score for a second finished game.</p></div><div class="wk">Wk 8</div></div>
+    </div>
+
+    <div class="foot"><span class="b">Code Illustrated</span><span>Game Development Pro — Curriculum</span><span>5</span></div>
+  </div>
+</section>
+
+<!-- ============================================ PAGE 6 — MONTH 3 + PROJECTS -->
+<section class="page">
+  <div class="pad">
+    <div class="month-band">
+      <span class="mlabel">Month Three</span><h3>Real Projects &amp; Polish</h3>
+      <span class="tag">Weeks 9–12 · Sessions 17–24</span>
+    </div>
+    <div class="sessions">
+      <div class="srow"><div class="sn">17</div><div class="sc"><h4>Professional Code Organisation</h4><p>Learns to structure larger programs the way professional developers do.</p></div><div class="wk">Wk 9</div></div>
+      <div class="srow"><div class="sn">18</div><div class="sc"><h4>Sprites &amp; Artwork</h4><p>Replaces simple shapes with real graphics and animated characters.</p></div><div class="wk">Wk 9</div></div>
+      <div class="srow"><div class="sn">19</div><div class="sc"><h4>Sound &amp; Music</h4><p>Adds sound effects and music for a richer, more exciting experience.</p></div><div class="wk">Wk 10</div></div>
+      <div class="srow"><div class="sn">20</div><div class="sc"><h4>Project: Breakout — Part 1 <span class="proj-tag">Game</span></h4><p>Builds a wall of bricks, a paddle and a bouncing ball — the most ambitious game yet.</p></div><div class="wk">Wk 10</div></div>
+      <div class="srow"><div class="sn">21</div><div class="sc"><h4>Project: Breakout — Part 2 <span class="proj-tag">Game</span></h4><p>Adds brick-breaking, lives, winning and losing to complete the game.</p></div><div class="wk">Wk 11</div></div>
+      <div class="srow"><div class="sn">22</div><div class="sc"><h4>Scoreboards, Levels &amp; Polish</h4><p>Makes games feel finished and rewarding with displays, levels and feedback.</p></div><div class="wk">Wk 11</div></div>
+      <div class="srow"><div class="sn">23</div><div class="sc"><h4>Platformer Physics</h4><p>Implements gravity and jumping — a true rite of passage in game development.</p></div><div class="wk">Wk 12</div></div>
+      <div class="srow"><div class="sn">24</div><div class="sc"><h4>Publishing to the World <span class="proj-tag">Showcase</span></h4><p>Saves high scores and publishes a real game online with a shareable link.</p></div><div class="wk">Wk 12</div></div>
+    </div>
+
+    <hr class="rule-c" />
+    <div class="eyebrow">The Portfolio Your Child Will Build</div>
+    <div class="proj-grid">
+      <div class="proj"><div class="top" style="background:#10203f;">🏓</div><div class="body"><h4>Pong</h4><p>The timeless two-player paddle game — with an AI opponent and live scoring.</p></div></div>
+      <div class="proj"><div class="top" style="background:#0f2a1c;">🐍</div><div class="body"><h4>Snake</h4><p>A grid classic that grows as it eats — teaching logic and sequencing.</p></div></div>
+      <div class="proj"><div class="top" style="background:#2a1530;">🧱</div><div class="body"><h4>Breakout</h4><p>Smash a wall of bricks across multiple levels, with lives and sound.</p></div></div>
+      <div class="proj"><div class="top" style="background:#231a06;">🏃</div><div class="body"><h4>Platformer</h4><p>Run and jump with real gravity physics — the capstone project.</p></div></div>
+    </div>
+
+    <div class="foot"><span class="b">Code Illustrated</span><span>Game Development Pro — Curriculum</span><span>6</span></div>
+  </div>
+</section>
+
+<!-- ============================================ PAGE 7 — FAQ + ENROLL -->
+<section class="page">
+  <div class="pad">
+    <div class="sec-head"><span class="n">04</span><h2>Questions Parents Often Ask</h2></div>
+    <hr class="rule" />
+    <div class="faq">
+      <div class="qa"><div class="q">Does my child need any coding experience?</div><p class="a">None at all. The course is built for complete beginners and starts by installing the tools together. Every new term is explained in plain language the first time it appears.</p></div>
+      <div class="qa"><div class="q">What equipment and software are required?</div><p class="a">Any computer (Windows, Mac or Linux) with an internet connection. All software used is completely free, and we help install it during the first session.</p></div>
+      <div class="qa"><div class="q">Is the content age-appropriate and safe?</div><p class="a">Yes. Lessons use school-safe, industry-standard tools, and any work published online uses free, reputable hosting. Screen time is purposeful and creative.</p></div>
+      <div class="qa"><div class="q">What if my child misses a session?</div><p class="a">Every session comes with written notes and runnable examples, so a missed lesson is easy to catch up on before the next one.</p></div>
+      <div class="qa"><div class="q">Will this help with school or a future career?</div><p class="a">Absolutely. Students gain genuine programming foundations, computational thinking, and a portfolio — valuable for school computing, further study, and beyond.</p></div>
+      <div class="qa"><div class="q">What does my child finish with?</div><p class="a">Four complete games, one published live on the internet, written notes for everything covered, and the confidence and skills to keep building independently.</p></div>
+    </div>
+
+    <hr class="rule-c" />
+    <div class="enroll">
+      <h3>Enrollment</h3>
+      <p style="color:#d7deee;font-size:9.5pt;margin-top:6px;">Secure your child’s place in the next cohort. Pricing and start dates below.</p>
+      <div class="price">
+        <div class="tier"><div class="name">Full Program</div><div class="amt">$[•••]<small> / 12 weeks</small></div><div class="note">All 24 live sessions, notes &amp; project files included.</div></div>
+        <div class="tier"><div class="name">Monthly</div><div class="amt">$[•••]<small> / month</small></div><div class="note">Pay month-to-month across the three stages.</div></div>
+        <div class="tier"><div class="name">Sibling / Group</div><div class="amt">[•••]%<small> off</small></div><div class="note">Discount for siblings or referred friends.</div></div>
+      </div>
+      <p style="color:#aeb9d2;font-size:8pt;margin:0;">Replace the bracketed values with your pricing before sending. Next cohort start date: <b style="color:#f0d9a8;">[ Add date ]</b>.</p>
+    </div>
+
+    <div class="foot"><span class="b">Code Illustrated</span><span>Game Development Pro — Curriculum</span><span>7</span></div>
+  </div>
+</section>
+
+<!-- ============================================ PAGE 8 — CONTACT / BACK -->
+<section class="page cover">
+  <div class="pad" style="text-align:center;align-items:center;">
+    <div class="cover-top">
+      <div class="monogram lg crest">CI</div>
+      <div class="school"><b>Code Illustrated</b> Online School</div>
+    </div>
+
+    <div class="cover-mid">
+      <div class="kicker">Begin the Journey</div>
+      <div class="title" style="font-size:30pt;">Let’s build something<br/>worth being proud of.</div>
+      <div class="gold-line"></div>
+      <div class="sub" style="font-size:11pt;">We would be delighted to welcome your child into the next cohort of Game Development Pro. Reach out with any questions — we’re happy to help you decide if it’s the right fit.</div>
+    </div>
+
+    <div style="width:100%;">
+      <div class="contact" style="margin-bottom:18px;">
+        <div class="ci" style="background:rgba(255,255,255,.05);border-color:rgba(201,162,75,.4);"><div class="lbl">Email</div><div class="v" style="color:#fff;">[ hello@codeillustrated.school ]</div></div>
+        <div class="ci" style="background:rgba(255,255,255,.05);border-color:rgba(201,162,75,.4);"><div class="lbl">Website</div><div class="v" style="color:#fff;">[ codeillustrated.school ]</div></div>
+        <div class="ci" style="background:rgba(255,255,255,.05);border-color:rgba(201,162,75,.4);"><div class="lbl">Phone / WhatsApp</div><div class="v" style="color:#fff;">[ +000 000 0000 ]</div></div>
+        <div class="ci" style="background:rgba(255,255,255,.05);border-color:rgba(201,162,75,.4);"><div class="lbl">Enroll</div><div class="v" style="color:#fff;">[ Registration link ]</div></div>
+      </div>
+      <div class="cover-foot">
+        <div>© Code Illustrated Online School</div>
+        <div>Game Development Pro · Beginner Curriculum</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

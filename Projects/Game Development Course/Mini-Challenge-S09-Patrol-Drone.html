@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mini Challenge — The Patrol Drone · Session 9</title>
+<style>
+  :root{
+    --bg:#0f1226; --bg2:#161a36; --panel:#1c2147; --panel2:#232a5c;
+    --ink:#e9ecff; --muted:#a3aad6; --line:#2c3470;
+    --brand:#6c8cff; --brand2:#9a6bff; --accent:#34d399; --warn:#fbbf24; --bad:#fb7185;
+    --code-bg:#0b0e24; --radius:14px; --maxw:940px;
+    --mono:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;
+    --sans:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{background:linear-gradient(180deg,#0c0f22,#0f1226 40%);color:var(--ink);font-family:var(--sans);line-height:1.6;font-size:16px}
+  header.topbar{position:sticky;top:0;z-index:30;background:rgba(13,16,38,.93);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .topbar-inner{max-width:var(--maxw);margin:0 auto;display:flex;align-items:center;gap:14px;padding:12px 18px}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.3px}
+  .logo .badge{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--brand),var(--brand2));display:grid;place-items:center;font-size:18px}
+  .logo small{display:block;font-weight:500;color:var(--muted);font-size:11px;letter-spacing:.5px}
+  .spacer{flex:1}
+  .stamp{font-size:11.5px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);padding:5px 12px;border-radius:99px}
+  .stamp.tut{color:#08130d;background:var(--warn);border-color:transparent;font-weight:800}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:26px 18px 90px}
+  .card{background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);padding:24px 28px;box-shadow:0 10px 40px rgba(0,0,0,.25);margin-bottom:22px}
+  .crumbs{font-size:12.5px;color:var(--muted);letter-spacing:.3px;text-transform:uppercase;margin-bottom:8px}
+  h1.t{font-size:30px;line-height:1.14;margin:0 0 6px}
+  .sub{color:var(--muted);font-size:15px;margin:0}
+  .meta{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 0}
+  .chip{font-size:12px;padding:5px 11px;border-radius:99px;background:var(--panel);border:1px solid var(--line);color:var(--muted)}
+  .chip.brand{color:var(--ink);border-color:var(--brand);background:rgba(108,140,255,.12)}
+  .chip.acc{color:#bff5df;border-color:rgba(52,211,153,.5);background:rgba(52,211,153,.10)}
+  h2{font-size:21px;margin:0 0 6px}
+  h3{font-size:16.5px;margin:24px 0 6px;color:#cfd6ff}
+  h4{font-size:13px;margin:20px 0 4px;color:var(--accent);letter-spacing:.9px;text-transform:uppercase}
+  p{margin:10px 0}
+  ul,ol{margin:10px 0;padding-left:22px}
+  li{margin:6px 0}
+  code.inline{font-family:var(--mono);background:#0c1030;border:1px solid var(--line);padding:1px 6px;border-radius:6px;font-size:13.5px;color:#ffd9a0}
+  kbd{font-family:var(--mono);background:#0c1030;border:1px solid var(--line);border-bottom-width:2px;padding:1px 7px;border-radius:6px;font-size:12.5px}
+  .note{border-radius:12px;padding:14px 16px;margin:18px 0;border:1px solid var(--line)}
+  .note .nt{font-weight:700;font-size:13px;letter-spacing:.4px;margin-bottom:4px}
+  .note.tip{background:rgba(52,211,153,.08);border-color:rgba(52,211,153,.4)} .note.tip .nt{color:var(--accent)}
+  .note.warn{background:rgba(251,191,36,.08);border-color:rgba(251,191,36,.4)} .note.warn .nt{color:var(--warn)}
+  .note.info{background:rgba(108,140,255,.08);border-color:rgba(108,140,255,.4)} .note.info .nt{color:var(--brand)}
+  .note.key{background:rgba(154,107,255,.08);border-color:rgba(154,107,255,.45)} .note.key .nt{color:#c5a8ff}
+  .note.bad{background:rgba(251,113,133,.08);border-color:rgba(251,113,133,.45)} .note.bad .nt{color:var(--bad)}
+  .goal{background:var(--panel);border-left:3px solid var(--brand);border-radius:0 10px 10px 0;padding:12px 16px;margin:14px 0;font-size:15px}
+  .done-when{background:rgba(52,211,153,.07);border:1px solid rgba(52,211,153,.35);border-radius:11px;padding:12px 16px;margin:18px 0 0}
+  .done-when b{color:var(--accent);display:block;font-size:12.5px;letter-spacing:.8px;text-transform:uppercase;margin-bottom:4px}
+  .steps{counter-reset:st;list-style:none;padding-left:0;margin:12px 0}
+  .steps li{position:relative;padding-left:32px;margin:10px 0}
+  .steps li::before{counter-increment:st;content:counter(st);position:absolute;left:0;top:1px;width:22px;height:22px;border-radius:7px;background:#0c1030;border:1px solid var(--line);color:var(--brand);font-size:12px;font-weight:700;display:grid;place-items:center}
+  details{margin:12px 0;border:1px solid var(--line);border-radius:11px;background:var(--panel);overflow:hidden}
+  details > summary{cursor:pointer;padding:10px 15px;font-size:13.5px;font-weight:700;list-style:none;display:flex;align-items:center;gap:8px;color:var(--muted)}
+  details > summary::-webkit-details-marker{display:none}
+  details > summary::before{content:'\25B8';font-size:12px;color:var(--brand)}
+  details[open] > summary::before{content:'\25BE'}
+  details .dbody{padding:4px 16px 14px;font-size:14.5px;border-top:1px solid var(--line)}
+  pre{margin:12px 0;background:var(--code-bg);border:1px solid var(--line);border-radius:11px;padding:14px 16px;overflow:auto;font-family:var(--mono);font-size:12.9px;line-height:1.6;color:#e7ecff;tab-size:2}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px}
+  th,td{border:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top}
+  th{background:var(--panel);color:#cfd6ff;font-size:12.5px;text-transform:uppercase;letter-spacing:.6px}
+  .ok{color:var(--accent);font-weight:700}
+  .runner{margin:18px 0 0;border:1px solid var(--line);border-radius:13px;overflow:hidden;background:var(--code-bg)}
+  .runner .rhead{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--panel);border-bottom:1px solid var(--line);font-size:12px;color:var(--muted)}
+  .runner .rhead .dot{width:10px;height:10px;border-radius:99px;background:#3a4280}
+  .runner .rhead .label{flex:1;font-weight:600;color:var(--ink)}
+  .runner textarea{width:100%;border:none;background:var(--code-bg);color:#e7ecff;font-family:var(--mono);font-size:12.6px;line-height:1.55;padding:14px;resize:vertical;min-height:340px;outline:none;display:block;tab-size:2}
+  .runner .ractions{display:flex;gap:8px;padding:8px 12px;background:var(--panel);border-top:1px solid var(--line);flex-wrap:wrap;align-items:center}
+  .btn{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;border:none;border-radius:9px;padding:8px 16px;font-size:13px;font-weight:600;cursor:pointer}
+  .btn.ghost{background:var(--panel2);color:var(--ink);border:1px solid var(--line)}
+  .btn:hover{filter:brightness(1.1)}
+  .hintline{font-size:12px;color:var(--muted);margin-left:auto}
+  .runner iframe{width:100%;border:none;display:block;background:#0b0e24;min-height:350px}
+  @media print{ body{background:#fff;color:#111} details[open] .dbody{display:block} pre{white-space:pre-wrap} .runner textarea{height:auto} }
+  @media (max-width:640px){ .card{padding-left:16px;padding-right:16px} h1.t{font-size:24px} }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="logo"><span class="badge">🚁</span><span>Game Dev Pro<small>Mini Challenge</small></span></div>
+    <div class="spacer"></div>
+    <span class="stamp ">Student copy</span>
+  </div>
+</header>
+<div class="wrap">
+
+<div class="card">
+  <div class="crumbs">Mini Challenge · Session 9 · Animation &amp; Movement</div>
+  <h1 class="t">THE PATROL DRONE</h1>
+  <p class="sub">A guard drone has to march back and forth between two posts — and stop exactly at them, not somewhere past them.</p>
+  <div class="meta">
+    <span class="chip brand">Session 9</span><span class="chip">≈ 20 minutes</span>
+    <span class="chip acc">Velocity &amp; direction</span><span class="chip">In-class challenge</span>
+  </div>
+</div>
+
+<div class="card">
+  <h2>🚁 The situation</h2>
+  <p>You've seen a ball bounce off the walls of a canvas. But real games rarely bounce things off the screen edge — they bounce them off <b>whatever you decide</b>. A guard walks between two lampposts. A lift stops at two floors. A platform slides between two ledges.</p>
+  <p>Your drone starts between the two yellow posts and doesn't move, because <code class="inline">update()</code> is empty. Fix that.</p>
+
+  <div class="goal"><b>Your job:</b> make the drone patrol left and right forever between the two posts, turning around <i>exactly</i> at each one — never overlapping a post, never leaving a gap.</div>
+
+  <h4>Requirements</h4>
+  <ol class="steps">
+    <li>Move the drone by its velocity every frame.</li>
+    <li>When it reaches the right post, reverse its direction.</li>
+    <li>When it reaches the left post, reverse its direction.</li>
+    <li>It must turn <b>at</b> the post. Watch closely — if it slides past and then jumps back, that's not finished.</li>
+  </ol>
+
+  <div class="note warn">
+    <div class="nt">⚠️ Two things that will trip you up</div>
+    The drone is a <b>rectangle</b>, so its <code class="inline">x</code> is its left corner. Its right edge is somewhere else — work out where.<br><br>
+    And reversing the velocity alone is not enough. Reversing changes where it's <i>going</i>; it doesn't change where it <i>is</i>. If it's already past the post when you flip, it's still past the post on the next frame too.
+  </div>
+
+  <h4>Build it here</h4>
+  <p>Edit the code, press <b>Run</b>. (Or copy it into VS Code if you'd rather work there.)</p>
+  
+<div class="runner">
+  <div class="rhead"><span class="dot"></span><span class="label">session-09-patrol.html</span></div>
+  <textarea spellcheck="false">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;style&gt;
+  body{margin:0;background:#0d1024;display:flex;flex-direction:column;align-items:center;
+       padding:12px;font-family:system-ui;color:#a3aad6}
+  canvas{background:#0b0e24;border:3px solid #6c8cff;border-radius:12px}
+  p{font-size:13px;margin:8px 0 0}
+&lt;/style&gt;&lt;/head&gt;
+&lt;body&gt;
+  &lt;canvas id=&quot;game&quot; width=&quot;420&quot; height=&quot;220&quot;&gt;&lt;/canvas&gt;
+  &lt;p&gt;The drone should patrol between the two yellow posts.&lt;/p&gt;
+  &lt;script&gt;
+    const canvas = document.getElementById(&quot;game&quot;);
+    const ctx = canvas.getContext(&quot;2d&quot;);
+    const W = canvas.width, H = canvas.height;
+
+    // ---- the patrol route (NOT the canvas edges) ----
+    const LEFT_POST = 60;
+    const RIGHT_POST = 360;
+
+    const drone = { x: 100, y: 88, w: 40, h: 26, vx: 3 };
+
+    function update() {
+      // ============ YOUR CODE GOES HERE ============
+      // 1. move the drone by its velocity
+      // 2. if it has reached the RIGHT post, put it exactly at the post
+      //    and reverse its velocity
+      // 3. do the same for the LEFT post
+      // Remember: the drone&#x27;s right edge is x + w, its left edge is x.
+      // =============================================
+    }
+
+    function drawPost(x) {
+      ctx.strokeStyle = &quot;#fbbf24&quot;;
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(x, 40);
+      ctx.lineTo(x, H - 40);
+      ctx.stroke();
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      drawPost(LEFT_POST);
+      drawPost(RIGHT_POST);
+      ctx.fillStyle = &quot;#34d399&quot;;
+      ctx.fillRect(drone.x, drone.y, drone.w, drone.h);
+      ctx.fillStyle = &quot;#e9ecff&quot;;
+      ctx.font = &quot;14px system-ui&quot;;
+      ctx.fillText(&quot;vx: &quot; + drone.vx, 12, 24);
+    }
+
+    function loop() { update(); draw(); requestAnimationFrame(loop); }
+    requestAnimationFrame(loop);
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+  <div class="ractions">
+    <button class="btn" data-run>&#9654; Run</button>
+    <button class="btn ghost" data-reset>&#8634; Reset to starter</button>
+    <span class="hintline">Tab inserts two spaces</span>
+  </div>
+  <iframe></iframe>
+</div>
+
+  <div class="done-when"><b>Done when</b> the drone bounces cleanly between the posts for a full minute without you touching anything, and the moment of turning looks instant and exact at both ends.</div>
+</div>
+
+<div class="card">
+  <h2>🚀 If you finish early</h2>
+  <ol>
+    <li><b>Two axes.</b> Give the drone a <code class="inline">vy</code> as well, and make it bounce off the top and bottom of the canvas too — so it patrols in a diagonal zig-zag between the posts.</li>
+    <li><b>A second drone.</b> Add one starting at the other end with a different speed. Do they need any code to avoid each other? Try it and see what actually happens when they meet.</li>
+    <li><b>Speed trap.</b> Make the drone 15% faster every time it turns (<code class="inline">drone.vx = drone.vx * 1.15</code> at each turn — careful with the sign). Let it run. Something breaks. Work out <i>why</i> it breaks, in terms of how far it travels in one frame.</li>
+  </ol>
+  <div class="note info">
+    <div class="nt">🤔 Think about this one before you leave</div>
+    Your drone reverses by flipping the sign of a number. What would you have to change to make it <b>stop</b> at the right post and stay there forever instead of bouncing? How much of your code would survive?
+  </div>
+</div>
+
+</div>
+<script>
+(function(){
+  document.querySelectorAll('.runner').forEach(function(runner){
+    var ta = runner.querySelector('textarea');
+    var frame = runner.querySelector('iframe');
+    var original = ta.value;
+    function run(){ frame.srcdoc = ta.value; }
+    runner.querySelector('[data-run]').addEventListener('click', run);
+    runner.querySelector('[data-reset]').addEventListener('click', function(){ ta.value = original; run(); });
+    ta.addEventListener('keydown', function(e){
+      if(e.key === 'Tab'){
+        e.preventDefault();
+        var s = ta.selectionStart, en = ta.selectionEnd;
+        ta.value = ta.value.slice(0, s) + '  ' + ta.value.slice(en);
+        ta.selectionStart = ta.selectionEnd = s + 2;
+      }
+    });
+    run();
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lesson 2: Your First Web Page — Code Your World: HTML</title>
+<link rel="stylesheet" href="../assets/style.css" />
+</head>
+<body>
+
+<div class="top-progress"><div class="top-progress__fill" style="width:0%"></div></div>
+<button class="sidebar-toggle" aria-label="Toggle menu">☰ Menu</button>
+<div class="sidebar-scrim"></div>
+
+<div class="app-shell">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand__mark">&lt;/&gt;</div>
+      <div class="brand__text"><div class="kicker">CIOS Course Book</div><div class="name">Code Your World: HTML</div></div>
+    </div>
+    <div class="sidebar-progress">
+      <div class="sidebar-progress__label"><span>Your progress</span><strong class="sidebar-progress__count">0 / 16</strong></div>
+      <div class="sidebar-progress__track"><div class="sidebar-progress__fill" style="width:0%"></div></div>
+    </div>
+    <div class="nav-group__title">Start Here</div>
+    <ul class="nav-list">
+      <li><a href="../index.html">🏠 <span>Course Home</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 1 · Getting Started</div>
+    <ul class="nav-list">
+      <li><a href="lesson-01.html" data-lesson-id="l01"><span class="num">1</span><span>Welcome to the Web</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-02.html" class="active" data-lesson-id="l02"><span class="num">2</span><span>Your First Web Page</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 2 · Text Foundations</div>
+    <ul class="nav-list">
+      <li><a href="lesson-03.html" data-lesson-id="l03"><span class="num">3</span><span>Headings &amp; Paragraphs</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-04.html" data-lesson-id="l04"><span class="num">4</span><span>Text Formatting</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 3 · Organizing Content</div>
+    <ul class="nav-list">
+      <li><a href="lesson-05.html" data-lesson-id="l05"><span class="num">5</span><span>Lists</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-06.html" data-lesson-id="l06"><span class="num">6</span><span>Links</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 4 · Media &amp; Data</div>
+    <ul class="nav-list">
+      <li><a href="lesson-07.html" data-lesson-id="l07"><span class="num">7</span><span>Images</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-08.html" data-lesson-id="l08"><span class="num">8</span><span>Tables</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 5 · Forms</div>
+    <ul class="nav-list">
+      <li><a href="lesson-09.html" data-lesson-id="l09"><span class="num">9</span><span>Forms Part 1</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-10.html" data-lesson-id="l10"><span class="num">10</span><span>Forms Part 2</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 6 · Structure &amp; Media</div>
+    <ul class="nav-list">
+      <li><a href="lesson-11.html" data-lesson-id="l11"><span class="num">11</span><span>Div, Span &amp; Semantics</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-12.html" data-lesson-id="l12"><span class="num">12</span><span>Audio, Video &amp; Embeds</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 7 · Real-World Skills</div>
+    <ul class="nav-list">
+      <li><a href="lesson-13.html" data-lesson-id="l13"><span class="num">13</span><span>Attributes &amp; Accessibility</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-14.html" data-lesson-id="l14"><span class="num">14</span><span>Mini Project: Plan</span><span class="check">✓</span></a></li>
+    </ul>
+    <div class="nav-group__title">Week 8 · Project &amp; Beyond</div>
+    <ul class="nav-list">
+      <li><a href="lesson-15.html" data-lesson-id="l15"><span class="num">15</span><span>Mini Project: Build</span><span class="check">✓</span></a></li>
+      <li><a href="lesson-16.html" data-lesson-id="l16"><span class="num">16</span><span>Publishing &amp; Next Steps</span><span class="check">✓</span></a></li>
+    </ul>
+  </aside>
+
+  <main class="main">
+    <div class="content">
+
+      <div class="lesson-kicker"><span class="pill">Lesson 2 of 16</span><span class="pill week">Week 1</span><span class="pill time">⏱ 60 minutes</span></div>
+      <h1 class="lesson-title">Your First Web Page</h1>
+      <p class="lesson-sub">Every HTML page — from the simplest to the most complex website in the world — starts with the exact same skeleton. Today you'll learn it by heart.</p>
+
+      <div class="box objectives">
+        <div class="box-title">🎯 Learning Objectives</div>
+        <ul>
+          <li>Write the doctype declaration and explain what it does</li>
+          <li>Build the required &lt;html&gt;, &lt;head&gt;, and &lt;body&gt; structure</li>
+          <li>Add a page title that appears in the browser tab</li>
+          <li>Save and correctly name an HTML file</li>
+        </ul>
+      </div>
+
+      <h2><span class="num-chip">1</span>The Anatomy of a Web Page</h2>
+      <p>Every single HTML document follows the same required pattern. Once you memorize this, you'll type it at the top of every page you ever build:</p>
+
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">index.html</span></div>
+        <pre><code><span class="cmt">&lt;!-- This line must always be first --&gt;</span>
+<span class="tag">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;html</span> <span class="attr">lang</span>=<span class="str">"en"</span><span class="tag">&gt;</span>
+
+<span class="tag">&lt;head&gt;</span>
+  <span class="tag">&lt;title&gt;</span><span class="txt">My First Page</span><span class="tag">&lt;/title&gt;</span>
+<span class="tag">&lt;/head&gt;</span>
+
+<span class="tag">&lt;body&gt;</span>
+  <span class="tag">&lt;h1&gt;</span><span class="txt">Hello, World!</span><span class="tag">&lt;/h1&gt;</span>
+  <span class="tag">&lt;p&gt;</span><span class="txt">This is my very first complete web page.</span><span class="tag">&lt;/p&gt;</span>
+<span class="tag">&lt;/body&gt;</span>
+
+<span class="tag">&lt;/html&gt;</span></code></pre>
+      </div>
+
+      <p>Let's go through each part, because every piece has an important job:</p>
+      <ul>
+        <li><code class="inline">&lt;!DOCTYPE html&gt;</code> — tells the browser "this is a modern HTML5 document." It's not a tag with a closing pair; it's a one-time declaration at the very top.</li>
+        <li><code class="inline">&lt;html&gt;</code> — the <strong>root element</strong>. Every other tag lives inside this one. The <code class="inline">lang="en"</code> part tells the browser (and screen readers) the page is in English.</li>
+        <li><code class="inline">&lt;head&gt;</code> — holds information <em>about</em> the page that isn't shown directly on the page itself (like its title).</li>
+        <li><code class="inline">&lt;body&gt;</code> — holds everything visitors actually see: text, images, buttons, links.</li>
+      </ul>
+
+      <h2><span class="num-chip">2</span>The &lt;head&gt;: Behind-the-Scenes Info</h2>
+      <p>Think of the <code class="inline">&lt;head&gt;</code> like the label on a food package — it's information about the page, not the page's content itself. The most important tag inside it is <code class="inline">&lt;title&gt;</code>, which sets the text shown in the browser tab.</p>
+
+      <div class="preview-window">
+        <div class="preview-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="url">🔒 my-first-page.html</span></div>
+        <div class="preview-window__body">
+          <h1 style="margin:0 0 10px;font-family:Poppins,sans-serif;">Hello, World!</h1>
+          <p style="margin:0;">This is my very first complete web page.</p>
+        </div>
+      </div>
+      <p>Notice that "My First Page" (the title) doesn't appear inside the page body — it only shows in the browser's tab or window title. That's the difference between the &lt;head&gt; and the &lt;body&gt;.</p>
+
+      <div class="box tip">
+        <div class="box-title">💡 Another Common &lt;head&gt; Tag</div>
+        <p>You'll also often see <code class="inline">&lt;meta charset="UTF-8"&gt;</code> in the head. This simply tells the browser which set of characters to use, so things like emoji, accents (é, ñ), and symbols display correctly. We'll include it in every page from now on.</p>
+      </div>
+
+      <h2><span class="num-chip">3</span>Saving Your File Correctly</h2>
+      <p>A few strict rules make sure your file works properly:</p>
+      <ul>
+        <li>The file must end in <code class="inline">.html</code> — for example, <code class="inline">about-me.html</code></li>
+        <li>Avoid spaces in file names — use hyphens instead: <code class="inline">my-page.html</code>, not <code class="inline">my page.html</code></li>
+        <li>Use lowercase letters — <code class="inline">profile.html</code>, not <code class="inline">Profile.HTML</code></li>
+        <li>A file named exactly <code class="inline">index.html</code> is special: it's the default page a website shows when someone visits a folder or domain without a specific file name</li>
+      </ul>
+
+      <div class="box vocab">
+        <div class="box-title">📚 Key Vocabulary</div>
+        <dl class="vocab-grid">
+          <div class="vocab-item"><dt>Doctype</dt><dd>The declaration at the top of a file that tells the browser it's HTML5</dd></div>
+          <div class="vocab-item"><dt>Root element</dt><dd>The outermost element that contains all others — &lt;html&gt;</dd></div>
+          <div class="vocab-item"><dt>Head</dt><dd>Section holding page metadata like the title, not shown directly on the page</dd></div>
+          <div class="vocab-item"><dt>Body</dt><dd>Section holding all visible page content</dd></div>
+          <div class="vocab-item"><dt>Metadata</dt><dd>Data about the page itself, such as its title or character encoding</dd></div>
+          <div class="vocab-item"><dt>File extension</dt><dd>The suffix (like .html) that tells the computer what type of file it is</dd></div>
+        </dl>
+      </div>
+
+      <div class="box challenge">
+        <div class="box-title">🚀 Challenge</div>
+        <p>Build a complete HTML page called <code class="inline">about-me.html</code> that includes:</p>
+        <ul>
+          <li>A proper doctype, html, head, and body structure</li>
+          <li>A page title (in the &lt;head&gt;) with your name in it</li>
+          <li>One heading and one paragraph (in the &lt;body&gt;) introducing yourself</li>
+        </ul>
+        <p>Open it in your browser and check that your name appears in the browser tab!</p>
+      </div>
+
+      <div class="box recap">
+        <div class="box-title">✅ Recap</div>
+        <p>Every HTML page starts with a doctype, then an &lt;html&gt; root element containing a &lt;head&gt; (page info) and a &lt;body&gt; (visible content). The &lt;title&gt; tag sets the browser tab text. Files must be saved with a lowercase, hyphenated <code class="inline">.html</code> name. Next lesson, we'll fill the body with properly structured text.</p>
+      </div>
+
+      <div class="mark-complete"><button data-lesson-id="l02">Mark Lesson as Complete</button></div>
+
+      <div class="lesson-pager">
+        <a class="pager-btn" href="lesson-01.html"><div class="dir">← Previous</div><div class="title">Lesson 1: Welcome to the Web</div></a>
+        <a class="pager-btn next" href="lesson-03.html"><div class="dir">Next →</div><div class="title">Lesson 3: Headings &amp; Paragraphs</div></a>
+      </div>
+
+    </div>
+    <footer class="site-footer">CIOS HTML Course Book · Lesson 2 of 16</footer>
+  </main>
+</div>
+
+<script src="../assets/script.js"></script>
+</body>
+</html>

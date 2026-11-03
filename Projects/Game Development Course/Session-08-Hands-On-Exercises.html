@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Session 8 — Hands-On Exercises · The Game Loop</title>
+<style>
+  :root{
+    --bg:#0f1226; --bg2:#161a36; --panel:#1c2147; --panel2:#232a5c;
+    --ink:#e9ecff; --muted:#a3aad6; --line:#2c3470;
+    --brand:#6c8cff; --brand2:#9a6bff; --accent:#34d399; --warn:#fbbf24; --bad:#fb7185;
+    --code-bg:#0b0e24; --radius:14px; --maxw:980px;
+    --mono:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;
+    --sans:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{background:linear-gradient(180deg,#0c0f22,#0f1226 40%);color:var(--ink);font-family:var(--sans);line-height:1.6;font-size:16px}
+  a{color:var(--brand)}
+  header.topbar{position:sticky;top:0;z-index:30;background:rgba(13,16,38,.9);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .topbar-inner{max-width:var(--maxw);margin:0 auto;display:flex;align-items:center;gap:14px;padding:12px 18px}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.3px}
+  .logo .badge{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--brand),var(--brand2));display:grid;place-items:center;font-size:18px}
+  .logo small{display:block;font-weight:500;color:var(--muted);font-size:11px;letter-spacing:.5px}
+  .spacer{flex:1}
+  .progresswrap{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)}
+  .pbar{width:130px;height:8px;background:#0c1030;border-radius:99px;overflow:hidden;border:1px solid var(--line)}
+  .pbar > i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--brand));transition:width .4s}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:26px 18px 90px}
+  .card{background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);padding:24px 28px;box-shadow:0 10px 40px rgba(0,0,0,.25);margin-bottom:22px}
+  .crumbs{font-size:12.5px;color:var(--muted);letter-spacing:.3px;text-transform:uppercase;margin-bottom:8px}
+  h1.t{font-size:30px;line-height:1.15;margin:0 0 6px}
+  .meta{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 4px}
+  .chip{font-size:12px;padding:5px 11px;border-radius:99px;background:var(--panel);border:1px solid var(--line);color:var(--muted)}
+  .chip.brand{color:var(--ink);border-color:var(--brand);background:rgba(108,140,255,.12)}
+  .chip.acc{color:#bff5df;border-color:rgba(52,211,153,.5);background:rgba(52,211,153,.10)}
+  .obj{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:20px 0 0}
+  .obj h3{margin:0 0 8px;font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--accent)}
+  .obj ul{margin:0;padding-left:20px}
+  .obj li{margin:4px 0}
+  h2{font-size:21px;margin:0 0 6px}
+  h3{font-size:16px;margin:20px 0 6px;color:#cfd6ff}
+  p{margin:10px 0}
+  ul,ol{margin:10px 0;padding-left:22px}
+  li{margin:6px 0}
+  code.inline{font-family:var(--mono);background:#0c1030;border:1px solid var(--line);padding:1px 6px;border-radius:6px;font-size:13.5px;color:#ffd9a0}
+  kbd{font-family:var(--mono);background:#0c1030;border:1px solid var(--line);border-bottom-width:2px;padding:1px 7px;border-radius:6px;font-size:12.5px}
+  .note{border-radius:12px;padding:14px 16px;margin:18px 0;border:1px solid var(--line)}
+  .note .nt{font-weight:700;font-size:13px;letter-spacing:.4px;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+  .note.tip{background:rgba(52,211,153,.08);border-color:rgba(52,211,153,.4)} .note.tip .nt{color:var(--accent)}
+  .note.warn{background:rgba(251,191,36,.08);border-color:rgba(251,191,36,.4)} .note.warn .nt{color:var(--warn)}
+  .note.info{background:rgba(108,140,255,.08);border-color:rgba(108,140,255,.4)} .note.info .nt{color:var(--brand)}
+  .note.key{background:rgba(154,107,255,.08);border-color:rgba(154,107,255,.45)} .note.key .nt{color:#c5a8ff}
+
+  /* exercise card */
+  .ex{background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);margin-bottom:22px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,.22)}
+  .ex > header{display:flex;align-items:flex-start;gap:14px;padding:18px 24px;background:linear-gradient(135deg,rgba(154,107,255,.14),rgba(108,140,255,.07));border-bottom:1px solid var(--line)}
+  .ex .num{flex:none;width:40px;height:40px;border-radius:11px;background:#0c1030;border:1px solid var(--line);display:grid;place-items:center;font-weight:800;font-size:16px;color:#c5a8ff}
+  .ex .htxt{flex:1;min-width:0}
+  .ex .htxt h2{font-size:19px;margin:0 0 4px}
+  .ex .tags{display:flex;flex-wrap:wrap;gap:6px}
+  .tag{font-size:11px;padding:3px 9px;border-radius:99px;background:#0c1030;border:1px solid var(--line);color:var(--muted);letter-spacing:.3px}
+  .tag.d1{color:#bff5df;border-color:rgba(52,211,153,.45)}
+  .tag.d2{color:#ffe3ad;border-color:rgba(251,191,36,.45)}
+  .tag.d3{color:#ffc0cb;border-color:rgba(251,113,133,.5)}
+  .ex .body{padding:18px 24px 24px}
+  .goal{background:var(--panel);border-left:3px solid var(--brand);border-radius:0 10px 10px 0;padding:10px 14px;margin:0 0 14px;font-size:14.5px}
+  .goal b{color:#cfd6ff}
+  .steps{counter-reset:st;list-style:none;padding-left:0;margin:12px 0}
+  .steps li{position:relative;padding-left:32px;margin:9px 0}
+  .steps li::before{counter-increment:st;content:counter(st);position:absolute;left:0;top:1px;width:22px;height:22px;border-radius:7px;background:#0c1030;border:1px solid var(--line);color:var(--brand);font-size:12px;font-weight:700;display:grid;place-items:center}
+
+  details{margin:12px 0;border:1px solid var(--line);border-radius:11px;background:var(--panel);overflow:hidden}
+  details > summary{cursor:pointer;padding:10px 15px;font-size:13.5px;font-weight:700;letter-spacing:.3px;list-style:none;display:flex;align-items:center;gap:8px;color:var(--muted)}
+  details > summary::-webkit-details-marker{display:none}
+  details > summary::before{content:'▸';font-size:12px;transition:transform .15s;color:var(--brand)}
+  details[open] > summary::before{transform:rotate(90deg)}
+  details > summary:hover{color:var(--ink)}
+  details .dbody{padding:2px 16px 14px;font-size:14.5px;border-top:1px solid var(--line)}
+  details.sol{background:rgba(52,211,153,.06);border-color:rgba(52,211,153,.35)}
+  details.sol > summary{color:var(--accent)}
+  details.sol > summary::before{color:var(--accent)}
+
+  pre{margin:12px 0;background:var(--code-bg);border:1px solid var(--line);border-radius:11px;padding:14px;overflow:auto;font-family:var(--mono);font-size:13px;line-height:1.55;color:#e7ecff}
+
+  /* runnable editor */
+  .runner{margin:16px 0 0;border:1px solid var(--line);border-radius:13px;overflow:hidden;background:var(--code-bg)}
+  .runner .rhead{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--panel);border-bottom:1px solid var(--line);font-size:12px;color:var(--muted)}
+  .runner .rhead .dot{width:10px;height:10px;border-radius:99px;background:#3a4280}
+  .runner .rhead .label{flex:1;font-weight:600;color:var(--ink)}
+  .runner textarea{width:100%;border:none;background:var(--code-bg);color:#e7ecff;font-family:var(--mono);font-size:12.8px;line-height:1.55;padding:14px;resize:vertical;min-height:230px;outline:none;display:block;tab-size:2}
+  .runner .ractions{display:flex;gap:8px;padding:8px 12px;background:var(--panel);border-top:1px solid var(--line);flex-wrap:wrap;align-items:center}
+  .btn{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;border:none;border-radius:9px;padding:8px 16px;font-size:13px;font-weight:600;cursor:pointer}
+  .btn.ghost{background:var(--panel2);color:var(--ink);border:1px solid var(--line)}
+  .btn:hover{filter:brightness(1.1)}
+  .runner iframe{width:100%;border:none;display:block;background:#0b0e24;min-height:250px}
+  .hintline{font-size:12px;color:var(--muted);margin-left:auto}
+
+  .checkrow{display:flex;align-items:center;gap:10px;margin-top:18px;padding-top:14px;border-top:1px solid var(--line)}
+  .checkbtn{display:inline-flex;align-items:center;gap:9px;background:var(--panel);border:1px solid var(--line);border-radius:99px;padding:8px 16px;cursor:pointer;font-weight:600;font-size:13.5px;user-select:none}
+  .checkbtn.done{background:var(--accent);color:#08130d;border-color:transparent}
+
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px}
+  th,td{border:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top}
+  th{background:var(--panel);color:#cfd6ff;font-size:12.5px;text-transform:uppercase;letter-spacing:.6px}
+  .print-only{display:none}
+  @media print{
+    body{background:#fff;color:#111}
+    .runner textarea{min-height:auto;height:auto}
+    .btn,.checkbtn,.pbar,.progresswrap{display:none}
+    .print-only{display:block}
+  }
+  @media (max-width:640px){
+    .card,.ex .body,.ex > header{padding-left:16px;padding-right:16px}
+    h1.t{font-size:24px}
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="logo"><span class="badge">🎮</span><span>Game Dev Pro<small>Session 8 · Exercise Pack</small></span></div>
+    <div class="spacer"></div>
+    <div class="progresswrap"><span id="ptext">0 / 8 done</span><span class="pbar"><i id="pbar"></i></span></div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- ============ INTRO ============ -->
+  <div class="card">
+    <div class="crumbs">Month 1 · Week 4 · Session 8</div>
+    <h1 class="t">Hands-On Exercises — The Game Loop</h1>
+    <p style="color:var(--muted);margin-top:4px">Work through these <b>in order</b>. Every exercise is a small change to the same skeleton you built in class: <code class="inline">update()</code>, <code class="inline">draw()</code>, <code class="inline">loop()</code>. Type the code yourself — do not copy and paste. Press <b>Run</b> to see your change immediately.</p>
+    <div class="meta">
+      <span class="chip brand">8 exercises + 1 boss challenge</span>
+      <span class="chip">≈ 45–60 minutes</span>
+      <span class="chip">Beginner</span>
+      <span class="chip acc">Runs in this page — no setup needed</span>
+    </div>
+
+    <div class="obj">
+      <h3>What you are practising</h3>
+      <ul>
+        <li>Making a loop run forever with <code class="inline">requestAnimationFrame</code></li>
+        <li>Keeping <b>thinking</b> (<code class="inline">update</code>) and <b>painting</b> (<code class="inline">draw</code>) in separate functions</li>
+        <li>Clearing the canvas so motion looks clean instead of smeared</li>
+        <li>Diagnosing the two classic loop bugs on your own</li>
+        <li>Running more than one moving object at the same time</li>
+      </ul>
+    </div>
+
+    <div class="note info">
+      <div class="nt">📌 How to use this page</div>
+      Each exercise gives you <b>starter code</b> you can edit right here in the browser. Change it, press <b>Run</b>, and watch the little canvas. If you get stuck for more than 3 minutes, open the <b>Hint</b>. Only open <b>Solution</b> after you have made a real attempt — reading the answer teaches you almost nothing.
+    </div>
+
+    <div class="note warn">
+      <div class="nt">✋ Before you start — say these out loud</div>
+      <ol style="margin:6px 0 0">
+        <li>What is a <i>frame</i>?</li>
+        <li>What are the two jobs a game loop does on every single frame?</li>
+        <li>Which line makes the loop keep going forever?</li>
+        <li>What goes wrong if you forget <code class="inline">clearRect</code>?</li>
+      </ol>
+      If you can't answer all four, re-read Session 8 first. These exercises will make much more sense.
+    </div>
+  </div>
+
+  <!-- ============ EX 1 ============ -->
+  <section class="ex" data-ex>
+    <header>
+      <div class="num">1</div>
+      <div class="htxt">
+        <h2>The Speed Dial</h2>
+        <div class="tags"><span class="tag d1">⭐ Warm-up</span><span class="tag">5 min</span><span class="tag">Observe</span></div>
+      </div>
+    </header>
+    <div class="body">
+      <div class="goal"><b>Goal:</b> prove to yourself that <i>one number</i> controls how fast the world moves, and that speed is measured in <b>pixels per frame</b>.</div>
+      <ol class="steps">
+        <li>Press <b>Run</b> first and just watch. The square moves right and wraps around.</li>
+        <li>Change <code class="inline">speed: 3</code> to <code class="inline">speed: 8</code>. Run again.</li>
+        <li>Change it to <code class="inline">speed: 1</code>. Run again.</li>
+        <li>Now try <code class="inline">speed: 0.5</code> — a decimal is allowed! Does it still move?</li>
+        <li>Finally try <code class="inline">speed: -3</code>. Which way does it go? Can you explain <i>why</i> before you run it?</li>
+      </ol>
+      <p><b>Write your answer:</b> the loop runs about 60 times a second. If <code class="inline">speed</code> is 3, how many pixels does the square travel in one second? Work it out on paper.</p>
+
+      <details><summary>Hint</summary><div class="dbody">
+        <code class="inline">speed</code> is added to <code class="inline">player.x</code> once <i>per frame</i>, not once per second. 60 frames × 3 pixels = ?
+      </div></details>
+
+      <div class="runner">
+        <div class="rhead"><span class="dot"></span><span class="label">exercise-1.html</span></div>
+        <textarea spellcheck="false">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;style&gt;
+  body{margin:0;background:#0d1024;display:flex;justify-content:center;padding:14px}
+  canvas{background:#0b0e24;border:3px solid #6c8cff;border-radius:12px}
+&lt;/style&gt;&lt;/head&gt;
+&lt;body&gt;
+  &lt;canvas id="game" width="360" height="200"&gt;&lt;/canvas&gt;
+  &lt;script&gt;
+    const canvas = document.getElementById("game");
+    const ctx = canvas.getContext("2d");
+    const W = canvas.width, H = canvas.height;
+
+    // ---- the world ----
+    let player = { x: 0, y: 80, size: 40, speed: 3 };   // <-- CHANGE speed
+
+    function update() {
+      player.x += player.speed;
+      if (player.x > W) { player.x = -player.size; }
+      if (player.x < -player.size) { player.x = W; }    // wrap the other way too
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = "#34d399";
+      ctx.fillRect(player.x, player.y, player.size, player.size);
+    }
+
+    function loop() {
+      update();
+      draw();
+      requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+        <div class="ractions">
+          <button class="btn" data-run>▶ Run</button>
+          <button class="btn ghost" data-reset>↺ Reset code</button>
+          <span class="hintline">Edit the code above, then press Run</span>
+        </div>
+        <iframe sandbox="allow-scripts"></iframe>
+      </div>
+
+      <details class="sol"><summary>Solution &amp; teacher notes</summary><div class="dbody">
+        <p><b>Maths answer:</b> 3 pixels × 60 frames = <b>180 pixels per second</b>. The canvas is 360 wide, so the square crosses it in about 2 seconds.</p>
+        <p><b>speed: 0.5</b> — yes, it still moves, just very slowly (30 px/sec). Position doesn't have to be a whole number; the canvas handles decimals fine.</p>
+        <p><b>speed: -3</b> — it moves <i>left</i>, because adding a negative number subtracts. The extra <code class="inline">if (player.x &lt; -player.size)</code> line catches it and wraps it to the right side.</p>
+        <p><b>Watch for:</b> a student who says "speed 3 means 3 pixels per second." Push them to notice the loop runs 60 times a second — this is the single most useful mental model for the rest of the course.</p>
+      </div></details>
+
+      <div class="checkrow"><span class="checkbtn" data-check>☐ Mark exercise complete</span></div>
+    </div>
+  </section>
+
+  <!-- ============ EX 2 ============ -->
+  <section class="ex" data-ex>
+    <header>
+      <div class="num">2</div>
+      <div class="htxt">
+        <h2>Doctor, My Loop Is Frozen</h2>
+        <div class="tags"><span class="tag d1">⭐ Debug</span><span class="tag">5 min</span><span class="tag">Fix the bug</span></div>
+      </div>
+    </header>
+    <div class="body">
+      <div class="goal"><b>Goal:</b> recognise the "runs once and stops" bug on sight. This code is <b>broken on purpose</b>.</div>
+      <ol class="steps">
+        <li>Press <b>Run</b>. The square appears but never moves.</li>
+        <li><b>Before touching anything</b>, write down what you think is missing.</li>
+        <li>Find the bug and fix it with <b>one line</b>.</li>
+        <li>Run again to confirm it moves.</li>
+      </ol>
+      <div class="note warn"><div class="nt">🔍 Detective question</div>Did the square get drawn at all? If yes, then <code class="inline">update()</code> and <code class="inline">draw()</code> definitely ran <i>at least once</i>. So the problem isn't that the code is wrong — it's that nothing is asking for the <b>next</b> frame.</div>
+
+      <details><summary>Hint</summary><div class="dbody">
+        Compare <code class="inline">loop()</code> in this file with the one from class. Something is missing <i>inside</i> the function. Remember: the loop has to ask the browser to call it again.
+      </div></details>
+
+      <div class="runner">
+        <div class="rhead"><span class="dot"></span><span class="label">exercise-2-broken.html</span></div>
+        <textarea spellcheck="false">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;style&gt;
+  body{margin:0;background:#0d1024;display:flex;justify-content:center;padding:14px}
+  canvas{background:#0b0e24;border:3px solid #fbbf24;border-radius:12px}
+&lt;/style&gt;&lt;/head&gt;
+&lt;body&gt;
+  &lt;canvas id="game" width="360" height="200"&gt;&lt;/canvas&gt;
+  &lt;script&gt;
+    const canvas = document.getElementById("game");
+    const ctx = canvas.getContext("2d");
+    const W = canvas.width, H = canvas.height;
+
+    let player = { x: 0, y: 80, size: 40, speed: 3 };
+
+    function update() {
+      player.x += player.speed;
+      if (player.x > W) { player.x = -player.size; }
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = "#fbbf24";
+      ctx.fillRect(player.x, player.y, player.size, player.size);
+    }
+
+    function loop() {
+      update();
+      draw();
+      // ??? something is missing here ???
+    }
+
+    requestAnimationFrame(loop);
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+        <div class="ractions">
+          <button class="btn" data-run>▶ Run</button>
+          <button class="btn ghost" data-reset>↺ Reset code</button>
+          <span class="hintline">One missing line</span>
+        </div>
+        <iframe sandbox="allow-scripts"></iframe>
+      </div>
+
+      <details class="sol"><summary>Solution &amp; teacher notes</summary><div class="dbody">
+        <pre>function loop() {
+  update();
+  draw();
+  requestAnimationFrame(loop);   // &lt;-- THE FIX
+}</pre>
+        <p><b>The idea to land:</b> <code class="inline">requestAnimationFrame</code> books <b>exactly one</b> future frame — it is not a "repeat forever" command. The loop only continues because each frame books the next one. The single call at the bottom of the file starts the chain; the call <i>inside</i> the function keeps the chain alive.</p>
+        <p><b>Good analogy for the student:</b> it's like a relay race. Each runner must hand the baton to the next runner. Remove one hand-off and the race stops there.</p>
+      </div></details>
+
+      <div class="checkrow"><span class="checkbtn" data-check>☐ Mark exercise complete</span></div>
+    </div>
+  </section>
+
+  <!-- ============ EX 3 ============ -->
+  <section class="ex" data-ex>
+    <header>
+      <div class="num">3</div>
+      <div class="htxt">
+        <h2>The Snake Trail</h2>
+        <div class="tags"><span class="tag d1">⭐ Debug</span><span class="tag">7 min</span><span class="tag">Fix the bug</span></div>
+      </div>
+    </header>
+    <div class="body">
+      <div class="goal"><b>Goal:</b> see the #1 beginner animation bug with your own eyes, then fix it — and then <b>use it on purpose</b>.</div>
+      <ol class="steps">
+        <li>Press <b>Run</b>. The square leaves a long smear behind it.</li>
+        <li>Explain out loud <i>why</i>: what is the canvas actually doing on each frame?</li>
+        <li>Fix it by adding <b>one line</b> at the top of <code class="inline">draw()</code>.</li>
+        <li><b>Now the fun part.</b> Instead of <code class="inline">clearRect</code>, try painting a see-through black rectangle over the whole canvas each frame:
+          <pre style="margin:8px 0">ctx.fillStyle = "rgba(11, 14, 36, 0.08)";
+ctx.fillRect(0, 0, W, H);</pre>
+          Run it. What effect do you get? Try changing <code class="inline">0.08</code> to <code class="inline">0.3</code> and to <code class="inline">0.02</code>.</li>
+      </ol>
+
+      <details><summary>Hint</summary><div class="dbody">
+        The canvas never erases itself. Whatever you painted last frame is still sitting there. Your <code class="inline">draw()</code> function must wipe the old picture before painting the new one — <code class="inline">ctx.clearRect(0, 0, W, H)</code>.
+      </div></details>
+
+      <div class="runner">
+        <div class="rhead"><span class="dot"></span><span class="label">exercise-3-smear.html</span></div>
+        <textarea spellcheck="false">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;style&gt;
+  body{margin:0;background:#0d1024;display:flex;justify-content:center;padding:14px}
+  canvas{background:#0b0e24;border:3px solid #fb7185;border-radius:12px}
+&lt;/style&gt;&lt;/head&gt;
+&lt;body&gt;
+  &lt;canvas id="game" width="360" height="200"&gt;&lt;/canvas&gt;
+  &lt;script&gt;
+    const canvas = document.getElementById("game");
+    const ctx = canvas.getContext("2d");
+    const W = canvas.width, H = canvas.height;
+
+    let ball = { x: 20, y: 100, r: 14, speed: 2.5 };
+
+    function update() {
+      ball.x += ball.speed;
+      if (ball.x - ball.r > W) { ball.x = -ball.r; }
+    }
+
+    function draw() {
+      // TODO: wipe the old frame here!
+
+      ctx.fillStyle = "#fb7185";
+      ctx.beginPath();
+      ctx.arc(ball.x, ball.y, ball.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    function loop() {
+      update();
+      draw();
+      requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+        <div class="ractions">
+          <button class="btn" data-run>▶ Run</button>
+          <button class="btn ghost" data-reset>↺ Reset code</button>
+          <span class="hintline">Add one line inside draw()</span>
+        </div>
+        <iframe sandbox="allow-scripts"></iframe>
+      </div>
+
+      <details class="sol"><summary>Solution &amp; teacher notes</summary><div class="dbody">
+        <pre>function draw() {
+  ctx.clearRect(0, 0, W, H);   // &lt;-- THE FIX: wipe first
+  ...
+}</pre>
+        <p><b>Step 4 result:</b> a fading <b>motion trail / comet tail</b>. A translucent rectangle only partly hides the old frames, so recent positions fade out gradually. Higher alpha (0.3) = short tail; lower alpha (0.02) = long ghostly tail.</p>
+        <p><b>Why this matters:</b> it reframes "the bug" as "a technique." The student learns that clearing isn't magic — it's just painting over the top, and controlling <i>how much</i> you paint over gives you a real visual effect used in actual games.</p>
+        <p><b>Common mistake:</b> putting <code class="inline">clearRect</code> at the <i>bottom</i> of <code class="inline">draw()</code> — the canvas then looks empty (they wipe the thing they just drew). Great teaching moment about order of operations.</p>
+      </div></details>
+
+      <div class="checkrow"><span class="checkbtn" data-check>☐ Mark exercise complete</span></div>
+    </div>
+  </section>
+
+  <!-- ============ EX 4 ============ -->
+  <section class="ex" data-ex>
+    <header>
+      <div class="num">4</div>
+      <div class="htxt">
+        <h2>Go Diagonal</h2>
+        <div class="tags"><span class="tag d2">⭐⭐ Build</span><span class="tag">8 min</span><span class="tag">Write code</span></div>
+      </div>
+    </header>
+    <div class="body">
+      <div class="goal"><b>Goal:</b> move on <b>both</b> axes and wrap on both. Y works exactly like X — nothing new to learn, just applied twice.</div>
+      <ol class="steps">
+        <li>Give the player a second speed variable, <code class="inline">speedY</code>, and rename the first one <code class="inline">speedX</code>.</li>
+        <li>In <code class="inline">update()</code>, add <code class="inline">speedY</code> to <code class="inline">player.y</code>.</li>
+        <li>Add the vertical wrap: if the square goes past the bottom, put it back above the top.</li>
+        <li>Try <code class="inline">speedX: 2, speedY: 1</code> then <code class="inline">speedX: 1, speedY: 4</code>. Notice the <b>angle</b> changes.</li>
+        <li><b>Think:</b> what pair of values makes it move at a perfect 45°?</li>
+      </ol>
+      <div class="note tip"><div class="nt">💡 Remember your canvas axes</div>On a canvas, <b>y gets bigger as you go DOWN</b>, not up. So <code class="inline">speedY: 2</code> moves downward.</div>
+
+      <details><summary>Hint</summary><div class="dbody">
+        Your vertical wrap is a mirror image of the horizontal one:<br>
+        <code class="inline">if (player.y &gt; H) { player.y = -player.size; }</code>
+      </div></details>
+
+      <div class="runner">
+        <div class="rhead"><span class="dot"></span><span class="label">exercise-4-diagonal.html</span></div>
+        <textarea spellcheck="false">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;style&gt;
+  body{margin:0;background:#0d1024;display:flex;justify-content:center;padding:14px}
+  canvas{background:#0b0e24;border:3px solid #6c8cff;border-radius:12px}
+&lt;/style&gt;&lt;/head&gt;
+&lt;body&gt;
+  &lt;canvas id="game" width="360" height="220"&gt;&lt;/canvas&gt;
+  &lt;script&gt;
+    const canvas = document.getElementById("game");
+    const ctx = canvas.getContext("2d");
+    const W = canvas.width, H = canvas.height;
+
+    // TODO 1: rename speed to speedX, and add a speedY
+    let player = { x: 0, y: 0, size: 34, speed: 2 };
+
+    function update() {
+      player.x += player.speed;
+      if (player.x > W) { player.x = -player.size; }
+
+      // TODO 2: move on y as well
+      // TODO 3: wrap vertically
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = "#6c8cff";
+      ctx.fillRect(player.x, player.y, player.size, player.size);
+    }
+
+    function loop() {
+      update();
+      draw();
+      requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+        <div class="ractions">
+          <button class="btn" data-run>▶ Run</button>
+          <button class="btn ghost" data-reset>↺ Reset code</button>
+          <span class="hintline">Three TODOs</span>
+        </div>
+        <iframe sandbox="allow-scripts"></iframe>
+      </div>
+
+      <details class="sol"><summary>Solution &amp; teacher notes</summary><div class="dbody">
+        <pre>let player = { x: 0, y: 0, size: 34, speedX: 2, speedY: 1.4 };
+
+function update() {
+  player.x += player.speedX;
+  player.y += player.speedY;
+
+  if (player.x &gt; W) { player.x = -player.size; }
+  if (player.y &gt; H) { player.y = -player.size; }
+}</pre>
+        <p><b>45° answer:</b> when <code class="inline">speedX</code> and <code class="inline">speedY</code> are <b>equal</b> (e.g. both 2). Ask them to test their prediction rather than taking your word for it.</p>
+        <p><b>This is the seed of "velocity"</b> — Session 9 renames <code class="inline">speedX/speedY</code> to <code class="inline">vx/vy</code> and makes the object bounce instead of wrap. Flag that connection out loud so Session 9 feels like a continuation, not a new topic.</p>
+      </div></details>
+
+      <div class="checkrow"><span class="checkbtn" data-check>☐ Mark exercise complete</span></div>
+    </div>
+  </section>
+
+  <!-- ============ EX 5 ============ -->
+  <section class="ex" data-ex>
+    <header>
+      <div class="num">5</div>
+      <div class="htxt">
+        <h2>Two Things at Once</h2>
+        <div class="tags"><span class="tag d2">⭐⭐ Build</span><span class="tag">10 min</span><span class="tag">Write code</span></div>
+      </div>
+    </header>
+    <div class="body">
+      <div class="goal"><b>Goal:</b> prove the loop can drive <b>any number</b> of objects. One <code class="inline">update()</code>, one <code class="inline">draw()</code> — two independent things moving at different speeds.</div>
+      <ol class="steps">
+        <li>Create a second object called <code class="inline">ball</code> with its own <code class="inline">x</code>, <code class="inline">y</code>, <code class="inline">r</code> (radius) and <code class="inline">speed</code>.</li>
+        <li>In <code class="inline">update()</code>, move the ball too — give it a <b>different</b> speed from the square.</li>
+        <li>In <code class="inline">draw()</code>, draw the ball as a circle <b>after</b> the square.</li>
+        <li>Make the ball travel <b>right to left</b> (negative speed) and wrap around the correct edge.</li>
+        <li><b>Experiment:</b> swap the order of the two drawing sections. Which shape ends up on top? Why?</li>
+      </ol>
+      <div class="note tip"><div class="nt">💡 Drawing a circle</div><pre style="margin:6px 0">ctx.beginPath();
+ctx.arc(x, y, radius, 0, Math.PI * 2);
+ctx.fill();</pre>Always start with <code class="inline">beginPath()</code>, or your circles join up into one weird shape.</div>
+
+      <details><summary>Hint</summary><div class="dbody">
+        Don't create new functions. Just add more lines <i>inside</i> the existing <code class="inline">update()</code> and <code class="inline">draw()</code>. Each object needs its own variables so they can move independently.
+      </div></details>
+
+      <div class="runner">
+        <div class="rhead"><span class="dot"></span><span class="label">exercise-5-two-objects.html</span></div>
+        <textarea spellcheck="false">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;style&gt;
+  body{margin:0;background:#0d1024;display:flex;justify-content:center;padding:14px}
+  canvas{background:#0b0e24;border:3px solid #34d399;border-radius:12px}
+&lt;/style&gt;&lt;/head&gt;
+&lt;body&gt;
+  &lt;canvas id="game" width="360" height="220"&gt;&lt;/canvas&gt;
+  &lt;script&gt;
+    const canvas = document.getElementById("game");
+    const ctx = canvas.getContext("2d");
+    const W = canvas.width, H = canvas.height;
+
+    let player = { x: 0, y: 30, size: 34, speed: 2 };
+    // TODO 1: create a "ball" object here
+    //         it needs: x, y, r, speed   (use a NEGATIVE speed)
+
+    function update() {
+      player.x += player.speed;
+      if (player.x > W) { player.x = -player.size; }
+
+      // TODO 2: move the ball and wrap it
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+
+      ctx.fillStyle = "#34d399";
+      ctx.fillRect(player.x, player.y, player.size, player.size);
+
+      // TODO 3: draw the ball as a circle
+    }
+
+    function loop() {
+      update();
+      draw();
+      requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+        <div class="ractions">
+          <button class="btn" data-run>▶ Run</button>
+          <button class="btn ghost" data-reset>↺ Reset code</button>
+          <span class="hintline">Three TODOs</span>
+        </div>
+        <iframe sandbox="allow-scripts"></iframe>
+      </div>
+
+      <details class="sol"><summary>Solution &amp; teacher notes</summary><div class="dbody">
+        <pre>let ball = { x: 360, y: 150, r: 18, speed: -3.2 };
+
+function update() {
+  player.x += player.speed;
+  if (player.x &gt; W) { player.x = -player.size; }
+
+  ball.x += ball.speed;                        // negative = leftwards
+  if (ball.x + ball.r &lt; 0) { ball.x = W + ball.r; }
+}
+
+function draw() {
+  ctx.clearRect(0, 0, W, H);
+
+  ctx.fillStyle = "#34d399";
+  ctx.fillRect(player.x, player.y, player.size, player.size);
+
+  ctx.fillStyle = "#fbbf24";
+  ctx.beginPath();
+  ctx.arc(ball.x, ball.y, ball.r, 0, Math.PI * 2);
+  ctx.fill();
+}</pre>
+        <p><b>Step 5 answer:</b> whatever is drawn <b>last</b> appears <b>on top</b>. The canvas is like painting — later strokes cover earlier ones. This is "draw order," and it's why in a real game you draw the background first and the player near the end.</p>
+        <p><b>Common mistake:</b> re-using the same variable name for both objects, or forgetting <code class="inline">beginPath()</code>. If their circle grows a strange tail connecting to the square, that's the missing <code class="inline">beginPath()</code>.</p>
+      </div></details>
+
+      <div class="checkrow"><span class="checkbtn" data-check>☐ Mark exercise complete</span></div>
+    </div>
+  </section>
+
+  <!-- ============ EX 6 ============ -->
+  <section class="ex" data-ex>
+    <header>
+      <div class="num">6</div>
+      <div class="htxt">
+        <h2>Tidy the Messy Code</h2>
+        <div class="tags"><span class="tag d2">⭐⭐ Refactor</span><span class="tag">8 min</span><span class="tag">Think like a pro</span></div>
+      </div>
+    </header>
+    <div class="body">
+      <div class="goal"><b>Goal:</b> this code <b>works</b>, but it breaks the rule from class: the referee is doing the camera's job. Reorganise it without changing what the user sees.</div>
+      <p>Remember the rule: <code class="inline">update()</code> <b>changes the world and draws nothing</b>. <code class="inline">draw()</code> <b>paints the world and decides nothing</b>.</p>
+      <ol class="steps">
+        <li>Run it first — confirm it works as-is. (Working code can still be bad code!)</li>
+        <li>Find every drawing instruction that is sitting inside <code class="inline">update()</code>.</li>
+        <li>Move them into <code class="inline">draw()</code>, in the right order.</li>
+        <li>Find any decision/logic that is sitting inside <code class="inline">draw()</code>, and move it into <code class="inline">update()</code>.</li>
+        <li>Run again. It must look <b>exactly the same</b>. If it changed, you moved something in the wrong order.</li>
+      </ol>
+      <div class="note key"><div class="nt">🧠 Why bother, if it already works?</div>Because in three weeks this file will be 300 lines long. When the ball moves wrong, you want to look in <b>one</b> place. Mixing the two jobs is how beginners end up with games they can no longer fix.</div>
+
+      <details><summary>Hint</summary><div class="dbody">
+        Anything starting with <code class="inline">ctx.</code> is <b>drawing</b> and belongs in <code class="inline">draw()</code>. Anything that changes a value like <code class="inline">.x</code>, <code class="inline">.y</code> or <code class="inline">score</code>, or any <code class="inline">if</code> that makes a rule decision, is <b>logic</b> and belongs in <code class="inline">update()</code>.
+      </div></details>
+
+      <div class="runner">
+        <div class="rhead"><span class="dot"></span><span class="label">exercise-6-messy.html</span></div>
+        <textarea spellcheck="false">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;style&gt;
+  body{margin:0;background:#0d1024;display:flex;justify-content:center;padding:14px}
+  canvas{background:#0b0e24;border:3px solid #9a6bff;border-radius:12px}
+&lt;/style&gt;&lt;/head&gt;
+&lt;body&gt;
+  &lt;canvas id="game" width="360" height="200"&gt;&lt;/canvas&gt;
+  &lt;script&gt;
+    const canvas = document.getElementById("game");
+    const ctx = canvas.getContext("2d");
+    const W = canvas.width, H = canvas.height;
+
+    let box = { x: 0, y: 80, size: 36, speed: 2.5 };
+    let laps = 0;
+
+    // MESSY: this function moves things AND paints things
+    function update() {
+      ctx.clearRect(0, 0, W, H);        // <-- drawing!
+
+      box.x += box.speed;
+
+      ctx.fillStyle = "#9a6bff";        // <-- drawing!
+      ctx.fillRect(box.x, box.y, box.size, box.size);
+    }
+
+    // MESSY: this function paints AND makes a rule decision
+    function draw() {
+      if (box.x > W) {                  // <-- logic!
+        box.x = -box.size;
+        laps = laps + 1;
+      }
+
+      ctx.fillStyle = "#e9ecff";
+      ctx.font = "16px sans-serif";
+      ctx.fillText("Laps: " + laps, 12, 26);
+    }
+
+    function loop() {
+      update();
+      draw();
+      requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+        <div class="ractions">
+          <button class="btn" data-run>▶ Run</button>
+          <button class="btn ghost" data-reset>↺ Reset code</button>
+          <span class="hintline">Same behaviour, cleaner code</span>
+        </div>
+        <iframe sandbox="allow-scripts"></iframe>
+      </div>
+
+      <details class="sol"><summary>Solution &amp; teacher notes</summary><div class="dbody">
+        <pre>function update() {          // ONLY logic
+  box.x += box.speed;
+
+  if (box.x &gt; W) {
+    box.x = -box.size;
+    laps = laps + 1;
+  }
+}
+
+function draw() {            // ONLY painting
+  ctx.clearRect(0, 0, W, H);
+
+  ctx.fillStyle = "#9a6bff";
+  ctx.fillRect(box.x, box.y, box.size, box.size);
+
+  ctx.fillStyle = "#e9ecff";
+  ctx.font = "16px sans-serif";
+  ctx.fillText("Laps: " + laps, 12, 26);
+}</pre>
+        <p><b>The order trap (step 5):</b> <code class="inline">clearRect</code> must be the <b>first</b> line of <code class="inline">draw()</code>. If a student leaves it after the <code class="inline">fillRect</code>, the canvas goes blank. Let them hit it — it's a 10-second fix and a permanent lesson.</p>
+        <p><b>Mark them right if:</b> no <code class="inline">ctx.</code> anywhere in <code class="inline">update()</code>, no <code class="inline">if</code>-decision or position change anywhere in <code class="inline">draw()</code>, and the lap counter still increases.</p>
+      </div></details>
+
+      <div class="checkrow"><span class="checkbtn" data-check>☐ Mark exercise complete</span></div>
+    </div>
+  </section>
+
+  <!-- ============ EX 7 ============ -->
+  <section class="ex" data-ex>
+    <header>
+      <div class="num">7</div>
+      <div class="htxt">
+        <h2>The Breathing Square</h2>
+        <div class="tags"><span class="tag d3">⭐⭐⭐ Stretch</span><span class="tag">10 min</span><span class="tag">Think</span></div>
+      </div>
+    </header>
+    <div class="body">
+      <div class="goal"><b>Goal:</b> realise that a game loop can animate <b>anything</b> that is a number — not just position. Here you animate <b>size</b>, and reverse direction at the limits.</div>
+      <ol class="steps">
+        <li>Make the square grow by <code class="inline">grow</code> pixels every frame.</li>
+        <li>When <code class="inline">size</code> passes <b>90</b>, reverse the direction (make <code class="inline">grow</code> negative).</li>
+        <li>When <code class="inline">size</code> drops below <b>20</b>, reverse it again.</li>
+        <li>Keep the square <b>centred</b> while it breathes — that's the tricky part.</li>
+        <li><b>Extra:</b> animate the colour too. Rotate through an array of colours every time it reverses.</li>
+      </ol>
+      <div class="note tip"><div class="nt">💡 The reversing trick</div>To flip a direction, multiply by −1: <code class="inline">grow = grow * -1;</code> — this exact trick is what makes balls bounce in Session 9.</div>
+      <div class="note tip"><div class="nt">💡 Keeping it centred</div>A rectangle is drawn from its <b>top-left corner</b>. So to keep the middle in the same place, the top-left has to move as the size changes:<br><code class="inline">const x = W/2 - size/2;</code>&nbsp;&nbsp;<code class="inline">const y = H/2 - size/2;</code></div>
+
+      <details><summary>Hint</summary><div class="dbody">
+        In <code class="inline">update()</code>: <code class="inline">box.size += box.grow;</code> then two <code class="inline">if</code> statements that flip <code class="inline">box.grow</code>. In <code class="inline">draw()</code>: work out the top-left corner from the current size, then <code class="inline">fillRect</code>.
+      </div></details>
+
+      <div class="runner">
+        <div class="rhead"><span class="dot"></span><span class="label">exercise-7-breathe.html</span></div>
+        <textarea spellcheck="false">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;style&gt;
+  body{margin:0;background:#0d1024;display:flex;justify-content:center;padding:14px}
+  canvas{background:#0b0e24;border:3px solid #34d399;border-radius:12px}
+&lt;/style&gt;&lt;/head&gt;
+&lt;body&gt;
+  &lt;canvas id="game" width="360" height="220"&gt;&lt;/canvas&gt;
+  &lt;script&gt;
+    const canvas = document.getElementById("game");
+    const ctx = canvas.getContext("2d");
+    const W = canvas.width, H = canvas.height;
+
+    let box = { size: 20, grow: 0.8 };
+
+    function update() {
+      // TODO 1: change box.size by box.grow
+
+      // TODO 2: if size is bigger than 90, reverse
+      // TODO 3: if size is smaller than 20, reverse
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+
+      // TODO 4: work out top-left so the square stays centred
+      const x = 0;   // <-- fix this
+      const y = 0;   // <-- fix this
+
+      ctx.fillStyle = "#34d399";
+      ctx.fillRect(x, y, box.size, box.size);
+    }
+
+    function loop() {
+      update();
+      draw();
+      requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+        <div class="ractions">
+          <button class="btn" data-run>▶ Run</button>
+          <button class="btn ghost" data-reset>↺ Reset code</button>
+          <span class="hintline">Four TODOs</span>
+        </div>
+        <iframe sandbox="allow-scripts"></iframe>
+      </div>
+
+      <details class="sol"><summary>Solution &amp; teacher notes</summary><div class="dbody">
+        <pre>function update() {
+  box.size += box.grow;
+
+  if (box.size &gt; 90) { box.grow = box.grow * -1; }
+  if (box.size &lt; 20) { box.grow = box.grow * -1; }
+}
+
+function draw() {
+  ctx.clearRect(0, 0, W, H);
+
+  const x = W / 2 - box.size / 2;
+  const y = H / 2 - box.size / 2;
+
+  ctx.fillStyle = "#34d399";
+  ctx.fillRect(x, y, box.size, box.size);
+}</pre>
+        <p><b>Extra (colour rotation):</b></p>
+        <pre>const colours = ["#34d399", "#6c8cff", "#fbbf24", "#fb7185"];
+let ci = 0;
+// inside each reverse:  ci = (ci + 1) % colours.length;
+// in draw():            ctx.fillStyle = colours[ci];</pre>
+        <p>That <code class="inline">%</code> wrap-around is straight from Session 7 — point it out, it's a nice "you already know this" moment.</p>
+        <p><b>Trap to watch for:</b> writing <code class="inline">if (box.size &gt; 90) { box.grow = -0.8; }</code> with a hard-coded number instead of <code class="inline">* -1</code>. It works here, but breaks the moment the speed changes. Ask: "what if I later set grow to 2?"</p>
+      </div></details>
+
+      <div class="checkrow"><span class="checkbtn" data-check>☐ Mark exercise complete</span></div>
+    </div>
+  </section>
+
+  <!-- ============ EX 8 ============ -->
+  <section class="ex" data-ex>
+    <header>
+      <div class="num">8</div>
+      <div class="htxt">
+        <h2>Boss Challenge — Busy Road</h2>
+        <div class="tags"><span class="tag d3">⭐⭐⭐ Boss</span><span class="tag">15–20 min</span><span class="tag">Combines S5–S8</span></div>
+      </div>
+    </header>
+    <div class="body">
+      <div class="goal"><b>Goal:</b> build a whole mini-scene from the skeleton, using <b>everything</b> from Month 1 — objects, arrays (S7), a for loop (S7), an <code class="inline">if</code> (S6), functions (S5) and the game loop (S8).</div>
+
+      <h3>The brief</h3>
+      <p>Four cars drive across four lanes of a road. Each car has its <b>own lane, own colour and own speed</b>. When a car leaves one side of the screen it reappears on the other. A counter in the corner shows how many frames have been drawn.</p>
+
+      <h3>Requirements checklist</h3>
+      <ul>
+        <li>☐ The cars are stored in <b>one array</b>, not four separate variables</li>
+        <li>☐ <code class="inline">update()</code> uses a <b>for loop</b> to move every car</li>
+        <li>☐ <code class="inline">draw()</code> uses a <b>for loop</b> to draw every car</li>
+        <li>☐ Each car has a different speed — at least one drives the opposite way</li>
+        <li>☐ Cars wrap correctly on <b>both</b> edges</li>
+        <li>☐ A frame counter is displayed with <code class="inline">ctx.fillText</code></li>
+        <li>☐ No <code class="inline">ctx.</code> anywhere inside <code class="inline">update()</code></li>
+        <li>☐ Adding a 5th car takes <b>one line</b> of code</li>
+      </ul>
+
+      <div class="note key"><div class="nt">🏆 The real test</div>When you're done, add a fifth car. If you had to change <code class="inline">update()</code> or <code class="inline">draw()</code> to do it, your loop isn't doing its job — go back and fix that. <b>Good code lets you add content without touching logic.</b></div>
+
+      <details><summary>Hint 1 — how to shape the array</summary><div class="dbody">
+        <pre>let cars = [
+  { x: 0,   y: 20,  w: 60, h: 26, speed: 2,    colour: "#34d399" },
+  { x: 120, y: 70,  w: 60, h: 26, speed: 3.5,  colour: "#6c8cff" },
+  ...
+];</pre>
+        Every car is the same <i>shape</i> of object, so one piece of code can handle all of them.
+      </div></details>
+      <details><summary>Hint 2 — looping over the array</summary><div class="dbody">
+        <pre>for (let i = 0; i &lt; cars.length; i++) {
+  const car = cars[i];
+  car.x += car.speed;
+}</pre>
+        Pulling <code class="inline">cars[i]</code> into a variable called <code class="inline">car</code> makes the rest of the lines much easier to read.
+      </div></details>
+      <details><summary>Hint 3 — wrapping in both directions</summary><div class="dbody">
+        <pre>if (car.speed &gt; 0 &amp;&amp; car.x &gt; W)      { car.x = -car.w; }
+if (car.speed &lt; 0 &amp;&amp; car.x + car.w &lt; 0) { car.x = W; }</pre>
+      </div></details>
+
+      <div class="runner">
+        <div class="rhead"><span class="dot"></span><span class="label">exercise-8-busy-road.html</span></div>
+        <textarea spellcheck="false">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;style&gt;
+  body{margin:0;background:#0d1024;display:flex;justify-content:center;padding:14px}
+  canvas{background:#1a1d33;border:3px solid #6c8cff;border-radius:12px}
+&lt;/style&gt;&lt;/head&gt;
+&lt;body&gt;
+  &lt;canvas id="game" width="420" height="240"&gt;&lt;/canvas&gt;
+  &lt;script&gt;
+    const canvas = document.getElementById("game");
+    const ctx = canvas.getContext("2d");
+    const W = canvas.width, H = canvas.height;
+
+    let frames = 0;
+
+    // TODO 1: build an array of 4 car objects.
+    //         Each needs: x, y, w, h, speed, colour
+    let cars = [
+
+    ];
+
+    function update() {
+      frames = frames + 1;
+
+      // TODO 2: loop through cars, move each one, wrap it
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+
+      // TODO 3: loop through cars and fillRect each one in its colour
+
+      // TODO 4: show the frame counter
+      ctx.fillStyle = "#e9ecff";
+      ctx.font = "14px sans-serif";
+      ctx.fillText("Frames: " + frames, 12, 22);
+    }
+
+    function loop() {
+      update();
+      draw();
+      requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+        <div class="ractions">
+          <button class="btn" data-run>▶ Run</button>
+          <button class="btn ghost" data-reset>↺ Reset code</button>
+          <span class="hintline">Take your time on this one</span>
+        </div>
+        <iframe sandbox="allow-scripts"></iframe>
+      </div>
+
+      <details class="sol"><summary>Full solution &amp; teacher notes</summary><div class="dbody">
+        <pre>let frames = 0;
+
+let cars = [
+  { x: 0,   y: 40,  w: 64, h: 26, speed:  2.0, colour: "#34d399" },
+  { x: 140, y: 90,  w: 64, h: 26, speed:  3.6, colour: "#6c8cff" },
+  { x: 300, y: 140, w: 64, h: 26, speed: -2.6, colour: "#fbbf24" },
+  { x: 60,  y: 190, w: 64, h: 26, speed:  1.2, colour: "#fb7185" }
+];
+
+function update() {
+  frames = frames + 1;
+
+  for (let i = 0; i &lt; cars.length; i++) {
+    const car = cars[i];
+    car.x += car.speed;
+
+    if (car.speed &gt; 0 &amp;&amp; car.x &gt; W)          { car.x = -car.w; }
+    if (car.speed &lt; 0 &amp;&amp; car.x + car.w &lt; 0)  { car.x = W; }
+  }
+}
+
+function draw() {
+  ctx.clearRect(0, 0, W, H);
+
+  for (let i = 0; i &lt; cars.length; i++) {
+    const car = cars[i];
+    ctx.fillStyle = car.colour;
+    ctx.fillRect(car.x, car.y, car.w, car.h);
+  }
+
+  ctx.fillStyle = "#e9ecff";
+  ctx.font = "14px sans-serif";
+  ctx.fillText("Frames: " + frames, 12, 22);
+}</pre>
+        <p><b>Teacher notes</b></p>
+        <ul>
+          <li><b>The whole point</b> is that <code class="inline">update()</code> and <code class="inline">draw()</code> never mention "car 1" or "car 3". They just say "for every car…". Adding a fifth car is one new line in the array. Make the student actually do it and watch it appear — that moment is the lesson.</li>
+          <li><b>Frame counter reality check:</b> after about 10 seconds the counter should read roughly 600. Ask them to time it. It's a lovely concrete confirmation of "60 frames per second."</li>
+          <li><b>Likely stumbles:</b> forgetting <code class="inline">cars.length</code> and hard-coding <code class="inline">i &lt; 4</code>; declaring the array <i>after</i> the functions that use it (works with <code class="inline">let</code> at top level, but teach the habit of declaring state first); putting the frame counter inside <code class="inline">update()</code> where <code class="inline">ctx</code> doesn't belong.</li>
+          <li><b>If they finish early:</b> ask for lane divider lines drawn under the cars, or make each car's colour come from a separate <code class="inline">colours</code> array using <code class="inline">colours[i % colours.length]</code>.</li>
+        </ul>
+      </div></details>
+
+      <div class="checkrow"><span class="checkbtn" data-check>☐ Mark exercise complete</span></div>
+    </div>
+  </section>
+
+  <!-- ============ EXTENSION ============ -->
+  <div class="card">
+    <h2>🚀 If you finish everything — extension tasks</h2>
+    <p style="color:var(--muted)">These are optional. Pick whichever sounds most fun.</p>
+    <ol>
+      <li><b>Pause button.</b> Add <code class="inline">let running = true;</code> and make a click on the canvas flip it. When <code class="inline">running</code> is <code class="inline">false</code>, skip <code class="inline">update()</code> but still <code class="inline">draw()</code>. Notice how the picture stays but the world freezes — that's the update/draw split earning its keep.</li>
+      <li><b>Speed ramp.</b> Make the square get slightly faster every lap. How many laps before it moves so fast it "teleports"? Why does that happen?</li>
+      <li><b>FPS display.</b> Count frames for one second (using <code class="inline">Date.now()</code>) and print the real FPS on screen. Is it really 60 on your machine?</li>
+      <li><b>Comet.</b> Combine exercise 3's fading trail with exercise 4's diagonal movement to make a comet that streaks across the canvas.</li>
+    </ol>
+  </div>
+
+  <!-- ============ ASSESSMENT ============ -->
+  <div class="card">
+    <h2>✅ Teacher's marking sheet</h2>
+    <p style="color:var(--muted)">Quick check that the session actually landed. Ask verbally — a student who can explain it has understood it; a student who can only copy it has not.</p>
+
+    <h3>Oral questions</h3>
+    <table>
+      <tr><th style="width:52%">Ask</th><th>Looking for</th></tr>
+      <tr><td>What is a frame?</td><td>One single still picture. Games show ~60 per second.</td></tr>
+      <tr><td>Does anything really move on the screen?</td><td>No — we erase and redraw it slightly further along. Motion is an illusion.</td></tr>
+      <tr><td>Why is the <code class="inline">requestAnimationFrame</code> call <i>inside</i> the loop function?</td><td>It books only one frame at a time, so each frame must book the next one.</td></tr>
+      <tr><td>Give me one thing that belongs in <code class="inline">update()</code> and one that belongs in <code class="inline">draw()</code>.</td><td>Moving/deciding vs. painting. Any correct pair.</td></tr>
+      <tr><td>The player leaves a smear. What's your first guess?</td><td>Missing <code class="inline">clearRect</code> at the top of <code class="inline">draw()</code>.</td></tr>
+      <tr><td>If speed is 4, how far does it travel in a second?</td><td>~240 pixels (4 × 60).</td></tr>
+    </table>
+
+    <h3>Skill checklist</h3>
+    <table>
+      <tr><th style="width:60%">Can the student…</th><th>✓ / ✗</th></tr>
+      <tr><td>Write the three-function skeleton from memory, no reference</td><td></td></tr>
+      <tr><td>Spot a frozen loop and fix it unaided</td><td></td></tr>
+      <tr><td>Spot a smear bug and fix it unaided</td><td></td></tr>
+      <tr><td>Add a brand-new moving object without help</td><td></td></tr>
+      <tr><td>Correctly sort code into update vs. draw</td><td></td></tr>
+      <tr><td>Drive several objects from one array with a for loop</td><td></td></tr>
+    </table>
+
+    <div class="note tip"><div class="nt">🎯 Minimum bar before moving to Session 9</div>Exercises <b>1–5</b> must be solid, and the student should be able to type the <code class="inline">update / draw / loop</code> skeleton from memory. Session 9 (Animation &amp; Movement) assumes that skeleton is second nature — it only adds <code class="inline">vx</code> / <code class="inline">vy</code> and bouncing. Exercises 6–8 are the difference between "can follow along" and "can build."</div>
+
+    <h3>Suggested homework</h3>
+    <p>Exercise 8 (Busy Road) built <b>from a blank file</b>, typed from scratch — not edited from the starter. Then one extension task of their choice. Bring it to Session 9; we'll turn the wrapping into bouncing.</p>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  // ---- runnable editors ----
+  document.querySelectorAll('.runner').forEach(function(runner){
+    var ta = runner.querySelector('textarea');
+    var frame = runner.querySelector('iframe');
+    var original = ta.value;
+
+    function run(){
+      frame.srcdoc = ta.value;
+    }
+    runner.querySelector('[data-run]').addEventListener('click', run);
+    runner.querySelector('[data-reset]').addEventListener('click', function(){
+      ta.value = original;
+      run();
+    });
+
+    // Tab key inserts two spaces instead of leaving the box
+    ta.addEventListener('keydown', function(e){
+      if(e.key === 'Tab'){
+        e.preventDefault();
+        var s = ta.selectionStart, en = ta.selectionEnd;
+        ta.value = ta.value.slice(0, s) + '  ' + ta.value.slice(en);
+        ta.selectionStart = ta.selectionEnd = s + 2;
+      }
+    });
+
+    run(); // show the starting state immediately
+  });
+
+  // ---- progress ticks ----
+  var checks = document.querySelectorAll('[data-check]');
+  var bar = document.getElementById('pbar');
+  var txt = document.getElementById('ptext');
+
+  function refresh(){
+    var done = 0;
+    checks.forEach(function(c){ if(c.classList.contains('done')) done++; });
+    bar.style.width = (done / checks.length * 100) + '%';
+    txt.textContent = done + ' / ' + checks.length + ' done';
+  }
+  checks.forEach(function(c){
+    c.addEventListener('click', function(){
+      c.classList.toggle('done');
+      c.textContent = c.classList.contains('done') ? '☑ Completed' : '☐ Mark exercise complete';
+      refresh();
+    });
+  });
+  refresh();
+})();
+</script>
+</body>
+</html>

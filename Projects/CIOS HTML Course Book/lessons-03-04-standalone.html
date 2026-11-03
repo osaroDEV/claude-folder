@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lessons 3 &amp; 4: Text Foundations — Code Your World: HTML</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap');
+
+  :root {
+    --navy-950: #0b1023;
+    --indigo-600: #5b5bf0;
+    --indigo-500: #6f6ff5;
+    --indigo-400: #8d8dfb;
+    --violet-500: #9c5bf0;
+    --teal-400: #2fd9c4;
+    --amber-500: #ff9d1f;
+    --ink-900: #151833;
+    --ink-700: #3a3f66;
+    --ink-500: #6b6f96;
+    --ink-300: #a4a8c9;
+    --paper-0: #ffffff;
+    --paper-50: #f7f8fd;
+    --paper-100: #eef0fb;
+    --paper-200: #e2e5f7;
+    --success-500: #22c58b;
+    --radius-md: 14px;
+    --radius-sm: 9px;
+    --shadow-card: 0 4px 18px -6px rgba(20, 24, 60, 0.12);
+    --font-head: 'Poppins', 'Segoe UI', sans-serif;
+    --font-body: 'Inter', 'Segoe UI', sans-serif;
+    --font-code: 'Fira Code', 'Consolas', monospace;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: var(--font-body);
+    color: var(--ink-900);
+    background: var(--paper-50);
+    -webkit-font-smoothing: antialiased;
+  }
+  img { max-width: 100%; display: block; }
+
+  .main { padding: 44px clamp(20px, 5vw, 64px) 90px; }
+  .content { max-width: 860px; margin: 0 auto; }
+
+  .doc-header { max-width: 860px; margin: 0 auto 10px; }
+  .doc-title {
+    font-family: var(--font-head); font-weight: 800; font-size: clamp(22px, 3.4vw, 30px);
+    color: var(--ink-900); margin: 0 0 6px;
+  }
+  .doc-sub { color: var(--ink-500); font-size: 14.5px; margin: 0; }
+
+  .lesson-divider {
+    max-width: 860px; margin: 56px auto 0; padding-top: 26px;
+    border-top: 2px dashed var(--paper-200);
+  }
+
+  .lesson-kicker { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+  .pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 12px; border-radius: 100px;
+    font-size: 12px; font-weight: 700; letter-spacing: 0.03em;
+    background: var(--paper-100); color: var(--indigo-600);
+  }
+  .pill.week { background: #fff4e0; color: var(--amber-500); }
+  .pill.time { background: #e6faf5; color: #0e9a83; }
+
+  h1.lesson-title {
+    font-family: var(--font-head);
+    font-size: clamp(28px, 4vw, 38px);
+    font-weight: 800; margin: 0 0 10px; line-height: 1.15; color: var(--ink-900);
+  }
+  .lesson-sub { font-size: 16.5px; color: var(--ink-500); margin: 0 0 30px; max-width: 640px; }
+
+  h2 {
+    font-family: var(--font-head); font-size: 22px; font-weight: 700; color: var(--ink-900);
+    margin: 44px 0 16px; padding-top: 6px; display: flex; align-items: center; gap: 10px;
+  }
+  h2 .num-chip {
+    width: 30px; height: 30px; border-radius: 9px;
+    background: linear-gradient(135deg, var(--indigo-500), var(--violet-500));
+    color: #fff; font-size: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+
+  p { line-height: 1.75; font-size: 15.5px; color: var(--ink-700); margin: 0 0 16px; }
+  ul, ol { line-height: 1.75; font-size: 15.5px; color: var(--ink-700); padding-left: 22px; margin: 0 0 16px; }
+  li { margin-bottom: 6px; }
+  strong { color: var(--ink-900); }
+  code.inline {
+    font-family: var(--font-code); background: var(--paper-100); color: #8033d1;
+    padding: 2px 7px; border-radius: 6px; font-size: 0.88em;
+  }
+
+  .box { border-radius: var(--radius-md); padding: 20px 22px; margin: 22px 0; box-shadow: var(--shadow-card); }
+  .box p:last-child { margin-bottom: 0; }
+  .box-title {
+    display: flex; align-items: center; gap: 8px;
+    font-family: var(--font-head); font-weight: 700; font-size: 14px;
+    text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 10px;
+  }
+  .box.objectives { background: #f2f1ff; border-left: 4px solid var(--indigo-500); }
+  .box.objectives .box-title { color: var(--indigo-600); }
+  .box.objectives ul { margin-bottom: 0; }
+  .box.vocab { background: var(--paper-0); border: 1px solid var(--paper-200); }
+  .box.vocab .box-title { color: var(--ink-700); }
+  .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; margin-top: 4px; }
+  .vocab-item { background: var(--paper-50); border-radius: var(--radius-sm); padding: 12px 14px; }
+  .vocab-item dt { font-family: var(--font-code); font-weight: 600; color: var(--indigo-600); font-size: 13.5px; margin-bottom: 4px; }
+  .vocab-item dd { margin: 0; font-size: 13.5px; color: var(--ink-700); line-height: 1.5; }
+  .box.tip { background: #eafaf5; border-left: 4px solid var(--success-500); }
+  .box.tip .box-title { color: #0e9a6e; }
+  .box.warning { background: #fff4e6; border-left: 4px solid var(--amber-500); }
+  .box.warning .box-title { color: #b5691a; }
+  .box.challenge { background: linear-gradient(135deg, #1b1f4d, #2a1f5e); color: #fff; border-left: none; }
+  .box.challenge .box-title { color: var(--teal-400); }
+  .box.challenge p, .box.challenge li { color: #dfe1f7; }
+  .box.challenge strong { color: #fff; }
+  .box.recap { background: var(--paper-0); border: 1.5px dashed var(--indigo-400); }
+  .box.recap .box-title { color: var(--indigo-600); }
+
+  .code-window { border-radius: var(--radius-md); overflow: hidden; margin: 18px 0 22px; box-shadow: var(--shadow-card); background: #171b34; }
+  .code-window__bar { display: flex; align-items: center; gap: 8px; padding: 10px 14px; background: #12152b; }
+  .code-window__bar span.dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot.red { background: #ff5f56; } .dot.yellow { background: #ffbd2e; } .dot.green { background: #27c93f; }
+  .code-window__label { margin-left: 8px; font-family: var(--font-code); font-size: 12px; color: #8b8fb8; }
+  .code-window pre { margin: 0; padding: 18px 20px; overflow-x: auto; font-family: var(--font-code); font-size: 13.5px; line-height: 1.65; color: #e6e8fb; }
+  .code-window code { font-family: var(--font-code); }
+  .tag { color: #8d8dfb; } .attr { color: #2fd9c4; } .str { color: #ffb648; } .cmt { color: #6b6f96; font-style: italic; } .txt { color: #e6e8fb; }
+
+  .preview-window { border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--paper-200); margin: 0 0 22px; box-shadow: var(--shadow-card); }
+  .preview-window__bar { display: flex; align-items: center; gap: 8px; padding: 9px 14px; background: var(--paper-100); border-bottom: 1px solid var(--paper-200); }
+  .preview-window__bar .url { margin-left: 6px; background: #fff; border-radius: 100px; padding: 3px 12px; font-size: 11.5px; color: var(--ink-500); font-family: var(--font-code); }
+  .preview-window__body { padding: 20px 22px; background: #fff; font-family: var(--font-body); color: #222; }
+
+  table.grid-table { width: 100%; border-collapse: collapse; margin: 18px 0 26px; font-size: 14px; }
+  table.grid-table th, table.grid-table td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--paper-200); }
+  table.grid-table th { font-family: var(--font-head); font-size: 12.5px; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-500); }
+
+  footer.site-footer { text-align: center; padding: 30px 20px; color: var(--ink-500); font-size: 13px; }
+</style>
+</head>
+<body>
+
+  <main class="main">
+    <div class="doc-header">
+      <p class="doc-title">Text Foundations: Lessons 3 &amp; 4</p>
+      <p class="doc-sub">Standalone excerpt from Code Your World: HTML · Week 2</p>
+    </div>
+
+    <div class="content">
+
+      <div class="lesson-kicker"><span class="pill">Lesson 3 of 16</span><span class="pill week">Week 2</span><span class="pill time">⏱ 60 minutes</span></div>
+      <h1 class="lesson-title">Headings, Paragraphs &amp; Text Structure</h1>
+      <p class="lesson-sub">Text is the heart of most web pages. Today you'll learn how to organize it the way real websites do — with a clear, logical outline.</p>
+
+      <div class="box objectives">
+        <div class="box-title">🎯 Learning Objectives</div>
+        <ul>
+          <li>Use heading tags &lt;h1&gt; through &lt;h6&gt; correctly</li>
+          <li>Explain why heading order and hierarchy matter</li>
+          <li>Write body text using the &lt;p&gt; tag</li>
+          <li>Plan a page's structure like an outline before writing code</li>
+        </ul>
+      </div>
+
+      <h2><span class="num-chip">1</span>Headings: h1 Through h6</h2>
+      <p>HTML gives you six levels of headings, from biggest and most important (<code class="inline">&lt;h1&gt;</code>) to smallest (<code class="inline">&lt;h6&gt;</code>). Think of them exactly like the headings in a school essay or a book's table of contents: a big title, then section titles, then sub-section titles.</p>
+
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">headings.html</span></div>
+        <pre><code><span class="tag">&lt;h1&gt;</span><span class="txt">Volcanoes</span><span class="tag">&lt;/h1&gt;</span>
+<span class="tag">&lt;h2&gt;</span><span class="txt">How Volcanoes Form</span><span class="tag">&lt;/h2&gt;</span>
+<span class="tag">&lt;h3&gt;</span><span class="txt">Tectonic Plates</span><span class="tag">&lt;/h3&gt;</span>
+<span class="tag">&lt;h2&gt;</span><span class="txt">Types of Volcanoes</span><span class="tag">&lt;/h2&gt;</span>
+<span class="tag">&lt;h3&gt;</span><span class="txt">Shield Volcanoes</span><span class="tag">&lt;/h3&gt;</span>
+<span class="tag">&lt;h3&gt;</span><span class="txt">Composite Volcanoes</span><span class="tag">&lt;/h3&gt;</span></code></pre>
+      </div>
+
+      <div class="preview-window">
+        <div class="preview-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="url">🔒 headings.html</span></div>
+        <div class="preview-window__body">
+          <h1 style="margin:0 0 8px;font-family:Poppins,sans-serif;font-size:28px;">Volcanoes</h1>
+          <h2 style="margin:14px 0 6px;font-family:Poppins,sans-serif;font-size:20px;">How Volcanoes Form</h2>
+          <h3 style="margin:10px 0 6px;font-family:Poppins,sans-serif;font-size:16px;">Tectonic Plates</h3>
+          <h2 style="margin:14px 0 6px;font-family:Poppins,sans-serif;font-size:20px;">Types of Volcanoes</h2>
+          <h3 style="margin:10px 0 6px;font-family:Poppins,sans-serif;font-size:16px;">Shield Volcanoes</h3>
+          <h3 style="margin:10px 0 0;font-family:Poppins,sans-serif;font-size:16px;">Composite Volcanoes</h3>
+        </div>
+      </div>
+
+      <div class="box warning">
+        <div class="box-title">⚠️ The One-h1 Rule</div>
+        <p>Use exactly <strong>one &lt;h1&gt;</strong> per page — it should describe what the whole page is about, like a book's title. Never skip a level just to make text look smaller (like using &lt;h4&gt; because you think &lt;h2&gt; looks "too big"). Headings describe <em>structure</em>, not just size — save the look of things for CSS later.</p>
+      </div>
+
+      <h2><span class="num-chip">2</span>Paragraphs: The &lt;p&gt; Tag</h2>
+      <p>Regular text content goes inside <code class="inline">&lt;p&gt;</code> (paragraph) tags. Browsers automatically add spacing above and below each paragraph, and — importantly — they <strong>collapse extra whitespace</strong>. That means pressing enter multiple times or adding extra spaces in your code won't create extra space on the page; only actual HTML tags control layout.</p>
+
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">paragraphs.html</span></div>
+        <pre><code><span class="tag">&lt;p&gt;</span><span class="txt">Volcanoes are openings in the Earth's crust.</span><span class="tag">&lt;/p&gt;</span>
+<span class="tag">&lt;p&gt;</span><span class="txt">They   have      extra spaces
+    and line breaks in this code —
+    but the browser ignores them.</span><span class="tag">&lt;/p&gt;</span></code></pre>
+      </div>
+      <div class="preview-window">
+        <div class="preview-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="url">🔒 paragraphs.html</span></div>
+        <div class="preview-window__body">
+          <p style="margin:0 0 12px;">Volcanoes are openings in the Earth's crust.</p>
+          <p style="margin:0;">They have extra spaces and line breaks in this code — but the browser ignores them.</p>
+        </div>
+      </div>
+
+      <h2><span class="num-chip">3</span>Why Hierarchy Matters</h2>
+      <p>A clear heading structure isn't just neat — it's functional. Search engines like Google scan your headings to understand what a page is about. People using <strong>screen readers</strong> (software that reads pages aloud for blind or low-vision users) can jump directly between headings, the same way you'd skim a table of contents. Skipping levels or using headings randomly makes pages confusing for both machines and humans.</p>
+
+      <h2><span class="num-chip">4</span>Plan Before You Code</h2>
+      <p>Professional developers often sketch a page's outline in plain text before writing any tags. For example, a page about your favorite hobby might look like this:</p>
+      <ul>
+        <li>H1: My Favorite Hobby — Skateboarding</li>
+        <li>H2: How I Got Started</li>
+        <li>H2: My Favorite Tricks
+          <ul><li>H3: The Ollie</li><li>H3: The Kickflip</li></ul>
+        </li>
+        <li>H2: Why I Love It</li>
+      </ul>
+      <p>Once your outline is clear, turning it into HTML is simple — you're just filling in tags around content you've already planned.</p>
+
+      <div class="box vocab">
+        <div class="box-title">📚 Key Vocabulary</div>
+        <dl class="vocab-grid">
+          <div class="vocab-item"><dt>Heading</dt><dd>A title-style tag from &lt;h1&gt; (biggest) to &lt;h6&gt; (smallest)</dd></div>
+          <div class="vocab-item"><dt>Hierarchy</dt><dd>The order of importance shown by heading levels</dd></div>
+          <div class="vocab-item"><dt>Paragraph</dt><dd>A block of regular text, wrapped in &lt;p&gt;</dd></div>
+          <div class="vocab-item"><dt>Whitespace collapsing</dt><dd>Browsers ignore extra spaces/line breaks in your code</dd></div>
+          <div class="vocab-item"><dt>Screen reader</dt><dd>Software that reads a web page aloud for accessibility</dd></div>
+        </dl>
+      </div>
+
+      <div class="box challenge">
+        <div class="box-title">🚀 Challenge</div>
+        <p>Create <code class="inline">hobby.html</code> with a full page structure (doctype, head with title, body). Inside the body, write a page about a hobby or interest of yours using: one &lt;h1&gt;, at least two &lt;h2&gt; sections, one &lt;h3&gt; inside a section, and at least three &lt;p&gt; paragraphs total.</p>
+      </div>
+
+      <div class="box recap">
+        <div class="box-title">✅ Recap</div>
+        <p>Headings &lt;h1&gt;–&lt;h6&gt; create a page's outline — use exactly one &lt;h1&gt; and never skip levels for looks. Paragraphs &lt;p&gt; hold body text, and browsers collapse extra whitespace automatically. A clear hierarchy helps both search engines and screen reader users. Next lesson: formatting text with bold, italics, and special characters.</p>
+      </div>
+
+    </div>
+
+    <div class="lesson-divider"></div>
+
+    <div class="content">
+
+      <div class="lesson-kicker"><span class="pill">Lesson 4 of 16</span><span class="pill week">Week 2</span><span class="pill time">⏱ 60 minutes</span></div>
+      <h1 class="lesson-title">Text Formatting, Entities &amp; Comments</h1>
+      <p class="lesson-sub">Learn how to emphasize important words, insert special characters, and leave yourself helpful notes inside your code.</p>
+
+      <div class="box objectives">
+        <div class="box-title">🎯 Learning Objectives</div>
+        <ul>
+          <li>Use &lt;strong&gt; and &lt;em&gt; to add semantic emphasis</li>
+          <li>Insert line breaks and horizontal rules appropriately</li>
+          <li>Use HTML entities to display special characters</li>
+          <li>Write comments that browsers ignore but humans can read</li>
+        </ul>
+      </div>
+
+      <h2><span class="num-chip">1</span>Bold and Italic — the Right Way</h2>
+      <p>HTML actually gives you two ways to make text bold, and two ways to make it italic. They look the same by default, but they mean different things:</p>
+      <ul>
+        <li><code class="inline">&lt;strong&gt;</code> — marks text as <strong>important</strong> (semantic meaning). Screen readers may say it with extra emphasis.</li>
+        <li><code class="inline">&lt;b&gt;</code> — just makes text bold visually, with no special meaning.</li>
+        <li><code class="inline">&lt;em&gt;</code> — marks text as <em>emphasized</em>, like you'd stress a word when speaking (semantic meaning).</li>
+        <li><code class="inline">&lt;i&gt;</code> — just makes text italic visually, with no special meaning (often used for terms or titles).</li>
+      </ul>
+      <div class="box tip">
+        <div class="box-title">💡 Which Should I Use?</div>
+        <p>Default to <code class="inline">&lt;strong&gt;</code> and <code class="inline">&lt;em&gt;</code> — they carry meaning for accessibility tools, not just looks. Save &lt;b&gt; and &lt;i&gt; for cases where you truly just want a visual style with no added importance, like a book title.</p>
+      </div>
+
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">formatting.html</span></div>
+        <pre><code><span class="tag">&lt;p&gt;</span><span class="txt">Never share your </span><span class="tag">&lt;strong&gt;</span><span class="txt">password</span><span class="tag">&lt;/strong&gt;</span><span class="txt"> with anyone.</span><span class="tag">&lt;/p&gt;</span>
+<span class="tag">&lt;p&gt;</span><span class="txt">I </span><span class="tag">&lt;em&gt;</span><span class="txt">really</span><span class="tag">&lt;/em&gt;</span><span class="txt"> loved that movie.</span><span class="tag">&lt;/p&gt;</span></code></pre>
+      </div>
+      <div class="preview-window">
+        <div class="preview-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="url">🔒 formatting.html</span></div>
+        <div class="preview-window__body">
+          <p style="margin:0 0 12px;">Never share your <strong>password</strong> with anyone.</p>
+          <p style="margin:0;">I <em>really</em> loved that movie.</p>
+        </div>
+      </div>
+
+      <h2><span class="num-chip">2</span>Line Breaks &amp; Horizontal Rules</h2>
+      <p>Sometimes you need a line break <em>within</em> a paragraph (not a whole new paragraph). Use <code class="inline">&lt;br&gt;</code> for that. To draw a horizontal divider line between sections, use <code class="inline">&lt;hr&gt;</code>. Both are <strong>self-closing</strong> — they have no separate closing tag because they don't wrap any content.</p>
+
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">address.html</span></div>
+        <pre><code><span class="tag">&lt;p&gt;</span><span class="txt">123 Maple Street</span><span class="tag">&lt;br&gt;</span>
+<span class="txt">Springfield, IL 62704</span><span class="tag">&lt;/p&gt;</span>
+<span class="tag">&lt;hr&gt;</span></code></pre>
+      </div>
+      <div class="box warning">
+        <div class="box-title">⚠️ Don't Overuse &lt;br&gt;</div>
+        <p>New learners often use several &lt;br&gt; tags in a row to create empty space. Don't — that's a job for CSS spacing later. Use &lt;br&gt; only when a genuine line break belongs inside one piece of content, like an address.</p>
+      </div>
+
+      <h2><span class="num-chip">3</span>HTML Entities: Typing Special Characters</h2>
+      <p>Some characters have a special meaning in HTML — like <code class="inline">&lt;</code> and <code class="inline">&gt;</code>, which the browser normally reads as the start/end of a tag. To display these characters as plain text, you use an <strong>entity</strong>: a short code starting with <code class="inline">&amp;</code> and ending with <code class="inline">;</code>.</p>
+
+      <table class="grid-table">
+        <thead><tr><th>You want to show</th><th>Entity code</th></tr></thead>
+        <tbody>
+          <tr><td>&lt; (less than)</td><td><code class="inline">&amp;lt;</code></td></tr>
+          <tr><td>&gt; (greater than)</td><td><code class="inline">&amp;gt;</code></td></tr>
+          <tr><td>&amp; (ampersand)</td><td><code class="inline">&amp;amp;</code></td></tr>
+          <tr><td>© (copyright)</td><td><code class="inline">&amp;copy;</code></td></tr>
+          <tr><td>A non-breaking space</td><td><code class="inline">&amp;nbsp;</code></td></tr>
+          <tr><td>" (quote mark)</td><td><code class="inline">&amp;quot;</code></td></tr>
+        </tbody>
+      </table>
+
+      <h2><span class="num-chip">4</span>Comments: Notes the Browser Ignores</h2>
+      <p>You can leave notes for yourself (or teammates) directly in your code using comments. Browsers skip over anything inside <code class="inline">&lt;!-- --&gt;</code> completely — visitors never see it.</p>
+      <div class="code-window">
+        <div class="code-window__bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span class="code-window__label">comments.html</span></div>
+        <pre><code><span class="cmt">&lt;!-- TODO: add a photo here later --&gt;</span>
+<span class="tag">&lt;p&gt;</span><span class="txt">This page is still under construction.</span><span class="tag">&lt;/p&gt;</span>
+<span class="cmt">&lt;!-- End of intro section --&gt;</span></code></pre>
+      </div>
+
+      <div class="box vocab">
+        <div class="box-title">📚 Key Vocabulary</div>
+        <dl class="vocab-grid">
+          <div class="vocab-item"><dt>Semantic</dt><dd>Carrying meaning, not just visual style</dd></div>
+          <div class="vocab-item"><dt>Entity</dt><dd>A code like &amp;copy; used to display a special character</dd></div>
+          <div class="vocab-item"><dt>Self-closing tag</dt><dd>A tag with no separate closing pair, like &lt;br&gt; or &lt;hr&gt;</dd></div>
+          <div class="vocab-item"><dt>Comment</dt><dd>A note in code, wrapped in &lt;!-- --&gt;, invisible to visitors</dd></div>
+        </dl>
+      </div>
+
+      <div class="box challenge">
+        <div class="box-title">🚀 Challenge</div>
+        <p>In your <code class="inline">hobby.html</code> file from last lesson, add: one sentence using &lt;strong&gt;, one sentence using &lt;em&gt;, a copyright line at the bottom using the &amp;copy; entity (e.g. "&amp;copy; 2026 Your Name"), and a comment marking where your favorite section begins.</p>
+      </div>
+
+      <div class="box recap">
+        <div class="box-title">✅ Recap</div>
+        <p>Use &lt;strong&gt; and &lt;em&gt; for meaningful emphasis, &lt;br&gt; and &lt;hr&gt; sparingly for breaks and dividers, entities for special characters, and comments to leave notes browsers won't display. Next lesson: organizing content into lists.</p>
+      </div>
+
+    </div>
+
+    <footer class="site-footer">CIOS HTML Course Book · Lessons 3 &amp; 4 of 16 · Standalone excerpt</footer>
+  </main>
+
+</body>
+</html>

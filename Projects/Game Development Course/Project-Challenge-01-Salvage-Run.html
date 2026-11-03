@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Project Challenge 1 — Salvage Run · Sessions 1–12</title>
+<style>
+  :root{
+    --bg:#0f1226; --bg2:#161a36; --panel:#1c2147; --panel2:#232a5c;
+    --ink:#e9ecff; --muted:#a3aad6; --line:#2c3470;
+    --brand:#6c8cff; --brand2:#9a6bff; --accent:#34d399; --warn:#fbbf24; --bad:#fb7185;
+    --code-bg:#0b0e24; --radius:14px; --maxw:980px;
+    --mono:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;
+    --sans:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{background:linear-gradient(180deg,#0c0f22,#0f1226 40%);color:var(--ink);font-family:var(--sans);line-height:1.6;font-size:16px}
+  a{color:var(--brand)}
+  header.topbar{position:sticky;top:0;z-index:30;background:rgba(13,16,38,.9);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .topbar-inner{max-width:var(--maxw);margin:0 auto;display:flex;align-items:center;gap:14px;padding:12px 18px}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.3px}
+  .logo .badge{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--brand),var(--brand2));display:grid;place-items:center;font-size:18px}
+  .logo small{display:block;font-weight:500;color:var(--muted);font-size:11px;letter-spacing:.5px}
+  .spacer{flex:1}
+  .progresswrap{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)}
+  .pbar{width:130px;height:8px;background:#0c1030;border-radius:99px;overflow:hidden;border:1px solid var(--line)}
+  .pbar > i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--brand));transition:width .4s}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:26px 18px 90px}
+  .card{background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);padding:24px 28px;box-shadow:0 10px 40px rgba(0,0,0,.25);margin-bottom:22px}
+  .crumbs{font-size:12.5px;color:var(--muted);letter-spacing:.3px;text-transform:uppercase;margin-bottom:8px}
+  h1.t{font-size:32px;line-height:1.12;margin:0 0 6px}
+  .sub{color:var(--muted);font-size:15px;margin:0}
+  .meta{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 4px}
+  .chip{font-size:12px;padding:5px 11px;border-radius:99px;background:var(--panel);border:1px solid var(--line);color:var(--muted)}
+  .chip.brand{color:var(--ink);border-color:var(--brand);background:rgba(108,140,255,.12)}
+  .chip.acc{color:#bff5df;border-color:rgba(52,211,153,.5);background:rgba(52,211,153,.10)}
+  .obj{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:20px 0 0}
+  .obj h3{margin:0 0 8px;font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--accent)}
+  .obj ul{margin:0;padding-left:20px}
+  .obj li{margin:4px 0}
+  h2{font-size:21px;margin:0 0 6px}
+  h3{font-size:16px;margin:22px 0 6px;color:#cfd6ff}
+  h4{font-size:14px;margin:18px 0 4px;color:#cfd6ff;letter-spacing:.3px}
+  p{margin:10px 0}
+  ul,ol{margin:10px 0;padding-left:22px}
+  li{margin:6px 0}
+  code.inline{font-family:var(--mono);background:#0c1030;border:1px solid var(--line);padding:1px 6px;border-radius:6px;font-size:13.5px;color:#ffd9a0}
+  kbd{font-family:var(--mono);background:#0c1030;border:1px solid var(--line);border-bottom-width:2px;padding:1px 7px;border-radius:6px;font-size:12.5px}
+  .note{border-radius:12px;padding:14px 16px;margin:18px 0;border:1px solid var(--line)}
+  .note .nt{font-weight:700;font-size:13px;letter-spacing:.4px;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+  .note.tip{background:rgba(52,211,153,.08);border-color:rgba(52,211,153,.4)} .note.tip .nt{color:var(--accent)}
+  .note.warn{background:rgba(251,191,36,.08);border-color:rgba(251,191,36,.4)} .note.warn .nt{color:var(--warn)}
+  .note.info{background:rgba(108,140,255,.08);border-color:rgba(108,140,255,.4)} .note.info .nt{color:var(--brand)}
+  .note.key{background:rgba(154,107,255,.08);border-color:rgba(154,107,255,.45)} .note.key .nt{color:#c5a8ff}
+  .note.bad{background:rgba(251,113,133,.08);border-color:rgba(251,113,133,.45)} .note.bad .nt{color:var(--bad)}
+
+  .stage{background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);margin-bottom:22px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,.22)}
+  .stage > header{display:flex;align-items:flex-start;gap:14px;padding:18px 24px;background:linear-gradient(135deg,rgba(154,107,255,.14),rgba(108,140,255,.07));border-bottom:1px solid var(--line)}
+  .stage .num{flex:none;width:46px;height:46px;border-radius:12px;background:#0c1030;border:1px solid var(--line);display:grid;place-items:center;font-weight:800;font-size:13px;color:#c5a8ff;line-height:1.1;text-align:center}
+  .stage .htxt{flex:1;min-width:0}
+  .stage .htxt h2{font-size:19px;margin:0 0 6px}
+  .stage .tags{display:flex;flex-wrap:wrap;gap:6px}
+  .tag{font-size:11px;padding:3px 9px;border-radius:99px;background:#0c1030;border:1px solid var(--line);color:var(--muted);letter-spacing:.3px}
+  .tag.s{color:#bff5df;border-color:rgba(52,211,153,.45)}
+  .stage .body{padding:18px 24px 24px}
+  .goal{background:var(--panel);border-left:3px solid var(--brand);border-radius:0 10px 10px 0;padding:10px 14px;margin:0 0 14px;font-size:14.5px}
+  .goal b{color:#cfd6ff}
+  .done-when{background:rgba(52,211,153,.07);border:1px solid rgba(52,211,153,.35);border-radius:11px;padding:12px 16px;margin:16px 0 0;font-size:14.5px}
+  .done-when b{color:var(--accent);display:block;font-size:12.5px;letter-spacing:.8px;text-transform:uppercase;margin-bottom:4px}
+  .steps{counter-reset:st;list-style:none;padding-left:0;margin:12px 0}
+  .steps li{position:relative;padding-left:32px;margin:9px 0}
+  .steps li::before{counter-increment:st;content:counter(st);position:absolute;left:0;top:1px;width:22px;height:22px;border-radius:7px;background:#0c1030;border:1px solid var(--line);color:var(--brand);font-size:12px;font-weight:700;display:grid;place-items:center}
+
+  details{margin:12px 0;border:1px solid var(--line);border-radius:11px;background:var(--panel);overflow:hidden}
+  details > summary{cursor:pointer;padding:10px 15px;font-size:13.5px;font-weight:700;letter-spacing:.3px;list-style:none;display:flex;align-items:center;gap:8px;color:var(--muted)}
+  details > summary::-webkit-details-marker{display:none}
+  details > summary::before{content:'▸';font-size:12px;transition:transform .15s;color:var(--brand)}
+  details[open] > summary::before{transform:rotate(90deg)}
+  details > summary:hover{color:var(--ink)}
+  details .dbody{padding:2px 16px 14px;font-size:14.5px;border-top:1px solid var(--line)}
+  details.teach{background:rgba(251,191,36,.06);border-color:rgba(251,191,36,.35)}
+  details.teach > summary{color:var(--warn)}
+  details.teach > summary::before{color:var(--warn)}
+
+  pre{margin:12px 0;background:var(--code-bg);border:1px solid var(--line);border-radius:11px;padding:14px;overflow:auto;font-family:var(--mono);font-size:13px;line-height:1.55;color:#e7ecff}
+
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px}
+  th,td{border:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top}
+  th{background:var(--panel);color:#cfd6ff;font-size:12.5px;text-transform:uppercase;letter-spacing:.6px}
+  td code.inline{font-size:12.5px}
+
+  .checkrow{display:flex;align-items:center;gap:10px;margin-top:18px;padding-top:14px;border-top:1px solid var(--line)}
+  .checkbtn{display:inline-flex;align-items:center;gap:9px;background:var(--panel);border:1px solid var(--line);border-radius:99px;padding:8px 16px;cursor:pointer;font-weight:600;font-size:13.5px;user-select:none}
+  .checkbtn.done{background:var(--accent);color:#08130d;border-color:transparent}
+  figure{margin:18px 0}
+  figure svg{width:100%;height:auto;display:block;background:var(--code-bg);border:1px solid var(--line);border-radius:12px}
+  figcaption{font-size:12.5px;color:var(--muted);margin-top:8px;text-align:center}
+  @media print{
+    body{background:#fff;color:#111}
+    .checkbtn,.pbar,.progresswrap{display:none}
+    details{break-inside:avoid}
+    details[open] .dbody{display:block}
+  }
+  @media (max-width:640px){
+    .card,.stage .body,.stage > header{padding-left:16px;padding-right:16px}
+    h1.t{font-size:25px}
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="logo"><span class="badge">🛰️</span><span>Game Dev Pro<small>Project Challenge 1 · Sessions 1–12</small></span></div>
+    <div class="spacer"></div>
+    <div class="progresswrap"><span id="ptext">0 / 10 done</span><span class="pbar"><i id="pbar"></i></span></div>
+  </div>
+</header>
+
+<div class="wrap">
+
+<!-- ================= TITLE ================= -->
+<div class="card">
+  <div class="crumbs">Project Challenge · End of Month 1½ · Everything so far</div>
+  <h1 class="t">SALVAGE RUN <span style="color:var(--muted);font-weight:400;font-size:.6em">— Station Kepler</span></h1>
+  <p class="sub">Build a complete arcade game from an empty folder. Nothing here is copied from any demo you've seen in class — you have to think it through and write it yourself.</p>
+
+  <div class="meta">
+    <span class="chip brand">Sessions 1 → 12</span>
+    <span class="chip">≈ 4–6 hours</span>
+    <span class="chip">Spread over 2 weeks</span>
+    <span class="chip acc">9 build stages</span>
+    <span class="chip">Difficulty: hard, but every piece is something you already know</span>
+  </div>
+
+  <div class="obj">
+    <h3>Why this project exists</h3>
+    <ul>
+      <li>Every single thing you've learned in twelve sessions is <b>required</b> to finish it — miss one and the game won't work.</li>
+      <li>Nobody hands you the code. You get a <b>specification</b>, like a real developer does, and you build to it.</li>
+      <li>It is the first thing you'll have made that is genuinely <b>yours</b> — not a demo you followed along with.</li>
+    </ul>
+  </div>
+
+  <div class="note bad">
+    <div class="nt">🚫 The one big rule</div>
+    <b>Do not open any of the class demos while you build this.</b> Not the bouncing ball, not the driving square, not the target game, not the falling blocks. Your own notes are fine. The course pages for <i>explanations</i> are fine. Copying working game code from them is not — it turns a project into typing practice. If you're stuck, use the <b>Stuck?</b> panel inside each stage. Those panels give you a nudge and never the answer.
+  </div>
+</div>
+
+<!-- ================= THE BRIEF ================= -->
+<div class="card">
+  <h2>📡 The mission brief</h2>
+  <p>A cargo hauler has broken apart just outside <b>Station Kepler</b>. Its cargo pods are drifting all over the sector, and so is a field of rock debris. You are the pilot of the station's little <b>salvage tug</b>.</p>
+  <p>You have <b>60 seconds</b>. Two jobs, at the same time:</p>
+  <ul>
+    <li><b>Left hand on the arrow keys</b> — fly the tug around and collect the drifting cargo pods.</li>
+    <li><b>Right hand on the mouse</b> — rocks glow orange when they go <i>unstable</i>. Click an unstable rock to vaporise it before it reaches the station.</li>
+  </ul>
+  <p>The station core sits in the middle of the screen with a shield. Every rock that touches the core takes shield away. Unstable rocks take three times as much. When the shield hits zero, it's over — and the timer running out ends it too.</p>
+
+  <figure>
+    <svg viewBox="0 0 760 460" role="img" aria-label="Screen layout sketch of the Salvage Run game">
+      <rect x="20" y="60" width="720" height="380" rx="14" fill="#0d1024" stroke="#6c8cff" stroke-width="3"/>
+      <text x="38" y="46" fill="#a3aad6" font-family="system-ui" font-size="15">720 × 480 canvas — the whole play area</text>
+      <!-- HUD -->
+      <text x="40" y="92" fill="#e9ecff" font-family="system-ui" font-size="16">Score: 120   Wave: 2   Pods: 5   Shield: 8   Time: 41</text>
+      <!-- core -->
+      <circle cx="380" cy="255" r="46" fill="none" stroke="#9a6bff" stroke-width="3" stroke-dasharray="6 5"/>
+      <circle cx="380" cy="255" r="34" fill="#9a6bff" opacity="0.25"/>
+      <text x="380" y="261" fill="#e9ecff" font-family="system-ui" font-size="15" text-anchor="middle">CORE 8</text>
+      <!-- tug -->
+      <rect x="140" y="330" width="58" height="34" rx="5" fill="#34d399"/>
+      <text x="169" y="386" fill="#34d399" font-family="system-ui" font-size="13" text-anchor="middle">tug (rectangle)</text>
+      <text x="169" y="402" fill="#a3aad6" font-family="system-ui" font-size="12" text-anchor="middle">arrow keys</text>
+      <!-- pods -->
+      <rect x="530" y="150" width="24" height="24" rx="4" fill="#6c8cff"/>
+      <rect x="600" y="330" width="24" height="24" rx="4" fill="#6c8cff"/>
+      <rect x="250" y="140" width="24" height="24" rx="4" fill="#6c8cff"/>
+      <text x="596" y="382" fill="#6c8cff" font-family="system-ui" font-size="13" text-anchor="middle">pods (rectangles)</text>
+      <!-- rocks -->
+      <circle cx="520" cy="255" r="22" fill="#a3aad6"/>
+      <circle cx="220" cy="230" r="16" fill="#a3aad6"/>
+      <circle cx="640" cy="200" r="26" fill="#fbbf24"/>
+      <text x="640" y="245" fill="#fbbf24" font-family="system-ui" font-size="13" text-anchor="middle">UNSTABLE</text>
+      <text x="640" y="261" fill="#a3aad6" font-family="system-ui" font-size="12" text-anchor="middle">click it!</text>
+      <!-- arrows showing bounce -->
+      <path d="M 520 233 L 520 200" stroke="#a3aad6" stroke-width="2" marker-end="url(#a)"/>
+      <path d="M 236 230 L 300 245" stroke="#a3aad6" stroke-width="2" marker-end="url(#a)"/>
+      <defs><marker id="a" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#a3aad6"/></marker></defs>
+    </svg>
+    <figcaption>Rough layout. Colours and shapes are up to you — the behaviour below is not.</figcaption>
+  </figure>
+</div>
+
+<!-- ================= SPEC ================= -->
+<div class="card">
+  <h2>📋 The specification</h2>
+  <p>This is the part you must build to. Read it twice before you write a single line. Treat anything in <b>bold</b> as a hard requirement.</p>
+
+  <h3>The four kinds of thing on screen</h3>
+  <table>
+    <tr><th style="width:16%">Thing</th><th style="width:22%">Shape &amp; data</th><th>Behaviour</th></tr>
+    <tr>
+      <td><b>Tug</b><br>(you)</td>
+      <td>Rectangle<br><code class="inline">{ x, y, w, h, speed }</code></td>
+      <td>Moves in <b>all four directions</b> with the arrow keys. <b>Clamped</b> so no part of it ever leaves the canvas. Diagonal movement must work (hold two keys).</td>
+    </tr>
+    <tr>
+      <td><b>Pods</b><br>(the loot)</td>
+      <td>Rectangles in an <b>array</b><br><code class="inline">{ x, y, w, h }</code></td>
+      <td><b>8 per wave</b> at random positions. Never spawn one inside or touching the core. Collected when the tug <b>overlaps</b> it → <code class="inline">+10</code> score and the pod is <b>removed from the array</b>. Empty array = wave cleared → <code class="inline">+50</code> bonus, next wave spawns, and <b>one more rock</b> joins the field.</td>
+    </tr>
+    <tr>
+      <td><b>Rocks</b><br>(the danger)</td>
+      <td>Circles in an <b>array</b><br><code class="inline">{ x, y, r, vx, vy, unstable }</code></td>
+      <td>Start with <b>3</b>. Each drifts by its own velocity and <b>bounces off all four walls</b>. Every <b>5 seconds</b> one random rock turns <b>unstable</b> (draw it a different colour). Rocks pass straight through the tug and the pods — they only care about the core.</td>
+    </tr>
+    <tr>
+      <td><b>Core</b><br>(what you defend)</td>
+      <td>Circle<br><code class="inline">{ x, y, r, shield }</code></td>
+      <td>Sits dead centre, does not move. <b>Shield starts at 10.</b> A rock touching it costs <b>1 shield</b>, or <b>3</b> if that rock was unstable. The rock is then removed and a fresh one spawns at a random edge. Shield draws as a number inside the core.</td>
+    </tr>
+  </table>
+
+  <h3>Mouse rules</h3>
+  <ul>
+    <li>Clicking an <b>unstable</b> rock vaporises it: <code class="inline">+25</code> score, rock removed, a fresh normal rock spawns at a random edge.</li>
+    <li>Clicking a <b>normal</b> rock costs you <code class="inline">-5</code> score. (So no wild clicking. Aim.)</li>
+    <li>Clicking empty space does nothing.</li>
+    <li>Clicks must land <b>exactly</b> where you clicked — no offset. You know why.</li>
+  </ul>
+
+  <h3>Game state and controls</h3>
+  <ul>
+    <li><b>60-second timer</b>, counting down, shown in the HUD.</li>
+    <li><kbd>P</kbd> pauses and unpauses. While paused, nothing moves, but the screen still draws and shows the word <b>PAUSED</b>.</li>
+    <li><kbd>R</kbd> restarts the whole game from scratch, at any time.</li>
+    <li>Game ends when the <b>shield reaches 0</b> or the <b>timer reaches 0</b>. On the end screen show the final score and which of the two ended it.</li>
+  </ul>
+
+  <h3>HUD (one line, top-left)</h3>
+  <pre>Score: 120   Wave: 2   Pods: 5   Shield: 8   Time: 41</pre>
+  <p>Built by joining text and numbers together — not five separate <code class="inline">fillText</code> calls with hardcoded words in random places.</p>
+
+  <div class="note key">
+    <div class="nt">🔑 Two rules about how the code is written, not what it does</div>
+    <p style="margin:6px 0"><b>1. Every tuning number lives in one place.</b> At the very top of your JavaScript, a block of <code class="inline">const</code> settings: tug speed, pod count, rock count, shield amount, the timer length, score values. Nothing further down the file may contain a "magic number" you'd want to tweak. I should be able to make the game twice as hard by editing five lines at the top.</p>
+    <p style="margin:6px 0"><b>2. <code class="inline">update()</code> stays small.</b> Aim for about 12 lines. It should read like a list of instructions — <code class="inline">movePlayer()</code>, <code class="inline">moveRocks()</code>, <code class="inline">checkPodPickups()</code>, <code class="inline">checkCoreHits()</code> — with the actual work living inside named functions. If <code class="inline">update()</code> is 60 lines long, you haven't finished; you've just stopped.</p>
+  </div>
+
+  <h3>Functions you are required to write</h3>
+  <p>These specific ones must exist, must take parameters, and the first four must <b>return</b> a value:</p>
+  <pre>randomBetween(min, max)      → returns a number between min and max
+distance(ax, ay, bx, by)     → returns the straight-line distance between two points
+rectsOverlap(a, b)           → returns true or false
+circlesOverlap(a, b)         → returns true or false
+makeRock()                   → returns a brand-new rock object, ready to push into the array
+spawnWave()                  → fills the pods array with a fresh wave
+resetGame()                  → puts every variable back to its starting value</pre>
+  <div class="note tip">
+    <div class="nt">💡 Watch what happens with <code class="inline">distance</code></div>
+    You will call that one function for three completely different jobs: deciding whether a click hit a rock, deciding whether a rock hit the core, and keeping new pods away from the core. Write it once, use it three times. That's what "don't repeat yourself" actually feels like in practice.
+  </div>
+</div>
+
+<!-- ================= STAGES ================= -->
+<div class="card">
+  <h2>🧭 How to build it: nine stages</h2>
+  <p>Do not try to write the whole thing and then run it. That way lies pain. Build one stage, <b>run it</b>, make sure it does what "Done when" says, and only then start the next one. Each stage is roughly 20–40 minutes.</p>
+  <p style="color:var(--muted);font-size:14px">Tick a stage off as you finish it — the bar at the top fills up.</p>
+</div>
+
+<!-- STAGE 0 -->
+<div class="stage">
+  <header>
+    <div class="num">STAGE<br>0</div>
+    <div class="htxt">
+      <h2>Set up the studio</h2>
+      <div class="tags"><span class="tag s">Session 1</span><span class="tag s">Session 2</span><span class="tag s">Session 3</span></div>
+    </div>
+  </header>
+  <div class="body">
+    <div class="goal"><b>Goal:</b> a proper three-file project that opens in the browser and looks like a real game page — before any game exists.</div>
+    <ol class="steps">
+      <li>Make a new folder called <code class="inline">salvage-run</code> in your projects folder. Open it in VS Code as a folder, not as loose files.</li>
+      <li>Create three files inside it: <code class="inline">index.html</code>, <code class="inline">style.css</code>, <code class="inline">game.js</code>.</li>
+      <li>In <code class="inline">index.html</code>, write the page skeleton by hand. It needs: a real <code class="inline">&lt;h1&gt;</code> title, a <code class="inline">&lt;canvas&gt;</code> that is <b>720 wide and 480 tall</b> with an <code class="inline">id</code>, and a <code class="inline">&lt;p&gt;</code> underneath explaining the controls to the player.</li>
+      <li>Link the stylesheet in the <code class="inline">&lt;head&gt;</code>. Link the script at the <b>end of the body</b> with <code class="inline">&lt;script src="game.js"&gt;&lt;/script&gt;</code>.</li>
+      <li>In <code class="inline">style.css</code>: dark page background, centre the canvas horizontally, give the canvas a visible border and rounded corners, choose a font for the page, and use margin and padding deliberately so nothing is squashed against anything else.</li>
+      <li>In <code class="inline">game.js</code>, write one line: <code class="inline">console.log("Salvage Run booting…");</code></li>
+      <li>Open the page in your browser, open DevTools, and confirm that message is in the Console and there are <b>no red errors</b>.</li>
+    </ol>
+    <div class="note warn">
+      <div class="nt">⚠️ Set the canvas size in the HTML, not the CSS</div>
+      <code class="inline">width</code> and <code class="inline">height</code> go on the <code class="inline">&lt;canvas&gt;</code> tag as attributes. If you set the size in CSS instead, the canvas gets <i>stretched</i> like a blown-up photo and every coordinate you calculate all project long will be subtly wrong. This is a bug that is genuinely horrible to find later.
+    </div>
+    <details><summary>Stuck?</summary><div class="dbody">
+      <p>If the console message doesn't appear, the script tag isn't finding your file. Check the spelling of the filename, check it's in the same folder, and look at the <b>Network</b> or <b>Console</b> tab for a 404.</p>
+      <p>If the canvas is invisible, that's normal — it's transparent until you give it a background or a border in CSS. That's exactly why step 5 asks for a border.</p>
+    </div></details>
+    <div class="done-when"><b>Done when</b> the page shows a title, a bordered empty canvas centred on a dark background, and a controls line — and the Console shows your boot message with no errors.</div>
+    <div class="checkrow"><span class="checkbtn" data-check>☐ Mark stage complete</span></div>
+  </div>
+</div>
+
+<!-- STAGE 1 -->
+<div class="stage">
+  <header>
+    <div class="num">STAGE<br>1</div>
+    <div class="htxt">
+      <h2>Settings, the core, and text on the canvas</h2>
+      <div class="tags"><span class="tag s">Session 2</span><span class="tag s">Session 4</span><span class="tag s">Session 5</span></div>
+    </div>
+  </header>
+  <div class="body">
+    <div class="goal"><b>Goal:</b> a settings block at the top of the file, the station core drawn in the exact middle, and a HUD line built from variables.</div>
+    <ol class="steps">
+      <li>Grab the canvas and its 2D context. Store the width and height in constants — you'll use them constantly and typing <code class="inline">canvas.width</code> forty times is miserable.</li>
+      <li>Write the <b>SETTINGS block</b>: constants for tug speed, pods per wave, starting rocks, starting shield, round length in seconds, and the four score values (pod, wave bonus, vaporise, wrong click).</li>
+      <li>Create your changing variables with <code class="inline">let</code>: score, wave, and the two booleans <code class="inline">paused</code> and <code class="inline">gameOver</code>.</li>
+      <li>Create the core object at the exact centre of the canvas, with a radius and a shield value taken from your settings.</li>
+      <li>Write a function <code class="inline">drawCircle(c, colour)</code> that draws any circle object, and <code class="inline">drawRect(r, colour)</code> for any rectangle object. Use them for everything from here on.</li>
+      <li>Draw the core once, and draw the HUD line by joining your variables into one string.</li>
+    </ol>
+    <div class="note info">
+      <div class="nt">🎯 Why <code class="inline">const</code> for some and <code class="inline">let</code> for others</div>
+      A setting is decided once and never changes while the game runs — that's <code class="inline">const</code>. The score changes constantly — that's <code class="inline">let</code>. Getting this right is not fussiness: <code class="inline">const</code> means the computer will <i>stop you</i> from accidentally overwriting something important.
+    </div>
+    <details><summary>Stuck?</summary><div class="dbody">
+      <p>Nothing drawing at all? Two usual suspects: you didn't get the context (<code class="inline">getContext("2d")</code>), or your script is running before the canvas exists on the page — which is exactly why the script tag goes at the <i>end</i> of the body.</p>
+      <p>For the HUD, remember that a number joined onto a string becomes text automatically. Build the whole line as one string in a variable first, then draw that variable. Easier to debug.</p>
+    </div></details>
+    <div class="done-when"><b>Done when</b> a circle sits in the dead centre of the canvas and a line of text at the top-left reads <code class="inline">Score: 0   Wave: 1   Pods: 0   Shield: 10   Time: 60</code> — every number coming from a variable, none of them typed into the string by hand.</div>
+    <div class="checkrow"><span class="checkbtn" data-check>☐ Mark stage complete</span></div>
+  </div>
+</div>
+
+<!-- STAGE 2 -->
+<div class="stage">
+  <header>
+    <div class="num">STAGE<br>2</div>
+    <div class="htxt">
+      <h2>The engine: update, draw, loop</h2>
+      <div class="tags"><span class="tag s">Session 8</span><span class="tag s">Session 5</span><span class="tag s">Session 6</span></div>
+    </div>
+  </header>
+  <div class="body">
+    <div class="goal"><b>Goal:</b> the thing is alive. Sixty frames a second, forever, with a working pause.</div>
+    <ol class="steps">
+      <li>Split your drawing code into the three-function skeleton you know: one that changes things, one that paints things, one that runs both and asks for the next frame.</li>
+      <li>Make the very first line of the painting function wipe the canvas.</li>
+      <li>Add a frame counter that goes up by one every frame, and work the remaining time out from it. Sixty frames is one second.</li>
+      <li>Add the pause: a <code class="inline">keydown</code> listener on the document for the <kbd>P</kbd> key that flips the <code class="inline">paused</code> boolean. Then make the updating function do nothing at all while paused — but keep drawing, and draw the word PAUSED in the middle.</li>
+      <li>Do the same for <kbd>R</kbd>, calling a <code class="inline">resetGame()</code> function. It can be nearly empty for now; you'll fill it in as you add things.</li>
+    </ol>
+    <div class="note key">
+      <div class="nt">🔑 The neatest way to pause</div>
+      You do <b>not</b> need to wrap your whole update function in a giant <code class="inline">if</code>. The first two lines can simply be a check that leaves the function early when paused or when the game is over. That's a <b>guard</b> — one of the most useful three-line patterns in programming, and you'll use it in every game you ever write.
+    </div>
+    <details><summary>Stuck?</summary><div class="dbody">
+      <p>Timer showing something like <code class="inline">59.98333</code>? You need to chop the decimals off — there's a maths function for rounding down.</p>
+      <p>Pressing <kbd>P</kbd> flickers wildly between paused and unpaused? You've probably put the flip inside something that runs every frame instead of inside the key event. The event fires once per press; the loop fires sixty times a second.</p>
+      <p>Nothing at all happens on key press? Remember from Session 10 that key events go to whatever has <b>focus</b>. For whole-game keys like pause and restart, listening on <code class="inline">document</code> is the simpler choice.</p>
+    </div></details>
+    <div class="done-when"><b>Done when</b> the timer counts down from 60 in real seconds, <kbd>P</kbd> freezes it with PAUSED on screen and unfreezes it, and <kbd>R</kbd> sets it back to 60.</div>
+    <div class="checkrow"><span class="checkbtn" data-check>☐ Mark stage complete</span></div>
+  </div>
+</div>
+
+<!-- STAGE 3 -->
+<div class="stage">
+  <header>
+    <div class="num">STAGE<br>3</div>
+    <div class="htxt">
+      <h2>Fly the tug</h2>
+      <div class="tags"><span class="tag s">Session 10</span><span class="tag s">Session 6</span><span class="tag s">Session 4</span></div>
+    </div>
+  </header>
+  <div class="body">
+    <div class="goal"><b>Goal:</b> a rectangle you can fly around in all directions, that cannot escape the screen.</div>
+    <ol class="steps">
+      <li>Create the tug object with position, size and speed (speed from your settings).</li>
+      <li>Set up the "which keys are held" record with a keydown and a keyup listener. Stop the arrow keys from scrolling the page.</li>
+      <li>Write <code class="inline">moveTug()</code>: four separate checks, one per direction, each moving the tug by its speed. Call it from your update function.</li>
+      <li>Clamp the tug so no part of it leaves the canvas — remember that its <code class="inline">x</code> is its <b>left corner</b>, so the right-hand limit isn't the canvas width.</li>
+      <li>Draw the tug using your <code class="inline">drawRect</code> helper.</li>
+    </ol>
+    <div class="note warn">
+      <div class="nt">⚠️ Do not move the tug inside the key event</div>
+      You know why from Session 10 — the operating system's key-repeat makes it stutter. The listeners write down <i>true</i> and <i>false</i>, and nothing else. The loop does the moving.
+    </div>
+    <details><summary>Stuck?</summary><div class="dbody">
+      <p>Only one direction works at a time when you hold two keys? You've used <code class="inline">else if</code> between the four checks. They must be four independent checks.</p>
+      <p>The tug slides off the right side by exactly its own width? You clamped against the canvas width instead of the canvas width minus the tug's width.</p>
+      <p>Key names are case-sensitive and spelled precisely, and a wrong spelling fails <i>silently</i>. If a direction does nothing, print the key name to the console and read what the browser actually calls it.</p>
+    </div></details>
+    <div class="done-when"><b>Done when</b> you can fly smoothly in eight directions (including diagonals), and pressing hard into any corner parks the tug perfectly against both edges with nothing hanging off.</div>
+    <div class="checkrow"><span class="checkbtn" data-check>☐ Mark stage complete</span></div>
+  </div>
+</div>
+
+<!-- STAGE 4 -->
+<div class="stage">
+  <header>
+    <div class="num">STAGE<br>4</div>
+    <div class="htxt">
+      <h2>Cargo pods: arrays, loops and collecting</h2>
+      <div class="tags"><span class="tag s">Session 7</span><span class="tag s">Session 12</span><span class="tag s">Session 5</span></div>
+    </div>
+  </header>
+  <div class="body">
+    <div class="goal"><b>Goal:</b> eight pods scattered around, and a tug that collects them by flying into them.</div>
+    <ol class="steps">
+      <li>Create an empty <code class="inline">pods</code> array and write <code class="inline">spawnWave()</code>, which uses a loop to add the right number of pods at random positions.</li>
+      <li>Two spawn rules: a pod must be <b>fully on screen</b>, and it must be <b>at least 90 pixels from the centre of the core</b>. Use your <code class="inline">distance()</code> function for the second one, and simply pick again if the spot is no good.</li>
+      <li>Draw every pod with a loop over the array.</li>
+      <li>Write <code class="inline">rectsOverlap(a, b)</code> — the four-comparison test — and use it in <code class="inline">checkPodPickups()</code> to test the tug against every pod.</li>
+      <li>On a pickup: add to the score and <b>remove that pod from the array</b>.</li>
+      <li>When the array is empty: award the wave bonus, add one to the wave number, spawn a new wave, and log to the console which wave has started and how many pods it has.</li>
+    </ol>
+    <div class="note bad">
+      <div class="nt">🐛 The trap in this stage — and it is a real one</div>
+      Removing an item from an array <b>while you are looping forwards through it</b> makes the loop skip the next item, because everything shuffled down a place while the counter went up. Two pods stacked together, and only one gets collected. There are two standard fixes: loop <b>backwards</b> through the array, or mark pods as collected during the loop and remove them afterwards. Pick one and be able to explain why it works.
+    </div>
+    <details><summary>Stuck?</summary><div class="dbody">
+      <p>Can't get the "at least 90 pixels from the core" rule working? Do it in the simplest way: pick a random spot, measure the distance, and if it's too close, pick another one. A <code class="inline">while</code> loop is the natural tool but a simple "try, check, try again" with a loop of a few attempts is completely fine at this stage.</p>
+      <p>Collision "not working"? Draw the two boxes you're testing as thin outlines so you can <i>see</i> the hitboxes. Nine times out of ten the picture shows you a wrong width or a wrong corner immediately.</p>
+      <p>Everything vanishes at once when you touch one pod? You're probably emptying the array instead of removing one item, or your overlap test is returning true for everything — check the direction of your comparisons.</p>
+    </div></details>
+    <div class="done-when"><b>Done when</b> eight pods appear away from the core, the tug collects them one at a time with the score rising by ten each time, and clearing the last one instantly spawns a fresh set with the wave number going up.</div>
+    <div class="checkrow"><span class="checkbtn" data-check>☐ Mark stage complete</span></div>
+  </div>
+</div>
+
+<!-- STAGE 5 -->
+<div class="stage">
+  <header>
+    <div class="num">STAGE<br>5</div>
+    <div class="htxt">
+      <h2>The rock field: velocity and bouncing</h2>
+      <div class="tags"><span class="tag s">Session 9</span><span class="tag s">Session 7</span><span class="tag s">Session 6</span></div>
+    </div>
+  </header>
+  <div class="body">
+    <div class="goal"><b>Goal:</b> three rocks drifting around the sector, bouncing cleanly off all four walls.</div>
+    <ol class="steps">
+      <li>Write <code class="inline">randomBetween(min, max)</code> and use it inside <code class="inline">makeRock()</code>, which returns a new rock object: a random position, a random radius between 12 and 26, a random velocity in both directions, and <code class="inline">unstable: false</code>.</li>
+      <li>Fill a <code class="inline">rocks</code> array with the starting number of rocks using a loop.</li>
+      <li>Write <code class="inline">moveRocks()</code>: loop through them, add each rock's velocity to its position, then check the four walls and reverse the right velocity when it hits one.</li>
+      <li>Draw every rock with a loop and your <code class="inline">drawCircle</code> helper.</li>
+    </ol>
+    <div class="note warn">
+      <div class="nt">⚠️ A circle's edge is not its <code class="inline">x</code></div>
+      For a rectangle, <code class="inline">x</code> is a corner. For a circle, <code class="inline">x</code> is the <b>centre</b>. So a rock's left edge is <code class="inline">x - r</code> and its right edge is <code class="inline">x + r</code>. Forget it and every rock will sink halfway into the wall before turning around, which looks broken in a way that's oddly hard to spot.
+    </div>
+    <div class="note tip">
+      <div class="nt">💡 Make sure no rock gets a velocity of zero</div>
+      A random number between −2.5 and 2.5 can come out at almost exactly zero, and you'll get a rock that just sits there like it's asleep. Decide how you'll prevent that. There's more than one reasonable answer.
+    </div>
+    <details><summary>Stuck?</summary><div class="dbody">
+      <p>A rock gets stuck vibrating against a wall? That's the classic. Flipping the velocity fixes the <i>direction</i> but doesn't fix the <i>position</i> — the rock is still overlapping the wall next frame, so it flips again, and again. The fix is to also push it back to exactly touching the wall when you flip. Say the fix out loud: "flip the velocity, then fix the position."</p>
+      <p>All your rocks are identical? You've probably called <code class="inline">makeRock()</code> once and pushed the same object in several times. Each push needs its own fresh call.</p>
+    </div></details>
+    <div class="done-when"><b>Done when</b> three different-sized rocks drift at different speeds and angles, and every bounce happens exactly at the wall — not sunk into it, not bouncing off thin air — with nothing ever getting stuck.</div>
+    <div class="checkrow"><span class="checkbtn" data-check>☐ Mark stage complete</span></div>
+  </div>
+</div>
+
+<!-- STAGE 6 -->
+<div class="stage">
+  <header>
+    <div class="num">STAGE<br>6</div>
+    <div class="htxt">
+      <h2>Rocks hit the core: circle collision and consequences</h2>
+      <div class="tags"><span class="tag s">Session 12</span><span class="tag s">Session 11</span><span class="tag s">Session 6</span></div>
+    </div>
+  </header>
+  <div class="body">
+    <div class="goal"><b>Goal:</b> the game now has stakes. Rocks reaching the core cost you shield, and running out ends the run.</div>
+    <ol class="steps">
+      <li>Write <code class="inline">circlesOverlap(a, b)</code> using your <code class="inline">distance()</code> function — two circles touch when the gap between their centres is smaller than their two radii added together.</li>
+      <li>Write <code class="inline">checkCoreHits()</code>: loop the rocks, test each against the core, and on a hit take shield away — one normally, three if that rock was unstable.</li>
+      <li>Remove the rock that hit and spawn a fresh one, so the field never runs empty. (Watch out for the same remove-while-looping trap from Stage 4.)</li>
+      <li>Draw the shield number inside the core so the player can see the damage happening.</li>
+      <li>When the shield reaches zero, or the timer reaches zero, set <code class="inline">gameOver</code> to true. Draw an end screen with the final score and the reason it ended, plus "Press R to fly again".</li>
+    </ol>
+    <div class="note info">
+      <div class="nt">🎯 Notice what you just reused</div>
+      The distance formula you wrote for a mouse click in Session 11 is now deciding whether a rock hit a space station. Same three lines, completely different job. That's the whole point of writing functions.
+    </div>
+    <details><summary>Stuck?</summary><div class="dbody">
+      <p>Shield dropping by five at once instead of one? Your rock is overlapping the core for several frames in a row and being counted each frame. Removing the rock the moment it hits is the fix the spec asks for — make sure you're actually removing it, not just scoring it.</p>
+      <p>Game-over screen flashing then disappearing? Your draw function is still painting over it, or <code class="inline">resetGame()</code> is being called somewhere it shouldn't. Remember the guard from Stage 2: when the game is over, update should be doing nothing.</p>
+    </div></details>
+    <div class="done-when"><b>Done when</b> you can sit and watch the shield tick down from rock hits, the run ends properly at zero, and <kbd>R</kbd> starts a completely clean game — score back to zero, shield full, timer at 60, one wave of pods, three rocks.</div>
+    <div class="checkrow"><span class="checkbtn" data-check>☐ Mark stage complete</span></div>
+  </div>
+</div>
+
+<!-- STAGE 7 -->
+<div class="stage">
+  <header>
+    <div class="num">STAGE<br>7</div>
+    <div class="htxt">
+      <h2>Unstable rocks and the mouse</h2>
+      <div class="tags"><span class="tag s">Session 11</span><span class="tag s">Session 6</span><span class="tag s">Session 7</span></div>
+    </div>
+  </header>
+  <div class="body">
+    <div class="goal"><b>Goal:</b> the second half of the game. Your right hand gets a job.</div>
+    <ol class="steps">
+      <li>Every 5 seconds of game time, pick a random rock from the array and set its <code class="inline">unstable</code> flag to true. Use your frame counter to decide when.</li>
+      <li>Draw unstable rocks in a clearly different colour so the player can spot one instantly.</li>
+      <li>Write <code class="inline">getMousePos(event)</code> — properly, with the page-position conversion — and add a click listener on the canvas.</li>
+      <li>On a click, loop the rocks and find the one containing the click point (distance from the click to the rock's centre, versus its radius).</li>
+      <li>Branch on the boolean: unstable rock → score up and replace it with a fresh normal one. Normal rock → score down. Empty space → nothing at all.</li>
+      <li>Make sure the score can't go below zero.</li>
+    </ol>
+    <div class="note warn">
+      <div class="nt">⚠️ The bug that will absolutely get you</div>
+      If your clicks land offset from where you actually clicked, you skipped the conversion from window coordinates to canvas coordinates. You've seen this one before. It will look like your hit test is broken when your hit test is perfect.
+    </div>
+    <details><summary>Stuck?</summary><div class="dbody">
+      <p>Clicking one rock affects two of them? You looped every rock and didn't stop after finding a hit. Overlapping rocks can both contain the same point — decide what should happen and make the code say it.</p>
+      <p>Nothing happens on any click? Check the listener is on the canvas, and print the converted coordinates to the console — if those numbers look sensible for where you clicked, the problem is in the distance test, not the mouse code.</p>
+      <p>Every rock turns unstable at once? Your "every 5 seconds" check is true for a whole second's worth of frames, or you're looping all rocks instead of picking one.</p>
+    </div></details>
+    <div class="done-when"><b>Done when</b> a rock turns orange every five seconds, clicking it vaporises it for points, clicking a normal rock costs you points, clicking empty space does nothing, and clicks land <i>exactly</i> where you aimed even after scrolling the page.</div>
+    <div class="checkrow"><span class="checkbtn" data-check>☐ Mark stage complete</span></div>
+  </div>
+</div>
+
+<!-- STAGE 8 -->
+<div class="stage">
+  <header>
+    <div class="num">STAGE<br>8</div>
+    <div class="htxt">
+      <h2>Difficulty, polish, and the clean-up pass</h2>
+      <div class="tags"><span class="tag s">Session 5</span><span class="tag s">Session 3</span><span class="tag s">All of it</span></div>
+    </div>
+  </header>
+  <div class="body">
+    <div class="goal"><b>Goal:</b> turn a working program into a finished game — and then tidy the code as if someone else has to read it.</div>
+    <ol class="steps">
+      <li>Difficulty ramp: every time a wave is cleared, add one more rock to the field. The game should get noticeably nastier by wave three.</li>
+      <li>Polish the page in CSS: a proper title, a controls line the player can actually read, comfortable spacing, and a colour scheme you like. It should look like something you'd show someone.</li>
+      <li>Feedback: make damage <i>visible</i>. Flash the core, or shake it, or turn the shield number red when it's low. Your choice — but the player must feel it.</li>
+      <li><b>The clean-up pass.</b> Read your whole file top to bottom and fix these four things: any repeated code that should be a function; any magic number that should be in the settings block; any function longer than about 20 lines; any variable with a lazy name like <code class="inline">x2</code> or <code class="inline">thing</code>.</li>
+      <li>Add a short comment above each function saying what it does in one line. Not what every line does — what the <i>function</i> is for.</li>
+      <li>Final check: open DevTools and play a full round. <b>Zero errors and zero warnings in the console.</b></li>
+    </ol>
+    <div class="note key">
+      <div class="nt">🔑 The clean-up pass is not optional decoration</div>
+      This is the stage that separates "I got it working" from "I can build software". Working code that nobody can read — including you, in two weeks — is only half-finished. Every professional does this pass. Give it the full twenty minutes it deserves.
+    </div>
+    <div class="done-when"><b>Done when</b> you can hand the folder to someone who's never seen it, and they can open <code class="inline">index.html</code>, understand the controls without asking you, play a full 60 seconds, lose, and press R to go again — with a clean console the whole time.</div>
+    <div class="checkrow"><span class="checkbtn" data-check>☐ Mark stage complete</span></div>
+  </div>
+</div>
+
+<!-- ================= SELF TEST ================= -->
+<div class="stage">
+  <header>
+    <div class="num">FINAL<br>✓</div>
+    <div class="htxt">
+      <h2>Prove it works: the self-test</h2>
+      <div class="tags"><span class="tag s">Do this before you hand it in</span></div>
+    </div>
+  </header>
+  <div class="body">
+    <div class="goal"><b>Goal:</b> try to break your own game before your teacher does. Every one of these must behave.</div>
+    <ol class="steps">
+      <li>Hold two arrow keys at once. Does it fly diagonally?</li>
+      <li>Fly hard into each of the four corners and hold. Does any part of the tug leave the screen?</li>
+      <li>Let it run untouched for a full 60 seconds. Does it end cleanly, once, without piling error messages into the console?</li>
+      <li>Press <kbd>R</kbd> in the middle of a game, at the game-over screen, and while paused. Does it always give a clean fresh start?</li>
+      <li>Pause and then try to play. Is everything genuinely frozen — rocks, timer, tug, clicks?</li>
+      <li>Scroll the page down a little, then click a rock. Does the click still land where you aimed?</li>
+      <li>Collect two pods that are sitting right next to each other. Do <b>both</b> get collected?</li>
+      <li>Clear a whole wave. New pods, wave number up, bonus scored, one extra rock?</li>
+      <li>Click a normal rock ten times in a row. Does the score go down and stop at zero rather than going negative?</li>
+      <li>Change one number in your settings block — the tug's speed — and reload. Did the game change, and did nothing break?</li>
+    </ol>
+    <div class="note tip">
+      <div class="nt">💡 Number 10 is the sneaky one</div>
+      If changing one setting doesn't change the game, you've got that value hardcoded somewhere further down the file too. That's exactly the kind of thing this test is designed to catch.
+    </div>
+    <div class="checkrow"><span class="checkbtn" data-check>☐ Mark self-test complete</span></div>
+  </div>
+</div>
+
+<!-- ================= SKILLS MAP ================= -->
+<div class="card">
+  <h2>🗺️ Where every session shows up</h2>
+  <p>If you can't point at the line of your code that satisfies a row of this table, that session hasn't landed yet — go back to it.</p>
+  <table>
+    <tr><th style="width:20%">Session</th><th style="width:34%">What you learned</th><th>Where it's required in Salvage Run</th></tr>
+    <tr><td><b>1</b> · Studio setup</td><td>VS Code, folders, running a page, DevTools</td><td>Stage 0: the <code class="inline">salvage-run</code> folder, three files, and a console with no red in it.</td></tr>
+    <tr><td><b>2</b> · HTML &amp; canvas</td><td>Tags, attributes, the canvas, coordinates</td><td>Stage 0–1: the page skeleton, a 720×480 canvas, and knowing that y grows <i>downwards</i>.</td></tr>
+    <tr><td><b>3</b> · CSS</td><td>Selectors, colours, borders, spacing, centring</td><td>Stage 0 and 8: an external stylesheet, a centred and bordered canvas, deliberate margins.</td></tr>
+    <tr><td><b>4</b> · Variables &amp; data</td><td><code class="inline">let</code>/<code class="inline">const</code>, numbers, strings, booleans, joining text</td><td>The settings block, the score and timer maths, the HUD string, <code class="inline">paused</code> and <code class="inline">gameOver</code>.</td></tr>
+    <tr><td><b>5</b> · Functions</td><td>Parameters, return values, DRY</td><td>The seven required functions, the drawing helpers, and the rule that <code class="inline">update()</code> stays small.</td></tr>
+    <tr><td><b>6</b> · Decisions</td><td><code class="inline">if</code>/<code class="inline">else</code>, comparisons, AND/OR/NOT, booleans as switches</td><td>Clamping, wall bounces, the unstable branch on a click, pause and game-over guards.</td></tr>
+    <tr><td><b>7</b> · Loops &amp; arrays</td><td>Arrays, <code class="inline">for</code> loops, adding and removing items</td><td>Pods and rocks: spawning with loops, drawing with loops, testing with loops, removing safely.</td></tr>
+    <tr><td><b>8</b> · The game loop</td><td><code class="inline">requestAnimationFrame</code>, update/draw, clearing</td><td>Stage 2: the entire engine everything else plugs into.</td></tr>
+    <tr><td><b>9</b> · Animation</td><td>Velocity, bouncing, position vs direction</td><td>Stage 5: rocks drifting and bouncing off all four walls without sinking or sticking.</td></tr>
+    <tr><td><b>10</b> · Keyboard</td><td>Events, the held-keys record, clamping</td><td>Stage 3 for the tug; Stage 2 for the <kbd>P</kbd> and <kbd>R</kbd> keys.</td></tr>
+    <tr><td><b>11</b> · Mouse &amp; touch</td><td>Coordinate conversion, point-in-circle</td><td>Stage 7: clicking rocks, with the offset conversion done properly.</td></tr>
+    <tr><td><b>12</b> · Collisions</td><td>Rectangle overlap, circle overlap, reacting</td><td>Stage 4 (tug vs pods) and Stage 6 (rocks vs core) — one of each formula, doing different jobs.</td></tr>
+  </table>
+</div>
+
+<!-- ================= LEVEL 2 ================= -->
+<div class="card">
+  <h2>🚀 Level 2 — only if the main build is finished</h2>
+  <p>Genuinely optional. Pick one or two that appeal to you; don't try to do all six.</p>
+  <ol>
+    <li><b>Rock-on-rock collisions.</b> When two rocks touch each other, both bounce. Every rock has to be tested against every other rock — which needs a loop inside a loop. Warning: harder than it sounds, and very satisfying when it works.</li>
+    <li><b>Drifting pods.</b> Give pods a slow velocity so they float too. Suddenly collecting them takes actual skill.</li>
+    <li><b>Best score.</b> Keep a <code class="inline">bestScore</code> variable and show "NEW BEST!" on the end screen when it's beaten. (It resets on reload — saving it properly comes later in the course.)</li>
+    <li><b>Play it on a phone.</b> Swap your mouse listener for a pointer event so tapping works too. Then work out how someone with no keyboard could steer the tug — that's a real design problem, and there's no single right answer.</li>
+    <li><b>Warning ring.</b> Draw a faint circle around the core showing the danger zone, and make it pulse when any rock gets close. Uses the distance function yet again.</li>
+    <li><b>Combo scoring.</b> Collect three pods within two seconds and score double. You'll need to remember <i>when</i> the last pod was collected.</li>
+  </ol>
+</div>
+
+<!-- ================= TEACHER ================= -->
+<div class="card">
+  <h2>🧑‍🏫 Teacher's section</h2>
+  <p style="color:var(--muted);font-size:14px">Fold this away before sharing the page with the student, or just tell them it's the boring bit.</p>
+
+  <details class="teach"><summary>Marking rubric — 100 points</summary><div class="dbody">
+    <table>
+      <tr><th style="width:52%">Criterion</th><th style="width:12%">Points</th><th>What full marks looks like</th></tr>
+      <tr><td>Project set up properly (folder, three files, external CSS and JS, clean console)</td><td>10</td><td>Runs from a double-click with no errors; CSS and JS are genuinely in their own files.</td></tr>
+      <tr><td>Page and canvas (HTML structure, canvas sized in HTML, styled and centred)</td><td>8</td><td>Looks deliberate, not default. Canvas size set as attributes, not CSS.</td></tr>
+      <tr><td>Settings block (const vs let used correctly, no magic numbers below it)</td><td>10</td><td>Changing one setting visibly changes the game with nothing else edited.</td></tr>
+      <tr><td>Functions (all seven present, parameters used, four return values, update() stays small)</td><td>16</td><td><code class="inline">update()</code> reads as a short list of named calls.</td></tr>
+      <tr><td>Game loop (update/draw split, clearing, frame-based timer)</td><td>10</td><td>Smooth, no smearing, timer accurate to about a second over a full round.</td></tr>
+      <tr><td>Keyboard control (held-keys pattern, diagonals, clamping on all four edges)</td><td>10</td><td>No stutter, no escaping, no <code class="inline">else if</code> between directions.</td></tr>
+      <tr><td>Arrays and loops (spawning, drawing, testing, safe removal)</td><td>12</td><td>Two adjacent pods both collect — the remove-while-looping trap is handled.</td></tr>
+      <tr><td>Motion and bouncing (velocity, circle edges, no sticking)</td><td>8</td><td>Bounces exactly at the wall; nothing vibrates or sinks.</td></tr>
+      <tr><td>Collisions (both formulas, correct reactions)</td><td>10</td><td>AABB for pods, distance for the core, each reacting exactly as specified.</td></tr>
+      <tr><td>Mouse (coordinate conversion, point-in-circle, correct branch on unstable)</td><td>6</td><td>Accurate after scrolling — the real test of the conversion.</td></tr>
+      <tr><td><b>Total</b></td><td><b>100</b></td><td></td></tr>
+    </table>
+    <p><b>Suggested bar:</b> 70+ means they're ready for Pong. Below 55, the gap is almost always arrays or functions — check those two before anything else.</p>
+  </div></details>
+
+  <details class="teach"><summary>Oral questions — ask these while they demo it</summary><div class="dbody">
+    <p>The demo matters less than these answers. A student who can't explain their own code has copied it from somewhere.</p>
+    <ol>
+      <li>"Show me a function that <i>returns</i> something, and tell me who uses what it returns."</li>
+      <li>"Why is the tug's right-hand limit not just the canvas width?"</li>
+      <li>"You use <code class="inline">distance()</code> in three places. Name all three."</li>
+      <li>"What would happen if you deleted the line that clears the canvas? Guess first, then try it."</li>
+      <li>"Why is a rock's left edge <code class="inline">x - r</code> but a pod's left edge is just <code class="inline">x</code>?"</li>
+      <li>"Walk me through what happens, in order, in one single frame."</li>
+      <li>"Which of your variables are <code class="inline">const</code> and why couldn't the score be one?"</li>
+      <li>"Two pods are touching each other. What did you have to do so both get collected?"</li>
+      <li>"If clicks landed 40 pixels off, where would you look first?"</li>
+      <li>"Show me a piece of this code you're not happy with, and tell me what you'd do with another hour."</li>
+    </ol>
+  </div></details>
+
+  <details class="teach"><summary>Traps deliberately left in the spec (and what they'll look like)</summary><div class="dbody">
+    <ul>
+      <li><b>Splice-while-looping (Stage 4 &amp; 6).</b> Symptom: adjacent pods where only one collects; occasionally a rock survives a core hit. This is the single most valuable bug in the project — let them hit it. The spec warns them it exists but not how to fix it.</li>
+      <li><b>Circle edges on the wall bounce (Stage 5).</b> Symptom: rocks sink halfway into the wall. Very common, easy to see once you point at it.</li>
+      <li><b>Sticky rock at a wall.</b> Symptom: one rock vibrating in place. The fix — flip the velocity <i>and</i> correct the position — is the same one Pong needs in Session 13, so this is deliberate preparation.</li>
+      <li><b>Zero velocity rock.</b> Symptom: a rock that never moves. Flagged in the spec as a design decision rather than a bug, so they have to reason about randomness rather than just be told.</li>
+      <li><b>Multi-frame core damage.</b> Symptom: shield dropping by 4 or 5 on one hit. Teaches that a collision lasts many frames unless you remove or move something.</li>
+      <li><b>Mouse offset.</b> Symptom: clicks miss consistently. Most likely to appear only when they scroll — worth having them scroll during the demo.</li>
+      <li><b>Magic numbers.</b> Symptom: changing the settings block does nothing. Caught by self-test #10.</li>
+    </ul>
+  </div></details>
+
+  <details class="teach"><summary>Pacing and support</summary><div class="dbody">
+    <ul>
+      <li><b>Two weeks, four sessions.</b> Suggested split: Stages 0–2 in the first session, 3–4 in the second, 5–6 in the third, 7–8 plus the self-test in the fourth. Homework between each is the next stage attempted alone.</li>
+      <li><b>Do not debug for them.</b> Ask "what did you expect to happen, and what happened instead?" then "how could you <i>see</i> what's actually happening?" Drawing hitboxes and printing to the console solve most of this project's bugs.</li>
+      <li><b>If they're drowning at Stage 4 or 5,</b> the shortest recovery is to have them rebuild that one mechanic in a blank file with nothing else in it. Arrays plus collisions plus a game loop all at once is a lot; isolating it usually unblocks them in ten minutes.</li>
+      <li><b>If they finish early,</b> push them at Level 2 item 1 (rock-on-rock). The nested loop is the natural next step in difficulty and previews the thinking Breakout will need.</li>
+      <li><b>Protect Stage 8.</b> Students want to stop the moment it works. The clean-up pass and the self-test are where the professional habits form, and they're the first thing to get skipped. Mark them as part of the grade — they're worth 20 points between them — and say so up front.</li>
+    </ul>
+  </div></details>
+</div>
+
+<div class="card" style="text-align:center">
+  <p style="font-size:18px;margin:0 0 6px"><b>Good luck, pilot.</b></p>
+  <p style="color:var(--muted);margin:0">Twelve sessions of tools, one game. When this runs, you've stopped following tutorials and started building software.</p>
+</div>
+
+</div>
+
+<script>
+(function(){
+  var checks = document.querySelectorAll('[data-check]');
+  var bar = document.getElementById('pbar');
+  var txt = document.getElementById('ptext');
+  function refresh(){
+    var done = 0;
+    checks.forEach(function(c){ if(c.classList.contains('done')) done++; });
+    bar.style.width = (done / checks.length * 100) + '%';
+    txt.textContent = done + ' / ' + checks.length + ' done';
+  }
+  checks.forEach(function(c){
+    var original = c.textContent;
+    c.addEventListener('click', function(){
+      c.classList.toggle('done');
+      c.textContent = c.classList.contains('done') ? '☑ Completed' : original;
+      refresh();
+    });
+  });
+  refresh();
+})();
+</script>
+</body>
+</html>
